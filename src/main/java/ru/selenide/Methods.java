@@ -30,10 +30,10 @@ public class Methods {
 
     }
     public static void downloadProfStandardByNumber() throws FileNotFoundException {
-        String path = $("input[type='submit'][class='button'][value='Скачать в XML']").download().getPath();
-        //$("input[type='submit'][class='button'][value='Скачать в XML']").click();
-        System.out.println(path);
-        closeWebDriver();
+      //  String path = $("input[type='submit'][class='button'][value='Скачать в XML']").download().getPath();
+        $("input[type='submit'][class='button'][value='Скачать в XML']").click();
+       // System.out.println(path);
+    //    closeWebDriver();
     }
     //show all standards in this area, you can write only number of are, for example 06
     public static void showAllProfStandardsByProfAreaFromRosmintrud(String profArea){

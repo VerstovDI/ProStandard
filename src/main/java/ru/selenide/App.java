@@ -8,7 +8,9 @@ import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
+import java.io.File;
 import java.io.FileNotFoundException;
+import java.nio.file.Paths;
 import java.util.HashMap;
 
 import static com.codeborne.selenide.FileDownloadMode.PROXY;
@@ -17,16 +19,15 @@ import static ru.selenide.Methods.*;
 
 public class App {
     public static void setUp() {
-        System.setProperty("selenide.browser", "chrome");
-        Configuration.holdBrowserOpen = true;
-      //  Configuration.fileDownload = FileDownloadMode.FOLDER;
-        String downloadsFolder = Configuration.downloadsFolder;
+        var downloadDir = Paths.get("resources").toAbsolutePath().toString();
+        System.out.println(File.separator);
+        Configuration.downloadsFolder=downloadDir;
         System.out.println( Configuration.downloadsFolder);
         HashMap<String, Object> chromePrefs = new HashMap<String, Object>();
-        //  chromePrefs.put("profile.default_content_settings.popups", 0);
-        // chromePrefs.put("download.prompt_for_download", "true");
+     //   chromePrefs.put("profile.default_content_settings.popups", 0);
+      //  chromePrefs.put("download.prompt_for_download", "true");
         chromePrefs.put("safebrowsing.enabled", "true");
-        chromePrefs.put("download.default_directory",   downloadsFolder);
+        chromePrefs.put("download.default_directory",   downloadDir);
         ChromeOptions options = new ChromeOptions();
         options.setExperimentalOption("prefs", chromePrefs);
      /*   DesiredCapabilities cap = DesiredCapabilities.chrome();
@@ -36,6 +37,9 @@ public class App {
         Configuration.browserCapabilities = options;
         Configuration.timeout = 120000;
         Configuration.pageLoadTimeout = 120000;
+        Configuration.holdBrowserOpen = true;
+        //Configuration.headless = true;
+       Configuration.fileDownload = FileDownloadMode.FOLDER;
     }
 
     public static void main(String[] args) throws FileNotFoundException {
