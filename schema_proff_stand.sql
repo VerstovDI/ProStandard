@@ -106,3 +106,46 @@ CREATE TABLE proff.necessary_knowledge  --Необходимые знания
   FOREIGN KEY(id_particular_work_function)  REFERENCES proff.particular_work_functions (id_particular_work_function)  ON DELETE RESTRICT ON UPDATE CASCADE
 );
 end;
+
+/* ---------------- ЧАСТЬ СКРИПТА, ОТВЕТСТВЕННАЯ ЗА СОЗДАНИЕ СЛОВАРЕЙ ДАННЫХ ---------------- */
+-- Таблица-справочник со специальностями
+-- DROP TABLE IF EXISTS proff.dict_specialization
+CREATE TABLE IF NOT EXISTS proff.dict_specialization
+(
+    spec_id serial PRIMARY KEY,
+    spec_code int UNIQUE,  -- код специальности (например, 09.05.01)
+    spec_description varchar(300) UNIQUE NOT NULL  -- текстовое описание специальности (например, "Применение и эксплутация ...")
+    );
+
+-- Таблица-справочник со специализациями(направлениями подготовки)
+-- DROP TABLE IF EXISTS proff.dict_major
+CREATE TABLE IF NOT EXISTS proff.dict_major
+(
+    major_id serial PRIMARY KEY,
+    major_description varchar(300) UNIQUE NOT NULL  -- текстовое описание направления подготовки (например, "АСО ИУ")
+    );
+
+-- Таблица-справочник с уровнями образования
+-- DROP TABLE IF EXISTS proff.dict_education_level
+CREATE TABLE IF NOT EXISTS proff.dict_education_level
+(
+    level_id serial PRIMARY KEY,
+    level_value int UNIQUE, -- уровень образования
+    description varchar(100) UNIQUE NOT NULL  -- текстовое название уровня
+    );
+
+-- Сводная таблица
+-- DROP TABLE IF EXISTS proff.dict_pivot
+CREATE TABLE IF NOT EXISTS proff.dict_pivot
+(
+    record_id serial PRIMARY KEY,
+    level_id serial,
+    spec_id serial,
+    major_id serial,
+    FOREIGN KEY (level_id) REFERENCES proff.dict_education_level(level_id)
+    ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (spec_id) REFERENCES proff.dict_specialization(spec_id)
+    ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (major_id) REFERENCES proff.dict_major(major_id)
+    ON DELETE CASCADE ON UPDATE CASCADE
+    );
