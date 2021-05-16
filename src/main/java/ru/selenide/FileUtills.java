@@ -9,7 +9,7 @@ import java.nio.file.attribute.FileTime;
 import java.util.Comparator;
 import java.util.Optional;
 
-public class FilesMethods {
+public class FileUtills {
     public static Optional<Path>  getLastFilePath(String dir) throws IOException {
         return Files.list(Path.of(dir))    // here we get the stream with full directory listing
                 .filter(f -> !Files.isDirectory(f))  // exclude subdirectories from listing

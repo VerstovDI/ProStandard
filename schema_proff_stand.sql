@@ -5,7 +5,7 @@ create schema proff;
 
 CREATE TABLE proff.tcl_resource (  --откуда загружено
 id_resource serial PRIMARY KEY,
-url varchar(100)  NOT NULL
+url varchar(500)  NOT NULL
 );
 
 CREATE TABLE proff.proff_standarts ( -- профф стандарт
@@ -17,7 +17,7 @@ CREATE TABLE proff.proff_standarts ( -- профф стандарт
 	order_number varchar(10) NOT NULL,
 	kind_professional_activity varchar NOT NULL,
 	purpose_kind_professional_activity varchar NOT NULL,
-	id_resource integer NOT NULL,
+	id_resource BIGINT NOT NULL,
 	FOREIGN KEY(id_resource)  REFERENCES proff.tcl_resource     (id_resource)  ON DELETE RESTRICT ON UPDATE CASCADE
 );
 
@@ -54,7 +54,7 @@ CREATE TABLE proff.possible_job_titles  -- возможные профессии
 (
   id_possible_job_title serial  PRIMARY KEY,
   title varchar(1000) NOT NULL,
-  id_gwf integer NOT NULL,
+  id_gwf BIGINT NOT NULL,
   FOREIGN KEY(id_gwf)  REFERENCES proff.generalized_work_functions (id_gwf)  ON DELETE RESTRICT ON UPDATE CASCADE
 );
 
@@ -62,7 +62,7 @@ CREATE TABLE proff.educational_requirements --требования к уровн
 (
   id_educational_requirement serial  PRIMARY KEY,
   educational_requirement varchar(100)  NOT NULL,
-  id_gwf integer NOT NULL,
+  id_gwf BIGINT NOT NULL,
   FOREIGN KEY(id_gwf)  REFERENCES proff.generalized_work_functions (id_gwf)  ON DELETE RESTRICT ON UPDATE CASCADE
 );
 
@@ -76,7 +76,7 @@ CREATE TABLE proff.particular_work_functions  --трудовые функции
   сode_wf varchar(5) NOT NULL,
   name_wf varchar(100) NOT NULL,
   sub_qualification integer NOT NULL,
-  id_gwf integer NOT NULL,
+  id_gwf BIGINT NOT NULL,
   FOREIGN KEY(id_gwf)  REFERENCES proff.generalized_work_functions (id_gwf)  ON DELETE RESTRICT ON UPDATE CASCADE
 );
 
@@ -85,7 +85,7 @@ CREATE TABLE proff.labor_actions  --трудовые действия(навык
   id_labor_action serial  PRIMARY KEY,
   description varchar(1000) NOT NULL,
   
-  id_particular_work_function integer NOT NULL,
+  id_particular_work_function BIGINT NOT NULL,
   FOREIGN KEY(id_particular_work_function)  REFERENCES proff.particular_work_functions (id_particular_work_function)  ON DELETE RESTRICT ON UPDATE CASCADE
 );
 
@@ -94,7 +94,7 @@ CREATE TABLE proff.required_skills  --Необходимые умения
   id_required_skill serial  PRIMARY KEY,
   description varchar(1000) NOT NULL,
   
-  id_particular_work_function integer NOT NULL,
+  id_particular_work_function BIGINT NOT NULL,
   FOREIGN KEY(id_particular_work_function)  REFERENCES proff.particular_work_functions (id_particular_work_function)  ON DELETE RESTRICT ON UPDATE CASCADE
 );
 
@@ -102,9 +102,13 @@ CREATE TABLE proff.necessary_knowledge  --Необходимые знания
 (
   id_necessary_knowledge serial  PRIMARY KEY,
   description varchar(1000) NOT NULL,
-  id_particular_work_function integer NOT NULL,
+  id_particular_work_function BIGINT NOT NULL,
   FOREIGN KEY(id_particular_work_function)  REFERENCES proff.particular_work_functions (id_particular_work_function)  ON DELETE RESTRICT ON UPDATE CASCADE
 );
+
+insert into proff.tcl_resource (id_resource,url)
+values (default,'https://profstandart.rosmintrud.ru/obshchiy-informatsionnyy-blok/natsionalnyy-reestr-professionalnykh-standartov/reestr-professionalnykh-standartov');
+
 end;
 
 /* ---------------- ЧАСТЬ СКРИПТА, ОТВЕТСТВЕННАЯ ЗА СОЗДАНИЕ СЛОВАРЕЙ ДАННЫХ ---------------- */
