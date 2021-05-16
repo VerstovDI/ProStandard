@@ -22,7 +22,6 @@ public class StandardsDAO {
     }
 
 
-
     public void save(Standard standard) {
         Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
         Transaction tx1 = session.beginTransaction();

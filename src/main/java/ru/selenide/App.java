@@ -15,7 +15,7 @@ public class App {
 
 
     public static void main(String[] args) throws IOException, InterruptedException {
-       String number = "06.003";
+        String number = "06.003";
         String pathToSave = Paths.get("resources").toAbsolutePath().toString()
                 + File.separator + number;
         setUp(pathToSave);

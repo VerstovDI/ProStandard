@@ -7,7 +7,6 @@ import com.codeborne.selenide.SelenideElement;
 import org.openqa.selenium.By;
 import org.openqa.selenium.chrome.ChromeOptions;
 
-
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -18,6 +17,7 @@ import static com.codeborne.selenide.Selenide.*;
 public class SelenideUtills {
     /**
      * Метод для настройки драйвера перед скачиванием.
+     *
      * @param downloadDir папка для срохранения профф стандарта
      * @throws IOException
      */
@@ -48,6 +48,7 @@ public class SelenideUtills {
 
     /**
      * Ищет профф стандарт по его номеру
+     *
      * @param number номер профф стандарта
      */
     public static void findProfStandardByNumber(String number) {
@@ -68,6 +69,7 @@ public class SelenideUtills {
 
     /**
      * Показывает все стандарты в профф сйере. Можно написать, например 06
+     *
      * @param profArea проффессиональная сфера
      */
     public static void showAllProfStandardsByProfAreaFromRosmintrud(String profArea) {

@@ -5,7 +5,6 @@ import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 import ru.selenide.DB.HibernateSessionFactoryUtil;
 import ru.selenide.DB.domain.EmploymentGroupOkz;
-import ru.selenide.DB.domain.Standard;
 
 public class EmploymentGroupOkzDAO {
 

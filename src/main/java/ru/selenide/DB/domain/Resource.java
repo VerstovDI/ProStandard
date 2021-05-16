@@ -11,7 +11,7 @@ public class Resource {
     @Column(name = "id_resource", columnDefinition = "serial")
     private Long id;
 
-    @Column(name="url")
+    @Column(name = "url")
     private String url;
 
     public Resource() {

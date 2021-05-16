@@ -8,33 +8,33 @@ import java.util.Objects;
 @Table(name = "proff_standarts", schema = "proff")
 public class Standard {
     @Id
-    @Column(name="code_kind_professional_activity")
+    @Column(name = "code_kind_professional_activity")
     private String codeKindProfessionalActivity;
 
-    @Column(name="date_of_approval",nullable=false)
-    private Date  dateOfApproval;
+    @Column(name = "date_of_approval", nullable = false)
+    private Date dateOfApproval;
 
-    @Column(name="date_of_downloading",nullable=false)
-    private Date  dateOfDownloading;
+    @Column(name = "date_of_downloading", nullable = false)
+    private Date dateOfDownloading;
 
-    @Column(name="name_professional_standart",nullable=false)
-    private String  nameProfessionalStandart;
+    @Column(name = "name_professional_standart", nullable = false)
+    private String nameProfessionalStandart;
 
-    @Column(name="registration_number",nullable=false)
+    @Column(name = "registration_number", nullable = false)
     private Integer registrationNumber;
 
-    @Column(name="order_number",nullable=false)
-    private String  orderNumber;
+    @Column(name = "order_number", nullable = false)
+    private String orderNumber;
 
-    @Column(name="kind_professional_activity",nullable=false)
-    private String  kindProfessionalActivity;
+    @Column(name = "kind_professional_activity", nullable = false)
+    private String kindProfessionalActivity;
 
-    @Column(name="purpose_kind_professional_activity",nullable=false)
-    private String   purposeKindProfessionalActivity;
+    @Column(name = "purpose_kind_professional_activity", nullable = false)
+    private String purposeKindProfessionalActivity;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name=" id_resource",nullable=false)
-    private Resource  resource;
+    @JoinColumn(name = " id_resource", nullable = false)
+    private Resource resource;
 
 
     public Standard() {

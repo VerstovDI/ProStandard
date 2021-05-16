@@ -8,7 +8,8 @@ import ru.selenide.DB.domain.*;
 public class HibernateSessionFactoryUtil {
     private static SessionFactory sessionFactory;
 
-    private HibernateSessionFactoryUtil() {}
+    private HibernateSessionFactoryUtil() {
+    }
 
     public static SessionFactory getSessionFactory() {
         if (sessionFactory == null) {
@@ -19,6 +20,13 @@ public class HibernateSessionFactoryUtil {
                 configuration.addAnnotatedClass(EmploymentGroupOkz.class);
                 configuration.addAnnotatedClass(EmploymentGroupOkved.class);
                 configuration.addAnnotatedClass(GeneralizedWorkFunctions.class);
+                configuration.addAnnotatedClass(PossibleJobTitles.class);
+                configuration.addAnnotatedClass(EducationalRequirements.class);
+                configuration.addAnnotatedClass(ParticularWorkFunctions.class);
+                configuration.addAnnotatedClass(LaborActions.class);
+                configuration.addAnnotatedClass(RequiredSkills.class);
+                configuration.addAnnotatedClass(NecessaryKnowledge.class);
+
 
                 StandardServiceRegistryBuilder builder = new StandardServiceRegistryBuilder()
                         .applySettings(configuration.getProperties());

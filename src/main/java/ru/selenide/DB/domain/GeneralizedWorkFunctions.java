@@ -1,7 +1,6 @@
 package ru.selenide.DB.domain;
 
 import javax.persistence.*;
-import java.sql.Date;
 import java.util.Objects;
 
 @Entity
@@ -12,18 +11,18 @@ public class GeneralizedWorkFunctions {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name="сode_gwf",nullable=false)
-    private String  сodeGwf;
+    @Column(name = "сode_gwf", nullable = false)
+    private String сodeGwf;
 
-    @Column(name="name_gwf",nullable=false)
-    private String  nameGwf;
+    @Column(name = "name_gwf", nullable = false)
+    private String nameGwf;
 
-    @Column(name="level_of_qualification",nullable=false)
+    @Column(name = "level_of_qualification", nullable = false)
     private Integer levelOfQualification;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="code_kind_professional_activity",nullable=false)
-    private Standard  standard;
+    @JoinColumn(name = "code_kind_professional_activity", nullable = false)
+    private Standard standard;
 
     public GeneralizedWorkFunctions() {
     }

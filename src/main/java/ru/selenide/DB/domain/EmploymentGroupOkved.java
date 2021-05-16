@@ -8,16 +8,16 @@ import java.util.Objects;
 @Table(name = "employment_group_okved", schema = "proff")
 public class EmploymentGroupOkved {
     @Id
-    @Column(name="сode_okved")
-    private String codeOkved ;
+    @Column(name = "сode_okved")
+    private String codeOkved;
 
-    @Column(name="name_okved",nullable=false)
-    private String  nameOkved;
+    @Column(name = "name_okved", nullable = false)
+    private String nameOkved;
 
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="code_kind_professional_activity",nullable=false)
-    private Standard  standard;
+    @JoinColumn(name = "code_kind_professional_activity", nullable = false)
+    private Standard standard;
 
 
     public EmploymentGroupOkved() {

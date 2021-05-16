@@ -21,7 +21,6 @@ public class GeneralizedWorkFunctionsDAO {
     }
 
 
-
     public void save(GeneralizedWorkFunctions generalizedWorkFunctions) {
         Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
         Transaction tx1 = session.beginTransaction();
