@@ -5,7 +5,7 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "generalized_work_functions", schema = "proff")
-public class GeneralizedWorkFunctions {
+public class GeneralizedWorkFunction {
     @Id
     @Column(name = "id_gwf", columnDefinition = "serial")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,12 +24,12 @@ public class GeneralizedWorkFunctions {
     @JoinColumn(name = "code_kind_professional_activity", nullable = false)
     private Standard standard;
 
-    public GeneralizedWorkFunctions() {
+    public GeneralizedWorkFunction() {
     }
 
 
-    public GeneralizedWorkFunctions(Long id, String сodeGwf, String nameGwf, Integer levelOfQualification, Standard standard) {
-        this.id = id;
+    public GeneralizedWorkFunction(String сodeGwf, String nameGwf, Integer levelOfQualification, Standard standard) {
+
         this.сodeGwf = сodeGwf;
         this.nameGwf = nameGwf;
         this.levelOfQualification = levelOfQualification;
@@ -79,8 +79,8 @@ public class GeneralizedWorkFunctions {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof GeneralizedWorkFunctions)) return false;
-        GeneralizedWorkFunctions that = (GeneralizedWorkFunctions) o;
+        if (!(o instanceof GeneralizedWorkFunction)) return false;
+        GeneralizedWorkFunction that = (GeneralizedWorkFunction) o;
         return Objects.equals(id, that.id) && Objects.equals(сodeGwf, that.сodeGwf) && Objects.equals(nameGwf, that.nameGwf) && Objects.equals(levelOfQualification, that.levelOfQualification) && Objects.equals(standard, that.standard);
     }
 

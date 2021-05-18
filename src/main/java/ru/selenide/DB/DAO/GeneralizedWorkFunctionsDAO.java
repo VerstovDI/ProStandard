@@ -4,35 +4,35 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 import ru.selenide.DB.HibernateSessionFactoryUtil;
-import ru.selenide.DB.domain.GeneralizedWorkFunctions;
+import ru.selenide.DB.domain.GeneralizedWorkFunction;
 
 
 public class GeneralizedWorkFunctionsDAO {
-    public GeneralizedWorkFunctions findByCodeKindProfessionalActivity(String code) {
-        return HibernateSessionFactoryUtil.getSessionFactory().openSession().get(GeneralizedWorkFunctions.class, code);
+    public GeneralizedWorkFunction findByCodeKindProfessionalActivity(String code) {
+        return HibernateSessionFactoryUtil.getSessionFactory().openSession().get(GeneralizedWorkFunction.class, code);
     }
 
-    public GeneralizedWorkFunctions findByName(String nameGwf) {
+    public GeneralizedWorkFunction findByName(String nameGwf) {
 
-        Query<GeneralizedWorkFunctions> query = HibernateSessionFactoryUtil.getSessionFactory().openSession()
-                .createQuery("from GeneralizedWorkFunctions s where s.nameGwf=:nameGwf", GeneralizedWorkFunctions.class);
+        Query<GeneralizedWorkFunction> query = HibernateSessionFactoryUtil.getSessionFactory().openSession()
+                .createQuery("from GeneralizedWorkFunctions s where s.nameGwf=:nameGwf", GeneralizedWorkFunction.class);
         query.setParameter("name", nameGwf);
         return query.uniqueResult();
     }
 
 
-    public void save(GeneralizedWorkFunctions generalizedWorkFunctions) {
+    public void save(GeneralizedWorkFunction generalizedWorkFunction) {
         Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
         Transaction tx1 = session.beginTransaction();
-        session.saveOrUpdate(generalizedWorkFunctions);
+        session.saveOrUpdate(generalizedWorkFunction);
         tx1.commit();
         session.close();
     }
 
-    public void delete(GeneralizedWorkFunctions generalizedWorkFunctions) {
+    public void delete(GeneralizedWorkFunction generalizedWorkFunction) {
         Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
         Transaction tx1 = session.beginTransaction();
-        session.delete(generalizedWorkFunctions);
+        session.delete(generalizedWorkFunction);
         tx1.commit();
         session.close();
     }

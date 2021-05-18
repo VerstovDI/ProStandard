@@ -7,8 +7,8 @@ import java.io.IOException;
 import java.nio.file.Paths;
 
 import static java.lang.Thread.sleep;
-import static ru.selenide.FileUtills.getLastFilePath;
-import static ru.selenide.SelenideUtills.*;
+import static ru.selenide.Utills.FileUtills.getLastFilePath;
+import static ru.selenide.Utills.SelenideUtills.*;
 
 
 public class App {

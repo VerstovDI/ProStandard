@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-import static ru.selenide.FileUtills.getLastFilePath;
+import static ru.selenide.Utills.FileUtills.getLastFilePath;
 import static ru.selenide.ParseXML.parse;
 
 public class AppParse {

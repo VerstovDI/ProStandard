@@ -6,7 +6,7 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "possible_job_titles", schema = "proff")
-public class PossibleJobTitles {
+public class PossibleJobTitle {
     @Id
     @Column(name = "id_possible_job_title", columnDefinition = "serial")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,17 +18,16 @@ public class PossibleJobTitles {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_gwf", nullable = false)
-    private GeneralizedWorkFunctions generalizedWorkFunctions;
+    private GeneralizedWorkFunction generalizedWorkFunction;
 
 
-    public PossibleJobTitles() {
+    public PossibleJobTitle() {
     }
 
 
-    public PossibleJobTitles(Long id, String title, GeneralizedWorkFunctions generalizedWorkFunctions) {
-        this.id = id;
+    public PossibleJobTitle(String title, GeneralizedWorkFunction generalizedWorkFunction) {
         this.title = title;
-        this.generalizedWorkFunctions = generalizedWorkFunctions;
+        this.generalizedWorkFunction = generalizedWorkFunction;
     }
 
     public Long getId() {
@@ -47,25 +46,25 @@ public class PossibleJobTitles {
         this.title = title;
     }
 
-    public GeneralizedWorkFunctions getGeneralizedWorkFunctions() {
-        return generalizedWorkFunctions;
+    public GeneralizedWorkFunction getGeneralizedWorkFunctions() {
+        return generalizedWorkFunction;
     }
 
-    public void setGeneralizedWorkFunctions(GeneralizedWorkFunctions generalizedWorkFunctions) {
-        this.generalizedWorkFunctions = generalizedWorkFunctions;
+    public void setGeneralizedWorkFunctions(GeneralizedWorkFunction generalizedWorkFunction) {
+        this.generalizedWorkFunction = generalizedWorkFunction;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof PossibleJobTitles)) return false;
-        PossibleJobTitles that = (PossibleJobTitles) o;
-        return Objects.equals(id, that.id) && Objects.equals(title, that.title) && Objects.equals(generalizedWorkFunctions, that.generalizedWorkFunctions);
+        if (!(o instanceof PossibleJobTitle)) return false;
+        PossibleJobTitle that = (PossibleJobTitle) o;
+        return Objects.equals(id, that.id) && Objects.equals(title, that.title) && Objects.equals(generalizedWorkFunction, that.generalizedWorkFunction);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, title, generalizedWorkFunctions);
+        return Objects.hash(id, title, generalizedWorkFunction);
     }
 
     @Override
@@ -73,7 +72,7 @@ public class PossibleJobTitles {
         return "PossibleJobTitles{" +
                 "id=" + id +
                 ", title='" + title + '\'' +
-                ", generalizedWorkFunctions=" + generalizedWorkFunctions +
+                ", generalizedWorkFunctions=" + generalizedWorkFunction +
                 '}';
     }
 }

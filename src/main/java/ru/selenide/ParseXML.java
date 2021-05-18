@@ -4,14 +4,8 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
-import ru.selenide.DB.DAO.EmploymentGroupOkvedDAO;
-import ru.selenide.DB.DAO.EmploymentGroupOkzDAO;
-import ru.selenide.DB.DAO.ResourceDAO;
-import ru.selenide.DB.DAO.StandardsDAO;
-import ru.selenide.DB.domain.EmploymentGroupOkved;
-import ru.selenide.DB.domain.EmploymentGroupOkz;
-import ru.selenide.DB.domain.Resource;
-import ru.selenide.DB.domain.Standard;
+import ru.selenide.DB.DAO.*;
+import ru.selenide.DB.domain.*;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -34,9 +28,34 @@ public class ParseXML {
             StandardsDAO standardsDAO = new StandardsDAO();
             Standard standard = getStandard(document, resource);
             standardsDAO.save(standard);
+            /*
             saveEmploymentGroupOKZ(document, standard);
-
             saveEmploymentGroupOkved(document, standard);
+           */
+            GeneralizedWorkFunctionsDAO generalizedWorkFunctionsDAO = new GeneralizedWorkFunctionsDAO();
+            PossibleJobTitlesDAO possibleJobTitlesDAO = new PossibleJobTitlesDAO();
+            EducationalRequirementsDAO educationalRequirementsDAO = new EducationalRequirementsDAO();
+
+            NodeList generalizedWorkFunctions = document.getDocumentElement().getElementsByTagName("GeneralizedWorkFunction");
+            //перебор обобщенных трудовых функций
+            for (int i = 0; i < generalizedWorkFunctions.getLength(); i++) {
+                NodeList childNodes = generalizedWorkFunctions.item(i).getChildNodes();
+                GeneralizedWorkFunction generalizedWorkFunction = new GeneralizedWorkFunction(childNodes.item(0).getTextContent(),
+                        childNodes.item(1).getTextContent(), Integer.parseInt(childNodes.item(2).getTextContent())
+                        , standard);
+                generalizedWorkFunctionsDAO.save(generalizedWorkFunction);
+                NodeList possibleJobTitles = childNodes.item(3).getChildNodes();
+                for (int j = 0; j < possibleJobTitles.getLength(); j++) {
+                    PossibleJobTitle possibleJobTitle = new PossibleJobTitle(possibleJobTitles.item(j).getTextContent(), generalizedWorkFunction);
+                    possibleJobTitlesDAO.save(possibleJobTitle);
+                }
+                NodeList educationalRequirements = childNodes.item(4).getChildNodes();
+                for (int j = 0; j < educationalRequirements.getLength(); j++) {
+                    EducationalRequirement educationalRequirement = new EducationalRequirement(educationalRequirements.item(j).getTextContent(), generalizedWorkFunction);
+                    educationalRequirementsDAO.save(educationalRequirement);
+                }
+            }
+
 
         } catch (ParserConfigurationException | SAXException | IOException e) {
             e.printStackTrace();

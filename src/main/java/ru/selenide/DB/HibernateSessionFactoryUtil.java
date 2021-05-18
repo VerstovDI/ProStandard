@@ -19,12 +19,12 @@ public class HibernateSessionFactoryUtil {
                 configuration.addAnnotatedClass(Resource.class);
                 configuration.addAnnotatedClass(EmploymentGroupOkz.class);
                 configuration.addAnnotatedClass(EmploymentGroupOkved.class);
-                configuration.addAnnotatedClass(GeneralizedWorkFunctions.class);
-                configuration.addAnnotatedClass(PossibleJobTitles.class);
-                configuration.addAnnotatedClass(EducationalRequirements.class);
-                configuration.addAnnotatedClass(ParticularWorkFunctions.class);
-                configuration.addAnnotatedClass(LaborActions.class);
-                configuration.addAnnotatedClass(RequiredSkills.class);
+                configuration.addAnnotatedClass(GeneralizedWorkFunction.class);
+                configuration.addAnnotatedClass(PossibleJobTitle.class);
+                configuration.addAnnotatedClass(EducationalRequirement.class);
+                configuration.addAnnotatedClass(ParticularWorkFunction.class);
+                configuration.addAnnotatedClass(LaborAction.class);
+                configuration.addAnnotatedClass(RequiredSkill.class);
                 configuration.addAnnotatedClass(NecessaryKnowledge.class);
 
 

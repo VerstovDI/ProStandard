@@ -1,4 +1,4 @@
-package ru.selenide;
+package ru.selenide.Utills;
 
 import java.io.IOException;
 import java.nio.file.Files;

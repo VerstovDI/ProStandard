@@ -4,34 +4,34 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 import ru.selenide.DB.HibernateSessionFactoryUtil;
-import ru.selenide.DB.domain.EducationalRequirements;
+import ru.selenide.DB.domain.EducationalRequirement;
 
 public class EducationalRequirementsDAO {
-    public EducationalRequirements findById(Long id) {
-        return HibernateSessionFactoryUtil.getSessionFactory().openSession().get(EducationalRequirements.class, id);
+    public EducationalRequirement findById(Long id) {
+        return HibernateSessionFactoryUtil.getSessionFactory().openSession().get(EducationalRequirement.class, id);
     }
 
-    public EducationalRequirements findByRequirement(String requirement) {
+    public EducationalRequirement findByRequirement(String requirement) {
 
-        Query<EducationalRequirements> query = HibernateSessionFactoryUtil.getSessionFactory().openSession()
-                .createQuery("from EducationalRequirements s where s.requirement=:requirement", EducationalRequirements.class);
+        Query<EducationalRequirement> query = HibernateSessionFactoryUtil.getSessionFactory().openSession()
+                .createQuery("from EducationalRequirements s where s.requirement=:requirement", EducationalRequirement.class);
         query.setParameter("requirement", requirement);
         return query.uniqueResult();
     }
 
 
-    public void save(EducationalRequirements EducationalRequirements) {
+    public void save(EducationalRequirement EducationalRequirement) {
         Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
         Transaction tx1 = session.beginTransaction();
-        session.saveOrUpdate(EducationalRequirements);
+        session.saveOrUpdate(EducationalRequirement);
         tx1.commit();
         session.close();
     }
 
-    public void delete(EducationalRequirements EducationalRequirements) {
+    public void delete(EducationalRequirement EducationalRequirement) {
         Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
         Transaction tx1 = session.beginTransaction();
-        session.delete(EducationalRequirements);
+        session.delete(EducationalRequirement);
         tx1.commit();
         session.close();
     }

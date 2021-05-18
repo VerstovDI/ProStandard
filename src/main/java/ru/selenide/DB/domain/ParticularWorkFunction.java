@@ -5,7 +5,7 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "particular_work_functions", schema = "proff")
-public class ParticularWorkFunctions {
+public class ParticularWorkFunction {
     @Id
     @Column(name = " id_particular_work_function", columnDefinition = "serial")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,17 +22,17 @@ public class ParticularWorkFunctions {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_gwf", nullable = false)
-    private GeneralizedWorkFunctions generalizedWorkFunctions;
+    private GeneralizedWorkFunction generalizedWorkFunction;
 
-    public ParticularWorkFunctions() {
+    public ParticularWorkFunction() {
     }
 
-    public ParticularWorkFunctions(Long id, String сodeWf, String nameWf, Integer subQualification, GeneralizedWorkFunctions generalizedWorkFunctions) {
+    public ParticularWorkFunction(Long id, String сodeWf, String nameWf, Integer subQualification, GeneralizedWorkFunction generalizedWorkFunction) {
         this.id = id;
         this.сodeWf = сodeWf;
         this.nameWf = nameWf;
         this.subQualification = subQualification;
-        this.generalizedWorkFunctions = generalizedWorkFunctions;
+        this.generalizedWorkFunction = generalizedWorkFunction;
     }
 
     public Long getId() {
@@ -67,25 +67,25 @@ public class ParticularWorkFunctions {
         this.subQualification = subQualification;
     }
 
-    public GeneralizedWorkFunctions getGeneralizedWorkFunctions() {
-        return generalizedWorkFunctions;
+    public GeneralizedWorkFunction getGeneralizedWorkFunctions() {
+        return generalizedWorkFunction;
     }
 
-    public void setGeneralizedWorkFunctions(GeneralizedWorkFunctions generalizedWorkFunctions) {
-        this.generalizedWorkFunctions = generalizedWorkFunctions;
+    public void setGeneralizedWorkFunctions(GeneralizedWorkFunction generalizedWorkFunction) {
+        this.generalizedWorkFunction = generalizedWorkFunction;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof ParticularWorkFunctions)) return false;
-        ParticularWorkFunctions that = (ParticularWorkFunctions) o;
-        return Objects.equals(id, that.id) && Objects.equals(сodeWf, that.сodeWf) && Objects.equals(nameWf, that.nameWf) && Objects.equals(subQualification, that.subQualification) && Objects.equals(generalizedWorkFunctions, that.generalizedWorkFunctions);
+        if (!(o instanceof ParticularWorkFunction)) return false;
+        ParticularWorkFunction that = (ParticularWorkFunction) o;
+        return Objects.equals(id, that.id) && Objects.equals(сodeWf, that.сodeWf) && Objects.equals(nameWf, that.nameWf) && Objects.equals(subQualification, that.subQualification) && Objects.equals(generalizedWorkFunction, that.generalizedWorkFunction);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, сodeWf, nameWf, subQualification, generalizedWorkFunctions);
+        return Objects.hash(id, сodeWf, nameWf, subQualification, generalizedWorkFunction);
     }
 
     @Override
@@ -95,7 +95,7 @@ public class ParticularWorkFunctions {
                 ", сodeWf='" + сodeWf + '\'' +
                 ", nameWf='" + nameWf + '\'' +
                 ", subQualification=" + subQualification +
-                ", generalizedWorkFunctions=" + generalizedWorkFunctions +
+                ", generalizedWorkFunctions=" + generalizedWorkFunction +
                 '}';
     }
 }

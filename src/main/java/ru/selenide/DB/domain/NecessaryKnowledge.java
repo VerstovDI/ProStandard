@@ -16,15 +16,15 @@ public class NecessaryKnowledge {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_particular_work_function", nullable = false)
-    private ParticularWorkFunctions particularWorkFunctions;
+    private ParticularWorkFunction particularWorkFunction;
 
     public NecessaryKnowledge() {
     }
 
-    public NecessaryKnowledge(Long id, String description, ParticularWorkFunctions particularWorkFunctions) {
+    public NecessaryKnowledge(Long id, String description, ParticularWorkFunction particularWorkFunction) {
         this.id = id;
         this.description = description;
-        this.particularWorkFunctions = particularWorkFunctions;
+        this.particularWorkFunction = particularWorkFunction;
     }
 
     public Long getId() {
@@ -43,12 +43,12 @@ public class NecessaryKnowledge {
         this.description = description;
     }
 
-    public ParticularWorkFunctions getParticularWorkFunctions() {
-        return particularWorkFunctions;
+    public ParticularWorkFunction getParticularWorkFunctions() {
+        return particularWorkFunction;
     }
 
-    public void setParticularWorkFunctions(ParticularWorkFunctions particularWorkFunctions) {
-        this.particularWorkFunctions = particularWorkFunctions;
+    public void setParticularWorkFunctions(ParticularWorkFunction particularWorkFunction) {
+        this.particularWorkFunction = particularWorkFunction;
     }
 
     @Override
@@ -56,12 +56,12 @@ public class NecessaryKnowledge {
         if (this == o) return true;
         if (!(o instanceof NecessaryKnowledge)) return false;
         NecessaryKnowledge that = (NecessaryKnowledge) o;
-        return Objects.equals(id, that.id) && Objects.equals(description, that.description) && Objects.equals(particularWorkFunctions, that.particularWorkFunctions);
+        return Objects.equals(id, that.id) && Objects.equals(description, that.description) && Objects.equals(particularWorkFunction, that.particularWorkFunction);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, description, particularWorkFunctions);
+        return Objects.hash(id, description, particularWorkFunction);
     }
 
     @Override
@@ -69,7 +69,7 @@ public class NecessaryKnowledge {
         return "LaborActions{" +
                 "id=" + id +
                 ", description='" + description + '\'' +
-                ", particularWorkFunctions=" + particularWorkFunctions +
+                ", particularWorkFunctions=" + particularWorkFunction +
                 '}';
     }
 }

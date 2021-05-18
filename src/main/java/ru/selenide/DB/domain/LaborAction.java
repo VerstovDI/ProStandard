@@ -5,7 +5,7 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "labor_actions", schema = "proff")
-public class LaborActions {
+public class LaborAction {
     @Id
     @Column(name = "id_labor_action", columnDefinition = "serial")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -16,15 +16,15 @@ public class LaborActions {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_particular_work_function", nullable = false)
-    private ParticularWorkFunctions particularWorkFunctions;
+    private ParticularWorkFunction particularWorkFunction;
 
-    public LaborActions() {
+    public LaborAction() {
     }
 
-    public LaborActions(Long id, String description, ParticularWorkFunctions particularWorkFunctions) {
+    public LaborAction(Long id, String description, ParticularWorkFunction particularWorkFunction) {
         this.id = id;
         this.description = description;
-        this.particularWorkFunctions = particularWorkFunctions;
+        this.particularWorkFunction = particularWorkFunction;
     }
 
     public Long getId() {
@@ -43,25 +43,25 @@ public class LaborActions {
         this.description = description;
     }
 
-    public ParticularWorkFunctions getParticularWorkFunctions() {
-        return particularWorkFunctions;
+    public ParticularWorkFunction getParticularWorkFunctions() {
+        return particularWorkFunction;
     }
 
-    public void setParticularWorkFunctions(ParticularWorkFunctions particularWorkFunctions) {
-        this.particularWorkFunctions = particularWorkFunctions;
+    public void setParticularWorkFunctions(ParticularWorkFunction particularWorkFunction) {
+        this.particularWorkFunction = particularWorkFunction;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof LaborActions)) return false;
-        LaborActions that = (LaborActions) o;
-        return Objects.equals(id, that.id) && Objects.equals(description, that.description) && Objects.equals(particularWorkFunctions, that.particularWorkFunctions);
+        if (!(o instanceof LaborAction)) return false;
+        LaborAction that = (LaborAction) o;
+        return Objects.equals(id, that.id) && Objects.equals(description, that.description) && Objects.equals(particularWorkFunction, that.particularWorkFunction);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, description, particularWorkFunctions);
+        return Objects.hash(id, description, particularWorkFunction);
     }
 
     @Override
@@ -69,7 +69,7 @@ public class LaborActions {
         return "LaborActions{" +
                 "id=" + id +
                 ", description='" + description + '\'' +
-                ", particularWorkFunctions=" + particularWorkFunctions +
+                ", particularWorkFunctions=" + particularWorkFunction +
                 '}';
     }
 }

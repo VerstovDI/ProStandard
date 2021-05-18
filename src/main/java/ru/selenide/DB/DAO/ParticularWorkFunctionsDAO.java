@@ -4,40 +4,40 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 import ru.selenide.DB.HibernateSessionFactoryUtil;
-import ru.selenide.DB.domain.ParticularWorkFunctions;
+import ru.selenide.DB.domain.ParticularWorkFunction;
 
 public class ParticularWorkFunctionsDAO {
-    public ParticularWorkFunctions findById(Long id) {
-        return HibernateSessionFactoryUtil.getSessionFactory().openSession().get(ParticularWorkFunctions.class, id);
+    public ParticularWorkFunction findById(Long id) {
+        return HibernateSessionFactoryUtil.getSessionFactory().openSession().get(ParticularWorkFunction.class, id);
     }
 
-    public ParticularWorkFunctions findByName(String name) {
-        Query<ParticularWorkFunctions> query = HibernateSessionFactoryUtil.getSessionFactory().openSession()
-                .createQuery("from ParticularWorkFunctions s where s.nameWf=:name", ParticularWorkFunctions.class);
+    public ParticularWorkFunction findByName(String name) {
+        Query<ParticularWorkFunction> query = HibernateSessionFactoryUtil.getSessionFactory().openSession()
+                .createQuery("from ParticularWorkFunctions s where s.nameWf=:name", ParticularWorkFunction.class);
         query.setParameter("name", name);
         return query.uniqueResult();
     }
 
-    public ParticularWorkFunctions findByCode(String code) {
-        Query<ParticularWorkFunctions> query = HibernateSessionFactoryUtil.getSessionFactory().openSession()
-                .createQuery("from ParticularWorkFunctions s where s.codeWf=:code", ParticularWorkFunctions.class);
+    public ParticularWorkFunction findByCode(String code) {
+        Query<ParticularWorkFunction> query = HibernateSessionFactoryUtil.getSessionFactory().openSession()
+                .createQuery("from ParticularWorkFunctions s where s.codeWf=:code", ParticularWorkFunction.class);
         query.setParameter("code", code);
         return query.uniqueResult();
     }
 
 
-    public void save(ParticularWorkFunctions ParticularWorkFunctions) {
+    public void save(ParticularWorkFunction ParticularWorkFunction) {
         Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
         Transaction tx1 = session.beginTransaction();
-        session.saveOrUpdate(ParticularWorkFunctions);
+        session.saveOrUpdate(ParticularWorkFunction);
         tx1.commit();
         session.close();
     }
 
-    public void delete(ParticularWorkFunctions ParticularWorkFunctions) {
+    public void delete(ParticularWorkFunction ParticularWorkFunction) {
         Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
         Transaction tx1 = session.beginTransaction();
-        session.delete(ParticularWorkFunctions);
+        session.delete(ParticularWorkFunction);
         tx1.commit();
         session.close();
     }

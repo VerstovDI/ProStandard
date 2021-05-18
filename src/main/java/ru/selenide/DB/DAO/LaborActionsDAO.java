@@ -3,25 +3,25 @@ package ru.selenide.DB.DAO;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import ru.selenide.DB.HibernateSessionFactoryUtil;
-import ru.selenide.DB.domain.LaborActions;
+import ru.selenide.DB.domain.LaborAction;
 
 public class LaborActionsDAO {
-    public LaborActions findById(Long id) {
-        return HibernateSessionFactoryUtil.getSessionFactory().openSession().get(LaborActions.class, id);
+    public LaborAction findById(Long id) {
+        return HibernateSessionFactoryUtil.getSessionFactory().openSession().get(LaborAction.class, id);
     }
 
-    public void save(LaborActions LaborActions) {
+    public void save(LaborAction LaborAction) {
         Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
         Transaction tx1 = session.beginTransaction();
-        session.saveOrUpdate(LaborActions);
+        session.saveOrUpdate(LaborAction);
         tx1.commit();
         session.close();
     }
 
-    public void delete(LaborActions LaborActions) {
+    public void delete(LaborAction LaborAction) {
         Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
         Transaction tx1 = session.beginTransaction();
-        session.delete(LaborActions);
+        session.delete(LaborAction);
         tx1.commit();
         session.close();
     }

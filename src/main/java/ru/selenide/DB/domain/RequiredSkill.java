@@ -5,7 +5,7 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "required_skills", schema = "proff")
-public class RequiredSkills {
+public class RequiredSkill {
     @Id
     @Column(name = "id_required_skill", columnDefinition = "serial")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -16,15 +16,15 @@ public class RequiredSkills {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_particular_work_function", nullable = false)
-    private ParticularWorkFunctions particularWorkFunctions;
+    private ParticularWorkFunction particularWorkFunction;
 
-    public RequiredSkills() {
+    public RequiredSkill() {
     }
 
-    public RequiredSkills(Long id, String description, ParticularWorkFunctions particularWorkFunctions) {
+    public RequiredSkill(Long id, String description, ParticularWorkFunction particularWorkFunction) {
         this.id = id;
         this.description = description;
-        this.particularWorkFunctions = particularWorkFunctions;
+        this.particularWorkFunction = particularWorkFunction;
     }
 
     public Long getId() {
@@ -43,25 +43,25 @@ public class RequiredSkills {
         this.description = description;
     }
 
-    public ParticularWorkFunctions getParticularWorkFunctions() {
-        return particularWorkFunctions;
+    public ParticularWorkFunction getParticularWorkFunctions() {
+        return particularWorkFunction;
     }
 
-    public void setParticularWorkFunctions(ParticularWorkFunctions particularWorkFunctions) {
-        this.particularWorkFunctions = particularWorkFunctions;
+    public void setParticularWorkFunctions(ParticularWorkFunction particularWorkFunction) {
+        this.particularWorkFunction = particularWorkFunction;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof RequiredSkills)) return false;
-        RequiredSkills that = (RequiredSkills) o;
-        return Objects.equals(id, that.id) && Objects.equals(description, that.description) && Objects.equals(particularWorkFunctions, that.particularWorkFunctions);
+        if (!(o instanceof RequiredSkill)) return false;
+        RequiredSkill that = (RequiredSkill) o;
+        return Objects.equals(id, that.id) && Objects.equals(description, that.description) && Objects.equals(particularWorkFunction, that.particularWorkFunction);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, description, particularWorkFunctions);
+        return Objects.hash(id, description, particularWorkFunction);
     }
 
     @Override
@@ -69,7 +69,7 @@ public class RequiredSkills {
         return "LaborActions{" +
                 "id=" + id +
                 ", description='" + description + '\'' +
-                ", particularWorkFunctions=" + particularWorkFunctions +
+                ", particularWorkFunctions=" + particularWorkFunction +
                 '}';
     }
 }

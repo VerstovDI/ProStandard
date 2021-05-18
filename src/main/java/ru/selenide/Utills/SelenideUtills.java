@@ -1,4 +1,4 @@
-package ru.selenide;
+package ru.selenide.Utills;
 
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Configuration;
