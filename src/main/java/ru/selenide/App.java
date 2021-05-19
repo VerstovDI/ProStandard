@@ -1,30 +1,40 @@
 package ru.selenide;
 
-import com.codeborne.selenide.WebDriverRunner;
-
-import java.io.File;
 import java.io.IOException;
 import java.nio.file.Paths;
 
-import static java.lang.Thread.sleep;
-import static ru.selenide.Utills.FileUtills.getLastFilePath;
-import static ru.selenide.Utills.SelenideUtills.*;
+import static ru.selenide.GetAndParseProffStandard.getAndParseStandard;
 
 
 public class App {
 
 
     public static void main(String[] args) throws IOException, InterruptedException {
-        String number = "06.003";
-        String pathToSave = Paths.get("resources").toAbsolutePath().toString()
-                + File.separator + number;
-        setUp(pathToSave);
-        openProfStandardsFilter();
-        findProfStandardByNumber(number);
-        downloadOpenedProfStandard();
-        sleep(5000);
-        WebDriverRunner.getWebDriver().quit();
-        System.out.println(getLastFilePath(pathToSave).get());
-        //showAllProfStandardsByProfAreaFromRosmintrud("06");
+        String number1 = "06.021";
+        String number2 = "06.022";
+
+        String number4 = "06.024";
+        String number5 = "06.025";
+        String number6 = "06.026";
+        String number7 = "06.027";
+        String number8 = "06.028";
+        String number9 = "06.029";
+        String number10 = "06.010";
+        String number11 = "06.011";
+        String dirToSave = Paths.get("resources").toAbsolutePath().toString();
+        getAndParseStandard(number1, dirToSave);
+        getAndParseStandard(number2, dirToSave);
+        getAndParseStandard(number4, dirToSave);
+        getAndParseStandard(number5, dirToSave);
+        getAndParseStandard(number6, dirToSave);
+        getAndParseStandard(number7, dirToSave);
+
+        getAndParseStandard(number8, dirToSave);
+        getAndParseStandard(number9, dirToSave);
+        getAndParseStandard(number10, dirToSave);
+        getAndParseStandard(number11, dirToSave);
+
     }
+
+
 }

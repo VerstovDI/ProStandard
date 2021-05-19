@@ -1,4 +1,4 @@
-package ru.selenide;
+package ru.selenide.DB;
 
 import ru.selenide.DB.DAO.ResourceDAO;
 import ru.selenide.DB.DAO.StandardsDAO;

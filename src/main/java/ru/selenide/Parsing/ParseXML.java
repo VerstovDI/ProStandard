@@ -1,4 +1,4 @@
-package ru.selenide;
+package ru.selenide.Parsing;
 
 import org.w3c.dom.Document;
 
@@ -16,7 +16,7 @@ import static ru.selenide.Utills.ParseXMLUtills.*;
 
 
 public class ParseXML {
-    public static void parse(Path path) {
+    public static void parse(String path) {
         try {
             ResourceDAO resourceDAO = new ResourceDAO();
             StandardsDAO standardsDAO = new StandardsDAO();
@@ -31,7 +31,7 @@ public class ParseXML {
             EmploymentGroupOkzDAO employmentGroupOkzDAO = new EmploymentGroupOkzDAO();
 
             DocumentBuilder documentBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
-            Document document = documentBuilder.parse(path.toString());
+            Document document = documentBuilder.parse(path);
 
             Resource resource = resourceDAO.findById(1);
             Standard standard = getStandard(document, resource);

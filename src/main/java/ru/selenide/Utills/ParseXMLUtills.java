@@ -19,9 +19,13 @@ public class ParseXMLUtills {
         for (int i = 0; i < generalizedWorkFunctions.getLength(); i++) {
             NodeList generalizedWorkFunctionChildNodes = generalizedWorkFunctions.item(i).getChildNodes();
             if (generalizedWorkFunctionChildNodes != null) {
+                String s1 = generalizedWorkFunctionChildNodes.item(2).getTextContent().replaceAll("\\.", "");
+                Integer levelOfQualification=-1;
+                if(!s1.isBlank()){
+                    levelOfQualification=Integer.parseInt(s1);
+                }
                 GeneralizedWorkFunction generalizedWorkFunction = new GeneralizedWorkFunction(generalizedWorkFunctionChildNodes.item(0).getTextContent(),
-                        generalizedWorkFunctionChildNodes.item(1).getTextContent(), Integer.parseInt(generalizedWorkFunctionChildNodes.item(2).getTextContent())
-                        , standard);
+                        generalizedWorkFunctionChildNodes.item(1).getTextContent(), levelOfQualification, standard);
                 generalizedWorkFunctionsDAO.save(generalizedWorkFunction);
                 getAndSavePossibleJobTitles(possibleJobTitlesDAO, generalizedWorkFunctionChildNodes, generalizedWorkFunction);
                 getAndSaveEducationalRequirements(educationalRequirementsDAO, generalizedWorkFunctionChildNodes, generalizedWorkFunction);
@@ -36,10 +40,14 @@ public class ParseXMLUtills {
             for (int j = 0; j < particularWorkFunctions.getLength(); j++) {
                 NodeList particularWorkFunctionNodes = particularWorkFunctions.item(j).getChildNodes();
                 if (particularWorkFunctionNodes != null) {
+                    String subQualificationStr = particularWorkFunctionNodes.item(2).getTextContent();
+                    Integer subQualification=-1;
+                    if(!subQualificationStr.isBlank()){
+                        subQualification=Integer.parseInt(subQualificationStr);
+                    }
                     ParticularWorkFunction particularWorkFunction = new ParticularWorkFunction(particularWorkFunctionNodes.item(0).getTextContent(),
                             particularWorkFunctionNodes.item(1).getTextContent(),
-                            Integer.parseInt(particularWorkFunctionNodes.item(2).getTextContent())
-                            , generalizedWorkFunction);
+                            subQualification, generalizedWorkFunction);
                     particularWorkFunctionsDAO.save(particularWorkFunction);
                     getAndSaveLaborActions(laborActionsDAO, particularWorkFunctionNodes, particularWorkFunction);
                     getAndSaveRequiredSkills(requiredSkillsDAO, particularWorkFunctionNodes, particularWorkFunction);
@@ -119,10 +127,15 @@ public class ParseXMLUtills {
 
             NodeList childNodes = employmentGroupListOKZ.getChildNodes();
             for (int i = 0; i < childNodes.getLength(); i++) {
-                EmploymentGroupOkz employmentGroupOkz = new EmploymentGroupOkz(Integer.valueOf(childNodes.item(i).getChildNodes()
-                        .item(0).getTextContent().replaceAll("\\.", ""))
-                        , childNodes.item(i).getChildNodes().item(1).getTextContent(), standard);
-                employmentGroupOkzDAO.save(employmentGroupOkz);
+                String codeOKZ = childNodes.item(i).getChildNodes()
+                        .item(0).getTextContent().replaceAll("\\.", "");
+
+               if(!codeOKZ.isBlank()){
+                   EmploymentGroupOkz employmentGroupOkz = new EmploymentGroupOkz(Integer.parseInt(codeOKZ)
+                           , childNodes.item(i).getChildNodes().item(1).getTextContent(), standard);
+                   employmentGroupOkzDAO.save(employmentGroupOkz);
+               }
+
             }
         } else if (employmentGroupListOKZ != null && employmentGroupListOKZ.getNodeName().equals("ListOKVED")) {
 
@@ -138,8 +151,13 @@ public class ParseXMLUtills {
     public static Standard getStandard(Document document, Resource resource) {
         String nameProfessionalStandart = document.getDocumentElement().getElementsByTagName("NameProfessionalStandart")
                 .item(0).getTextContent();
-        Integer registrationNumber = Integer.valueOf(document.getDocumentElement().getElementsByTagName("RegistrationNumber")
-                .item(0).getTextContent().replaceAll("\\.", ""));
+        String registrationNumberString = document.getDocumentElement().getElementsByTagName("RegistrationNumber")
+                .item(0).getTextContent().replaceAll("\\.", "");
+        Integer registrationNumber =-1;
+        if(!registrationNumberString.isBlank()) {
+            registrationNumber = Integer.valueOf(registrationNumberString);
+        }
+
         String orderNumber = document.getDocumentElement().getElementsByTagName("OrderNumber")
                 .item(0).getTextContent();
         Date dateOfApproval = Date.valueOf(LocalDate.parse(document.getDocumentElement().getElementsByTagName("DateOfApproval")
