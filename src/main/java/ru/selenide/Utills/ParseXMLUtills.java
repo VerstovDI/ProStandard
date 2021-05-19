@@ -91,8 +91,10 @@ public class ParseXMLUtills {
         NodeList educationalRequirements = generalizedWorkFunctionChildNodes.item(4).getChildNodes();
         if (educationalRequirements != null) {
             for (int j = 0; j < educationalRequirements.getLength(); j++) {
-                EducationalRequirement educationalRequirement = new EducationalRequirement(educationalRequirements.item(j).getTextContent(), generalizedWorkFunction);
-                educationalRequirementsDAO.save(educationalRequirement);
+                if(!educationalRequirements.item(j).getTextContent().equalsIgnoreCase("или")) {
+                    EducationalRequirement educationalRequirement = new EducationalRequirement(educationalRequirements.item(j).getTextContent(), generalizedWorkFunction);
+                    educationalRequirementsDAO.save(educationalRequirement);
+                }
             }
         }
     }
