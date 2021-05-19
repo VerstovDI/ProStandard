@@ -27,8 +27,7 @@ public class ParticularWorkFunction {
     public ParticularWorkFunction() {
     }
 
-    public ParticularWorkFunction(Long id, String сodeWf, String nameWf, Integer subQualification, GeneralizedWorkFunction generalizedWorkFunction) {
-        this.id = id;
+    public ParticularWorkFunction( String сodeWf, String nameWf, Integer subQualification, GeneralizedWorkFunction generalizedWorkFunction) {
         this.сodeWf = сodeWf;
         this.nameWf = nameWf;
         this.subQualification = subQualification;

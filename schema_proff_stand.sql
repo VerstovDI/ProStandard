@@ -9,12 +9,12 @@ url varchar(500)  NOT NULL
 );
 
 CREATE TABLE proff.proff_standarts ( -- профф стандарт
-	code_kind_professional_activity varchar(6) PRIMARY KEY,
+	code_kind_professional_activity varchar(10) PRIMARY KEY,
 	date_of_approval date NOT NULL,
 	date_of_downloading date NOT NULL, --дата загрузки
-	name_professional_standart varchar(100) NOT NULL,
+	name_professional_standart varchar(500) NOT NULL,
 	registration_number integer NOT NULL,
-	order_number varchar(10) NOT NULL,
+	order_number varchar(20) NOT NULL,
 	kind_professional_activity varchar NOT NULL,
 	purpose_kind_professional_activity varchar NOT NULL,
 	id_resource BIGINT NOT NULL,
@@ -73,8 +73,8 @@ CREATE TABLE proff.educational_requirements --требования к уровн
 CREATE TABLE proff.particular_work_functions  --трудовые функции
 (
   id_particular_work_function serial  PRIMARY KEY,
-  сode_wf varchar(5) NOT NULL,
-  name_wf varchar(100) NOT NULL,
+  сode_wf varchar(100) NOT NULL,
+  name_wf varchar(1000) NOT NULL,
   sub_qualification integer NOT NULL,
   id_gwf BIGINT NOT NULL,
   FOREIGN KEY(id_gwf)  REFERENCES proff.generalized_work_functions (id_gwf)  ON DELETE RESTRICT ON UPDATE CASCADE

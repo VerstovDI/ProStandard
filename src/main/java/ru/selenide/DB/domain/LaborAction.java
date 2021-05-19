@@ -21,8 +21,7 @@ public class LaborAction {
     public LaborAction() {
     }
 
-    public LaborAction(Long id, String description, ParticularWorkFunction particularWorkFunction) {
-        this.id = id;
+    public LaborAction( String description, ParticularWorkFunction particularWorkFunction) {
         this.description = description;
         this.particularWorkFunction = particularWorkFunction;
     }
