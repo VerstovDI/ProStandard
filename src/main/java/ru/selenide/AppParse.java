@@ -10,13 +10,16 @@ import static ru.selenide.ParseXML.parse;
 
 public class AppParse {
     public static void main(String[] args) throws IOException {
-
-        String number = "06.003";
-        String pathToSave = Paths.get("resources").toAbsolutePath().toString()
-                + File.separator + number;
-        Path path = getLastFilePath(pathToSave).get();
-        //parse(Path.of("c:\\Users\\VAR\\Downloads\\ProfessionalStandarts_1055.xml"));
-        parse(path);
+        String number1 = "06.003";
+        String number2 = "06.040";
+        String pathToSave1 = Paths.get("resources").toAbsolutePath().toString()
+                + File.separator + number1;
+        String pathToSave2 = Paths.get("resources").toAbsolutePath().toString()
+                + File.separator + number2;
+        Path path1 = getLastFilePath(pathToSave1).get();
+        parse(path1);
+        Path path2 = getLastFilePath(pathToSave2).get();
+        parse(path2);
 
     }
 }
