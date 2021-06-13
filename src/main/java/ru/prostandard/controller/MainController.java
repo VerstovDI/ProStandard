@@ -36,15 +36,19 @@ public class MainController {
     @Autowired
     private ParsingService parsingService;
 
-    // Главная страница приложения
+/*    // Главная страница приложения
     @GetMapping
     public String getMainPage() {
         return "index";
-    }
+    }*/
 
-    // Получить JSON со всеми подобранными профстандартами
-    @GetMapping("/standards")
-    public ResponseEntity<Object> getStandards(@RequestBody DictionaryDataDTO dictionaryDataDTO) {
+    /**
+     * Отправить запрос на сервер для получения подобранного списка стандартов
+     * @param dictionaryDataDTO DTO для передачи всех необходимых для подбора параметров
+     * @return Статус запроса
+     */
+    @PostMapping("/send-request")
+    public ResponseEntity<Object> sendRequest(@RequestBody DictionaryDataDTO dictionaryDataDTO) {
         try {
             dictionaryService.createRequest(dictionaryDataDTO);
             return new ResponseEntity<>(HttpStatus.OK);
@@ -54,10 +58,29 @@ public class MainController {
         }
     }
 
-    // Получить справку о приложении
+    /**
+     * Получение списка всех подобранных стандартов
+     * @return
+     */
+    @GetMapping("/standards")
+    public ResponseEntity<Object> getStandards() {
+        try {
+            // TODO: Что вызываем? Что возвращает?
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (Exception ex) {
+            logger.error(ex.getMessage(), ex);
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    /**
+     * Получение справки о приложении
+     * @return Статус запроса
+     */
     @GetMapping("/info")
     public ResponseEntity<Object> getInfo() {
         try {
+            // TODO: возвращать не статус запроса, а объект "Справка о приложении"
             helpService.getInfo();
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (Exception ex) {
@@ -66,11 +89,15 @@ public class MainController {
         }
     }
 
-    // Проверить наличие обновлений (актуализировать базу данных - вручную)
+    /**
+     * Ручное обновление пользователем состояния профстандартов, хранящихся в БД
+     * @return ...
+     */
     @PutMapping("/manual-update")
     public ResponseEntity<Object> updateManually() {
         try {
             // TODO: логика, свзяанная с вызовом сервиса Айдара в многопоточном режиме
+            // TODO: возможно, возвращать, сколько (какие?) стандарты были обновлены - списком.
             //для обновления состояния БД
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (Exception ex) {
@@ -81,18 +108,19 @@ public class MainController {
 
 
 
-    // ----
+    // ---- БЫЛО ДЛЯ ТЕСТА
     @GetMapping("/education-levels")
     public ResponseEntity<Object> getAllEducationLevels() {
         try {
             Iterable<EducationLevel> educationLevels = educationLevelRepository.findAll();
             return new ResponseEntity<>(educationLevels, HttpStatus.OK);
         } catch (Exception ex) {
-            logger.error(ex.getMessage(), ex);
+            logger .error(ex.getMessage(), ex);
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
 
+    // Внутренняя функция, доступна в будущем админу или вообще в сервер скрыть
     @PostMapping("/submit-parsing")
     public ResponseEntity<Object> selectStandards(
             @RequestBody ParsingDataDTO parsingDataDTO
