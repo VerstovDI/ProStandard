@@ -1,16 +1,20 @@
 <template>
-  <Main></Main>
+<!--  <Main></Main>-->
+  <div id="root">
+    <router-view></router-view>
+  </div>
+
 </template>
 
 <script>
 
 
-import Main from "@/components/Main";
+//import Main from "@/components/Main";
 
 export default {
   name: 'App',
   components: {
-    Main
+    //Main
   }
 }
 </script>

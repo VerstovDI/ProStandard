@@ -16,7 +16,9 @@
 
         <div class="col-md-4">
           <div class="row p-3 m-2">
-            <button type="button" class="btn btn-secondary" id="reset">Отменить</button>
+            <router-link to="/main">
+              <button type="button" class="btn btn-secondary" id="reset">Назад</button>
+            </router-link>
           </div>
           <div class="row p-3 m-2">
             <button type="button" class="btn btn-success" id="getStandards">Ок</button>

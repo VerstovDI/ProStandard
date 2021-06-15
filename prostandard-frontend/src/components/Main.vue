@@ -20,7 +20,7 @@
                 <label for="educationLevelChoice">
                   <b>Уровень образования</b>
                 </label>
-                <select class="form-select" id="educationLevelChoice">
+                <select class="form-select" name="educationLevelChoice" id="educationLevelChoice">
                   <option value="" disabled selected hidden>Выберите уровень образования...</option>
                   <option value="1">Бакалавриат</option>
                   <option value="2">Специалитет</option>
@@ -32,7 +32,7 @@
                 <label for="specialty">
                   <b>Специальность</b>
                 </label>
-                <input type="specialty" class="form-control" id="specialty"
+                <input type="text" v-model="specialty" name="specialty" class="form-control" id="specialty"
                        placeholder="Введите наименование специальности">
                 <!--<p class="help-block"></p>-->
               </div>
@@ -40,7 +40,7 @@
                 <label for="major">
                   <b>Направление обучения</b>
                 </label>
-                <input type="major" class="form-control" id="major"
+                <input type="text" v-model="subj_major"  name="subj_major" class="form-control" id="major"
                        placeholder="Введите направление обучения">
               </div>
             </div>
@@ -50,10 +50,12 @@
 
         <div class="col-md-4">
           <div class="row p-3 m-2">
-            <button type="button" class="btn btn-secondary" id="reset">Сброс</button>
+            <button type="button" @click="resetInput" class="btn btn-secondary" id="reset">Сброс</button>
           </div>
           <div class="row p-3 m-2">
-            <button type="button" class="btn btn-success" id="getStandards">Подобрать</button>
+            <router-link to="/standards">
+              <button type="button" class="btn btn-success" id="getStandards">Подобрать</button>
+            </router-link>
           </div>
         </div>
 
@@ -68,7 +70,19 @@
 
 <script>
 export default {
-  name: "Main"
+  name: "Main",
+  data() {
+    return {
+      specialty: "",
+      subj_major: ""
+    }
+  },
+  methods: {
+    resetInput() {
+      this.specialty = "";
+      this.subj_major = "";
+    }
+  }
 }
 </script>
 

@@ -1,18 +1,20 @@
 import { createWebHistory, createRouter } from 'vue-router';
 
-import Standards from "@/components/Standards";
-import Main from "@/components/Main";
+//import Standards from "@/components/Standards";
+//import Main from "@/components/Main";
 
 const routes = [
     {
         path: "/main",
-        name: "MainPage",
-        component: Main
+        name: "Main",
+        //component: Main
+        component: () => import("@/components/Main")
     },
     {
-        path: '/main/standards',
+        path: '/standards',
         name: 'Standards',
-        component: Standards
+        //component: Standards
+        component: () => import("@/components/Standards")
     }
 ];
 
