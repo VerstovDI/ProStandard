@@ -5,7 +5,7 @@ import { createWebHistory, createRouter } from 'vue-router';
 
 const routes = [
     {
-        path: "/main",
+        path: "",
         name: "Main",
         //component: Main
         component: () => import("@/components/Main")
@@ -24,13 +24,3 @@ const router = createRouter({
 })
 
 export default router;
-
-
-/*const apiClient = {
-    async sendRequest() {
-        const response = await axios.post("/main/send-request");
-        return response.data;
-    }
-};
-
-export default apiClient;*/

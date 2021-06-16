@@ -20,8 +20,11 @@
                 <label for="educationLevelChoice">
                   <b>Уровень образования</b>
                 </label>
-                <select class="form-select" name="educationLevelChoice" id="educationLevelChoice">
-                  <option value="" disabled selected hidden>Выберите уровень образования...</option>
+                <select class="form-select"
+                        v-model="educationLevelChoice"
+                        name="educationLevelChoice"
+                        id="educationLevelChoice">
+                  <option value="0" disabled selected hidden>Выберите уровень образования...</option>
                   <option value="1">Бакалавриат</option>
                   <option value="2">Специалитет</option>
                   <option value="3">Магистратура</option>
@@ -43,6 +46,15 @@
                 <input type="text" v-model="subj_major"  name="subj_major" class="form-control" id="major"
                        placeholder="Введите направление обучения">
               </div>
+              <div class="form-group">
+                <label for="resource">
+                  <b>Уровень образования</b>
+                </label>
+                <select class="form-select" v-model="resource" name="resource" id="resource">
+                  <option value="0" disabled selected hidden>Выберите источник стандартов...</option>
+                  <option value="1">Росминтруд [https://profstandart.rosmintrud.ru/]</option>
+                </select>
+              </div>
             </div>
           </form>
         </div>
@@ -54,7 +66,7 @@
           </div>
           <div class="row p-3 m-2">
             <router-link to="/standards">
-              <button type="button" class="btn btn-success" id="getStandards">Подобрать</button>
+              <button @click="getStandards()" type="button" class="btn btn-success" id="getStandards">Подобрать</button>
             </router-link>
           </div>
         </div>
@@ -69,6 +81,8 @@
 </template>
 
 <script>
+import MainDataService from "@/services/MainDataService";
+
 export default {
   name: "Main",
   data() {
@@ -81,11 +95,22 @@ export default {
     resetInput() {
       this.specialty = "";
       this.subj_major = "";
+    },
+    getStandards() {
+      let requestData = {
+        educationLevelChoice: this.educationLevelChoice,
+        specializationCode: this.specialty,
+        majorId: this.subj_major,
+        resourceToDownload: this.resource
+      };
+
+      console.log(requestData);
+
+      MainDataService.getStandards(requestData).catch(e => {
+        if(e.request) {console.log(e.request)} if (e.response) {console.log(e.response)}
+      });
+      //return data? JSON.parse(data) : data;
     }
   }
 }
 </script>
-
-<style scoped>
-
-</style>

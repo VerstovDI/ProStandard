@@ -5,6 +5,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.prostandard.model.dicts.EducationLevel;
@@ -19,9 +20,8 @@ import ru.prostandard.service.ParsingService;
  * Контроллер, обрабатывающий запросы главной страницы приложения.
  * Отвечает за отправку и приём JSON с главного окна составления профстандарта.
  */
-@CrossOrigin(origins = "http://localhost:8080")
+//@CrossOrigin(origins = { "http://localhost:8080/","http://localhost:8080/standards" })
 @RestController
-@RequestMapping(value = "/main")
 @RequiredArgsConstructor
 public class MainController {
     private Logger logger = LoggerFactory.getLogger(MainController.class);
@@ -42,13 +42,12 @@ public class MainController {
         return "index";
     }*/
 
-    /**
+    /*
      * Отправить запрос на сервер для получения подобранного списка стандартов
      * @param dictionaryDataDTO DTO для передачи всех необходимых для подбора параметров
      * @return Статус запроса
-     */
-    @PostMapping("/send-request")
-    public ResponseEntity<Object> sendRequest(@RequestBody DictionaryDataDTO dictionaryDataDTO) {
+    @PostMapping("/standards-request")
+    public ResponseEntity<Object> getStandards(@RequestBody DictionaryDataDTO dictionaryDataDTO) {
         try {
             dictionaryService.createRequest(dictionaryDataDTO);
             return new ResponseEntity<>(HttpStatus.OK);
@@ -56,14 +55,16 @@ public class MainController {
             logger.error(ex.getMessage(), ex);
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-    }
+    }*/
 
     /**
      * Получение списка всех подобранных стандартов
      * @return
      */
-    @GetMapping("/standards")
-    public ResponseEntity<Object> getStandards() {
+    @CrossOrigin
+    @PostMapping(value = "/standards", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public ResponseEntity<Object> getStandards(@RequestBody DictionaryDataDTO dictionaryDataDTO) {
         try {
             // TODO: Что вызываем? Что возвращает?
             return new ResponseEntity<>(HttpStatus.OK);

@@ -16,7 +16,7 @@
 
         <div class="col-md-4">
           <div class="row p-3 m-2">
-            <router-link to="/main">
+            <router-link to="/">
               <button type="button" class="btn btn-secondary" id="reset">Назад</button>
             </router-link>
           </div>

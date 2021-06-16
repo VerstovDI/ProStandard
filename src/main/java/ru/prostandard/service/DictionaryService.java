@@ -24,7 +24,7 @@ public class DictionaryService {
         // TODO: где-то тут работает интеллектуальный сервис
         return new DictionaryDataDTO("Хо-хо, парниша!",
                 "09.05.01",
-                2L,
+                "Hi",
                 "rosmintrud.com");
     }
 }

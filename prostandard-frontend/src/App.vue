@@ -1,20 +1,13 @@
 <template>
-<!--  <Main></Main>-->
   <div id="root">
     <router-view></router-view>
   </div>
-
 </template>
 
 <script>
-
-
-//import Main from "@/components/Main";
-
 export default {
   name: 'App',
   components: {
-    //Main
   }
 }
 </script>
