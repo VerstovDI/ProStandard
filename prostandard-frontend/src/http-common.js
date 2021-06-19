@@ -6,5 +6,3 @@ export default axios.create({
         "Content-type": "application/json"
     }
 });
-
-// axios.defaults.headers.common['Content-type'] = 'application/json';

@@ -4,10 +4,6 @@ import lombok.*;
 
 import java.io.Serializable;
 
-/*@RequiredArgsConstructor
-@AllArgsConstructor
-@Getter
-@Setter*/
 
 /**
  * Класс для передачи данных запроса с клиента на сервер о требуемой конфигурации
@@ -18,29 +14,14 @@ import java.io.Serializable;
 public class DictionaryDataDTO implements Serializable {
 
     /** Уровень образования */
-    private String educationLevelValue;
+    private String educationLevel;
 
     /** Код специализации */
     private String specializationCode;
 
     /** Направление обучения */
-    private String major;
+    private String subjMajor;
 
     /** URL ресурса для загрузки и парсинга проф. стандартов */
     private String resourceToDownload;
-
-    /*public DictionaryDataDTO() {
-
-    }
-
-    public DictionaryDataDTO(String educationLevelValue,
-                             String specializationCode,
-                             Long majorId,
-                             String resourceToDownload) {
-        this.educationLevelValue = educationLevelValue;
-        this.specializationCode = specializationCode;
-        this.majorId = majorId;
-        this.resourceToDownload = resourceToDownload;
-    }*/
-
 }

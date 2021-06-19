@@ -10,7 +10,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.prostandard.model.dicts.EducationLevel;
 import ru.prostandard.model.dto.DictionaryDataDTO;
-import ru.prostandard.model.dto.ParsingDataDTO;
 import ru.prostandard.repository.EducationLevelRepository;
 import ru.prostandard.service.DictionaryService;
 import ru.prostandard.service.HelpService;
@@ -20,7 +19,6 @@ import ru.prostandard.service.ParsingService;
  * Контроллер, обрабатывающий запросы главной страницы приложения.
  * Отвечает за отправку и приём JSON с главного окна составления профстандарта.
  */
-//@CrossOrigin(origins = { "http://localhost:8080/","http://localhost:8080/standards" })
 @RestController
 @RequiredArgsConstructor
 public class MainController {
@@ -36,36 +34,17 @@ public class MainController {
     @Autowired
     private ParsingService parsingService;
 
-/*    // Главная страница приложения
-    @GetMapping
-    public String getMainPage() {
-        return "index";
-    }*/
-
-    /*
-     * Отправить запрос на сервер для получения подобранного списка стандартов
-     * @param dictionaryDataDTO DTO для передачи всех необходимых для подбора параметров
-     * @return Статус запроса
-    @PostMapping("/standards-request")
-    public ResponseEntity<Object> getStandards(@RequestBody DictionaryDataDTO dictionaryDataDTO) {
-        try {
-            dictionaryService.createRequest(dictionaryDataDTO);
-            return new ResponseEntity<>(HttpStatus.OK);
-        } catch (Exception ex) {
-            logger.error(ex.getMessage(), ex);
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
-    }*/
-
     /**
      * Получение списка всех подобранных стандартов
      * @return
      */
     @CrossOrigin
-    @PostMapping(value = "/standards", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = "/standards")
     @ResponseBody
     public ResponseEntity<Object> getStandards(@RequestBody DictionaryDataDTO dictionaryDataDTO) {
         try {
+            logger.info("Начало выдачи профессиональных стандартов");
+
             // TODO: Что вызываем? Что возвращает?
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (Exception ex) {
@@ -107,32 +86,18 @@ public class MainController {
         }
     }
 
-
-
-    // ---- БЫЛО ДЛЯ ТЕСТА
-    @GetMapping("/education-levels")
-    public ResponseEntity<Object> getAllEducationLevels() {
-        try {
-            Iterable<EducationLevel> educationLevels = educationLevelRepository.findAll();
-            return new ResponseEntity<>(educationLevels, HttpStatus.OK);
-        } catch (Exception ex) {
-            logger .error(ex.getMessage(), ex);
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
-    }
-
     // Внутренняя функция, доступна в будущем админу или вообще в сервер скрыть
     @PostMapping("/submit-parsing")
     public ResponseEntity<Object> selectStandards(
-            @RequestBody ParsingDataDTO parsingDataDTO
+            @RequestBody DictionaryDataDTO dictionaryDataDTO
     ) {
-        if (parsingDataDTO == null) {
+        if (dictionaryDataDTO == null) {
             logger.error("Parsing data is null!");
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
         try {
             // TODO: возвращаем не просто ответ, а ещё и что-то от парсинга
-            parsingService.parseResource(parsingDataDTO);
+            parsingService.parseResource(dictionaryDataDTO);
             logger.info("Parsing data was successfully transferred to the server!");
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (Exception ex) {
@@ -141,7 +106,6 @@ public class MainController {
         }
     }
 
-
-    // Впоследствии добавить @PutMapping для обновления (корректировки) введенных
-    // пользователем данных для будущего парсинга
+    // TODO: Впоследствии добавить @PutMapping для обновления (корректировки) введенных
+    //  пользователем данных для будущего парсинга
 }

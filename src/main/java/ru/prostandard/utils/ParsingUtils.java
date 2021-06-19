@@ -1,6 +1,6 @@
 package ru.prostandard.utils;
 
-import ru.prostandard.model.dto.ParsingDataDTO;
+import ru.prostandard.model.dto.DictionaryDataDTO;
 
 public class ParsingUtils {
 
@@ -9,7 +9,7 @@ public class ParsingUtils {
         return tempDir;
     }
 
-    public static String getTargetParsingString(String tempDir, ParsingDataDTO parsingDataDTO) {
+    public static String getTargetParsingString(String tempDir, DictionaryDataDTO parsingDataDTO) {
         return "";
     }
 }
