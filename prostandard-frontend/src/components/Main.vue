@@ -85,6 +85,19 @@
             <button type="button" @click="resetInput" class="btn btn-secondary" id="reset">Сброс</button>
           </div>
 
+          <!-- Кнопка "Справка" !-->
+          <div class="row p-3 m-2">
+            <button type="button" class="btn btn-info" @click="showModal = true">
+<!--              data-bs-toggle="modal" data-bs-target="#helpModal"-->
+              Справка
+            </button>
+            <ModalInfo v-if="showModal" @close="showModal = false">
+<!--              <template v-slot:body>
+                Hello, modal!
+              </template>-->
+            </ModalInfo>
+          </div>
+
           <!-- Кнопка "Подобрать" !-->
           <div class="row p-3 m-2">
             <router-link to="/standards">
@@ -105,11 +118,16 @@
 
 <script>
 import MainDataService from "@/services/MainDataService";
+import ModalInfo from "@/components/ModalInfo";
 
 export default {
   name: "Main",
+  components: {ModalInfo},
   data() {
     return {
+      // Накопленные ошибки работы приложения
+      errors: [],
+      // Переменные форм
       resourceOptions: [ {id: 0, name: 'Росминтруд'} ],
       educationLevels: [ {id: 0, name: 'Бакалавриат'},
                          {id: 1, name: 'Специалитет'},
@@ -118,7 +136,16 @@ export default {
       educationLevel: '',
       specializationCode: '',
       subjMajor: '',
-      resourceToDownload: ''
+      resourceToDownload: '',
+      // Переменные блока "Справка"
+      infoData: {
+        aboutApp: '',
+        appVersion: '',
+        developerInfo: '',
+        lastUpdateInfo: ''
+      },
+      // Переменная открытия модального окна
+      showModal: false
     }
   },
   methods: {
@@ -143,7 +170,23 @@ export default {
       MainDataService.getStandards(requestData).catch(e => {
         if(e.request) {console.log(e.request)} if (e.response) {console.log(e.response)}
       });
+    },
+
+    getInfo() {
+      MainDataService.getInfo().then(infoDataResponse => {
+        this.infoData = infoDataResponse.data;
+        console.log(infoDataResponse.data)
+      })
+          .catch(e=> {console.log(e.response)
+      })
     }
+  },
+  mounted() {
+
   }
 }
 </script>
+
+<style>
+
+</style>

@@ -16,11 +16,13 @@ public class HelpService {
     private final SpecializationRepository specializationRepository;
 
     public HelpInfoDTO getInfo() {
+        // TODO: тут вызов справочной инфы о приложении. Подумать, хранить ли её в БД.
+        // TODO: в будущем исправить на вычисляемые значения (см. HelpInfoDTO.java)
         HelpInfoDTO helpInfoDTO = new HelpInfoDTO(
+                "",
                 "0.1_prototype",
-                "asdas",
-                "asdasd",
-                123123123L);
+                "",
+                "21.06.2021");
         return helpInfoDTO;
     }
 }

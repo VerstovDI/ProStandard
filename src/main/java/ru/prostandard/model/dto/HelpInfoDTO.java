@@ -8,25 +8,25 @@ import lombok.Setter;
 
 import java.io.Serializable;
 
+/**
+ * Класс (DTO) для передачи данных запроса типа "Справка" основного окна приложения.
+ */
 @RequiredArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
-/**
- * Класс для передачи данных запроса типа "Справка" основного окна приложенияы
- */
 public class HelpInfoDTO implements Serializable {
 
+    /** О приложении */
+    private String aboutApp;
+
     /** Версия приложения */
-    private String appVersion; // TODO: хардкод. Исправить на вычисляемое значение.
+    private String appVersion; // TODO: В будущем убрать хардкод. Исправить на вычисляемое значение.
 
-    /** Уровень образования */
-    private String educationLevelValue;
+    /** Информация о разработчике приложения */
+    private String developerInfo;
 
-    /** Код специализации */
-    private String specializationCode;
-
-    /** Id направления */
-    private Long majorId;
+    /** Дата последнего обновления приложения */
+    private String lastUpdateInfo;
 
 }

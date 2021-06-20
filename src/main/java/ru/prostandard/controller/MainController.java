@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.prostandard.model.dicts.EducationLevel;
 import ru.prostandard.model.dto.DictionaryDataDTO;
+import ru.prostandard.model.dto.HelpInfoDTO;
 import ru.prostandard.repository.EducationLevelRepository;
 import ru.prostandard.service.DictionaryService;
 import ru.prostandard.service.HelpService;
@@ -46,6 +47,8 @@ public class MainController {
             logger.info("Начало выдачи профессиональных стандартов");
 
             // TODO: Что вызываем? Что возвращает?
+
+            logger.info("Выдача профессиональных стандартов прошла успешно");
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (Exception ex) {
             logger.error(ex.getMessage(), ex);
@@ -54,15 +57,17 @@ public class MainController {
     }
 
     /**
-     * Получение справки о приложении
-     * @return Статус запроса
+     * Получение справки о приложении.
+     * @return Статус запроса.
      */
+    @CrossOrigin()
     @GetMapping("/info")
-    public ResponseEntity<Object> getInfo() {
+    @ResponseBody
+    public ResponseEntity<HelpInfoDTO> getInfo() {
         try {
             // TODO: возвращать не статус запроса, а объект "Справка о приложении"
-            helpService.getInfo();
-            return new ResponseEntity<>(HttpStatus.OK);
+            HelpInfoDTO helpInfoDTO = helpService.getInfo();
+            return new ResponseEntity<>(helpInfoDTO, HttpStatus.OK);
         } catch (Exception ex) {
             logger.error(ex.getMessage(), ex);
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
