@@ -87,11 +87,11 @@
 
           <!-- Кнопка "Справка" !-->
           <div class="row p-3 m-2">
-            <button type="button" class="btn btn-info" @click="showModal = true">
+            <button type="button" class="btn btn-info" @click="showModal = true;">
 <!--              data-bs-toggle="modal" data-bs-target="#helpModal"-->
               Справка
             </button>
-            <ModalInfo v-if="showModal" @close="showModal = false">
+            <ModalInfo :infoData="infoData" v-if="showModal" @close="showModal = false">
 <!--              <template v-slot:body>
                 Hello, modal!
               </template>-->
@@ -104,6 +104,7 @@
               <button @click="getStandards()" type="button" class="btn btn-success" id="getStandards">Подобрать</button>
             </router-link>
           </div>
+
         </div>
 
       </div>
@@ -173,17 +174,16 @@ export default {
     },
 
     getInfo() {
-      MainDataService.getInfo().then(infoDataResponse => {
-        this.infoData = infoDataResponse.data;
-        console.log(infoDataResponse.data)
-      })
-          .catch(e=> {console.log(e.response)
-      })
-    }
-  },
-  mounted() {
+      return MainDataService.getInfo();
+    },
 
-  }
+  },
+  mounted: function () {
+    this.getInfo().then((response) => {
+      this.infoData = response.data;
+    });
+  },
+
 }
 </script>
 

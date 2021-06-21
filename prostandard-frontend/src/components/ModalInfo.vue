@@ -9,13 +9,13 @@
 <!--            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>-->
           </div>
           <div class="modal-body">
-            <p>О приложении:</p>
-            <p>Версия приложения:</p>
-            <p>О разработчике:</p>
-            <p>Дата последнего обновления:</p>
+            <p><b>О приложении:</b> {{infoData.aboutApp}}</p>
+            <p><b>Версия приложения:</b> {{infoData.appVersion}}</p>
+            <p><b>О разработчике:</b> {{infoData.developerInfo}}</p>
+            <p><b>Дата последнего обновления:</b> {{infoData.lastUpdateInfo}}</p>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" @click="$emit('close')" data-bs-dismiss="modal">Ок</button>
+            <button type="button" class="btn btn-secondary" @click="$emit('close')">Ок</button>
           </div>
         </div>
       </div>
@@ -24,8 +24,14 @@
 </template>
 
 <script>
+
 export default {
-  name: "ModalInfo"
+  name: "ModalInfo",
+  props: ['infoData'],
+  data() {
+    return {
+    }
+  }
 }
 </script>
 
@@ -48,7 +54,7 @@ export default {
 
 .modal-content {
    background: #fff;
-   width: 450px;
+   width: 750px;
    border-radius: 5px;
    box-shadow: 0 2px 8px rgba(0, 0, 0, .33);
    transition: all .3s ease;
