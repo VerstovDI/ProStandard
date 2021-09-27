@@ -15,13 +15,16 @@
       <div class="row justify-content-center">
 
         <div class="col-md-4">
+          <!-- Кнопка "Назад", возвращающая пользователя обратно на главную страницу !-->
           <div class="row p-3 m-2">
-            <router-link to="/">
-              <button type="button" class="btn btn-secondary" id="reset">Назад</button>
-            </router-link>
+              <button type="button" class="btn btn-secondary" @click="$router.push('/')" id="reset">
+                Назад
+              </button>
           </div>
           <div class="row p-3 m-2">
-            <button type="button" class="btn btn-success" id="getStandards">Ок</button>
+            <button type="button" class="btn btn-success" id="getStandards">
+              Ок
+            </button>
           </div>
         </div>
 

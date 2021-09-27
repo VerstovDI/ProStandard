@@ -8,8 +8,9 @@ import ru.prostandard.utils.ParsingUtils;
 public class ParsingService {
 
     public Object parseResource(DictionaryDataDTO parsingDataDTO) {
-        String tempDir = ParsingUtils.createTemporaryDir();
-        String targetParsingString = ParsingUtils.getTargetParsingString(tempDir, parsingDataDTO);
+        String targetParsingString = ParsingUtils.getTargetParsingString(parsingDataDTO);
+        String typicalString = "06.*";
+
         return targetParsingString;
     }
 }

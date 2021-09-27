@@ -22,6 +22,9 @@ public class DictionaryService {
 
     public DictionaryDataDTO createRequest(DictionaryDataDTO dictionaryDataDTO) {
         // TODO: где-то тут работает интеллектуальный сервис
+        // SearchFilter searchFilter = ...; -> составляем из dictionaryDataDTO и состояния базы
+        // intellectualService.selectStandards(SearchFilter searchFilter); -> "умная выборка стандартов"
+
         return new DictionaryDataDTO("Хо-хо, парниша!",
                 "09.05.01",
                 "Hi",

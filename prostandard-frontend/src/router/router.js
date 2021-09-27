@@ -1,15 +1,16 @@
 import { createWebHistory, createRouter } from 'vue-router';
 
-//import Standards from "@/components/Standards";
-//import Main from "@/components/Main";
 
 const routes = [
+    // На главный компонент приложения
     {
         path: "",
         name: "Main",
         //component: Main
         component: () => import("@/components/Main")
     },
+
+    // На компонент с выдачей подобранных профстандартов
     {
         path: '/standards',
         name: 'Standards',

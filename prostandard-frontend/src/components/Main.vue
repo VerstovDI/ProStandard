@@ -3,7 +3,7 @@
   <div class="root-main">
     <div class="row pt-5 pb-5">
       <div class="container">
-        <div class="row justify-content-center">
+        <div class="row">
           <div class="col text-center">
             <h4>Выберите необходимые параметры для формирования компетенций</h4>
           </div>
@@ -14,7 +14,7 @@
     <!-- Контейнер с формами ввода !-->
     <div class="container">
 
-      <div class="row justify-content-center">
+      <div class="row">
         <div class="col-md-6">
           <form role="form">
             <div class="row gy-3">
@@ -82,7 +82,9 @@
         <div class="col-md-4">
           <!-- Кнопка "Сброс" !-->
           <div class="row p-3 m-2">
-            <button type="button" @click="resetInput" class="btn btn-secondary" id="reset">Сброс</button>
+            <button type="button" class="btn btn-secondary" @click="resetInput" id="reset">
+              Сброс
+            </button>
           </div>
 
           <!-- Кнопка "Справка" !-->
@@ -100,9 +102,12 @@
 
           <!-- Кнопка "Подобрать" !-->
           <div class="row p-3 m-2">
-            <router-link to="/standards">
-              <button @click="getStandards()" type="button" class="btn btn-success" id="getStandards">Подобрать</button>
-            </router-link>
+<!--            <router-link to="/standards" tag="button">-->
+              <button type="button" class="btn btn-success" @click="$router.push('/standards'); getStandards()" id="getStandards">
+                Подобрать
+                <!-- TODO: вынести getStandards() на mount() страницы с профстандартами, а не на вызов по клику !-->
+              </button>
+<!--            </router-link>-->
           </div>
 
         </div>
@@ -123,7 +128,7 @@ import ModalInfo from "@/components/ModalInfo";
 
 export default {
   name: "Main",
-  components: {ModalInfo},
+  components: { ModalInfo },
   data() {
     return {
       // Накопленные ошибки работы приложения
@@ -150,14 +155,14 @@ export default {
     }
   },
   methods: {
-
+    // Метод сброса введённых пользователем данных
     resetInput() {
       this.educationLevel = '';
       this.specializationCode = '';
       this.subjMajor = '';
       this.resourceToDownload = '';
     },
-
+    // Метод получения подобранных профстандартов
     getStandards() {
       let requestData = {
         educationLevel: this.educationLevel,
@@ -165,19 +170,17 @@ export default {
         subjMajor: this.subjMajor,
         resourceToDownload: this.resourceToDownload
       };
-
       console.log(requestData);
-
       MainDataService.getStandards(requestData).catch(e => {
         if(e.request) {console.log(e.request)} if (e.response) {console.log(e.response)}
       });
     },
-
+    // Метод получения справки о приложении
     getInfo() {
       return MainDataService.getInfo();
     },
-
   },
+  // Справочная информация прогружается единожды при старте приложения
   mounted: function () {
     this.getInfo().then((response) => {
       this.infoData = response.data;
@@ -188,5 +191,7 @@ export default {
 </script>
 
 <style>
-
+.btn {
+  border-color: white;
+}
 </style>

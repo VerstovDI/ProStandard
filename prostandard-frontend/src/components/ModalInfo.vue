@@ -14,8 +14,10 @@
             <p><b>О разработчике:</b> {{infoData.developerInfo}}</p>
             <p><b>Дата последнего обновления:</b> {{infoData.lastUpdateInfo}}</p>
           </div>
+          <!-- Кнопка "Ок" модального окна справки !-->
           <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" @click="$emit('close')">Ок</button>
+            <button type="button" class="btn btn-secondary" @click="$emit('close')">
+              Ок</button>
           </div>
         </div>
       </div>
@@ -27,7 +29,13 @@
 
 export default {
   name: "ModalInfo",
-  props: ['infoData'],
+  props: {
+    // Свойство infoData, хранящее
+    infoData: {
+          type: String,
+          required: true
+    }
+  },
   data() {
     return {
     }
@@ -44,7 +52,7 @@ export default {
   height: 100%;
   background: rgba(0, 0, 0, 0.7);
   display: table;
-  transition: opacity .3s ease;
+  transition: opacity .5s ease;
 }
 
 .modal-dialog {
@@ -57,7 +65,7 @@ export default {
    width: 750px;
    border-radius: 5px;
    box-shadow: 0 2px 8px rgba(0, 0, 0, .33);
-   transition: all .3s ease;
+   transition: all .5s ease;
    margin: 0 auto;
    padding: 20px 30px;
  }
