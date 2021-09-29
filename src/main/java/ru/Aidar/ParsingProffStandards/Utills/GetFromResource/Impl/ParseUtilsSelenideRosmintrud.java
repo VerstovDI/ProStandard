@@ -52,8 +52,8 @@ public class ParseUtilsSelenideRosmintrud implements IParseUtils {
         Configuration.browserCapabilities = options;
         Configuration.timeout = 120000;
         Configuration.pageLoadTimeout = 120000;
-        Configuration.holdBrowserOpen = true;
-        //Configuration.headless = true;// не открывать браузер
+        Configuration.holdBrowserOpen = false;
+        Configuration.headless = true;// не открывать браузер
         Configuration.fileDownload = FileDownloadMode.FOLDER;
     }
 
