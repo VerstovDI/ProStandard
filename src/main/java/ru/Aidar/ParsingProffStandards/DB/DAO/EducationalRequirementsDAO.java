@@ -25,6 +25,7 @@ public class EducationalRequirementsDAO {
         Transaction tx1 = session.beginTransaction();
         session.saveOrUpdate(EducationalRequirement);
         tx1.commit();
+        session.clear();
         session.close();
     }
 
@@ -33,6 +34,7 @@ public class EducationalRequirementsDAO {
         Transaction tx1 = session.beginTransaction();
         session.delete(EducationalRequirement);
         tx1.commit();
+        session.clear();
         session.close();
     }
 }

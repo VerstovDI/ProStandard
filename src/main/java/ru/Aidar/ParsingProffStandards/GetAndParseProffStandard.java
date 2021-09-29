@@ -20,7 +20,7 @@ public class GetAndParseProffStandard {
     private static final IParseUtils iParseUtils = new ParseUtilsSelenideRosmintrud();
 
     public static void getAndParseStandard(String number, String dirToSave) throws InterruptedException {
-
+        log.info("начало парсинга стандарта № "+number);
         String pathToSave = dirToSave + File.separator + number;
         try {
             iParseUtils.setUp(pathToSave);
@@ -28,7 +28,7 @@ public class GetAndParseProffStandard {
             iParseUtils.findProfStandardByNumber(number);
             iParseUtils.downloadOpenedProfStandard();
             sleep(5000);
-        } catch (RuntimeException ex) {
+        } catch (Exception ex) {
             log.error(ex);
         } finally {
             WebDriverRunner.getWebDriver().close();

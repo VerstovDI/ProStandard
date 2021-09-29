@@ -18,7 +18,7 @@ public class GeneralizedWorkFunction {
     private String nameGwf;
 
     @Column(name = "level_of_qualification", nullable = false)
-    private Integer levelOfQualification;
+    private String levelOfQualification;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "code_kind_professional_activity", nullable = false)
@@ -28,7 +28,7 @@ public class GeneralizedWorkFunction {
     }
 
 
-    public GeneralizedWorkFunction(String сodeGwf, String nameGwf, Integer levelOfQualification, Standard standard) {
+    public GeneralizedWorkFunction(String сodeGwf, String nameGwf, String levelOfQualification, Standard standard) {
 
         this.сodeGwf = сodeGwf;
         this.nameGwf = nameGwf;
@@ -60,11 +60,11 @@ public class GeneralizedWorkFunction {
         this.nameGwf = nameGwf;
     }
 
-    public Integer getLevelOfQualification() {
+    public String getLevelOfQualification() {
         return levelOfQualification;
     }
 
-    public void setLevelOfQualification(Integer levelOfQualification) {
+    public void setLevelOfQualification(String levelOfQualification) {
         this.levelOfQualification = levelOfQualification;
     }
 

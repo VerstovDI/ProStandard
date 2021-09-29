@@ -31,6 +31,7 @@ public class ParticularWorkFunctionsDAO {
         Transaction tx1 = session.beginTransaction();
         session.saveOrUpdate(ParticularWorkFunction);
         tx1.commit();
+        session.clear();
         session.close();
     }
 
@@ -39,6 +40,7 @@ public class ParticularWorkFunctionsDAO {
         Transaction tx1 = session.beginTransaction();
         session.delete(ParticularWorkFunction);
         tx1.commit();
+        session.clear();
         session.close();
     }
 }

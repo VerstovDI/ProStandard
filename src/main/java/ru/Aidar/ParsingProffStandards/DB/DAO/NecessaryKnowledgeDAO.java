@@ -15,6 +15,7 @@ public class NecessaryKnowledgeDAO {
         Transaction tx1 = session.beginTransaction();
         session.saveOrUpdate(NecessaryKnowledge);
         tx1.commit();
+        session.clear();
         session.close();
     }
 
@@ -23,6 +24,7 @@ public class NecessaryKnowledgeDAO {
         Transaction tx1 = session.beginTransaction();
         session.delete(NecessaryKnowledge);
         tx1.commit();
+        session.clear();
         session.close();
     }
 }

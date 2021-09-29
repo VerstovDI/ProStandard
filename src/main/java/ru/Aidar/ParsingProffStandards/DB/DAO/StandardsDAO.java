@@ -27,6 +27,7 @@ public class StandardsDAO {
         Transaction tx1 = session.beginTransaction();
         session.saveOrUpdate(standard);
         tx1.commit();
+        session.clear();
         session.close();
     }
 
@@ -35,6 +36,7 @@ public class StandardsDAO {
         Transaction tx1 = session.beginTransaction();
         session.delete(standard);
         tx1.commit();
+        session.clear();
         session.close();
     }
 }

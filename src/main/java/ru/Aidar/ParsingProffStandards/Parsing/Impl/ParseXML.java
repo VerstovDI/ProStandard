@@ -1,9 +1,11 @@
 package ru.Aidar.ParsingProffStandards.Parsing.Impl;
 
 import org.apache.log4j.Logger;
+import org.hibernate.SessionFactory;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 import ru.Aidar.ParsingProffStandards.DB.DAO.*;
+import ru.Aidar.ParsingProffStandards.DB.HibernateSessionFactoryUtil;
 import ru.Aidar.ParsingProffStandards.DB.domain.Resource;
 import ru.Aidar.ParsingProffStandards.DB.domain.Standard;
 import ru.Aidar.ParsingProffStandards.Parsing.IParseXML;
@@ -53,8 +55,5 @@ public class ParseXML implements IParseXML {
         } catch (ParserConfigurationException | SAXException | IOException e) {
             log.error(e);
         }
-
     }
-
-
 }

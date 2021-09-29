@@ -15,6 +15,7 @@ public class LaborActionsDAO {
         Transaction tx1 = session.beginTransaction();
         session.saveOrUpdate(LaborAction);
         tx1.commit();
+        session.clear();
         session.close();
     }
 
@@ -23,6 +24,7 @@ public class LaborActionsDAO {
         Transaction tx1 = session.beginTransaction();
         session.delete(LaborAction);
         tx1.commit();
+        session.clear();
         session.close();
     }
 }

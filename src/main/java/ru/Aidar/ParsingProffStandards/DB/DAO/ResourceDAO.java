@@ -15,6 +15,7 @@ public class ResourceDAO {
         Transaction tx1 = session.beginTransaction();
         session.saveOrUpdate(resource);
         tx1.commit();
+        session.clear();
         session.close();
     }
 
@@ -23,6 +24,7 @@ public class ResourceDAO {
         Transaction tx1 = session.beginTransaction();
         session.delete(resource);
         tx1.commit();
+        session.clear();
         session.close();
     }
 }

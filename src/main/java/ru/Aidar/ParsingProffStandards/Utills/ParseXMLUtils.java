@@ -27,9 +27,9 @@ public class ParseXMLUtils {
             NodeList generalizedWorkFunctionChildNodes = generalizedWorkFunctions.item(i).getChildNodes();
             if (generalizedWorkFunctionChildNodes != null) {
                 String s1 = generalizedWorkFunctionChildNodes.item(2).getTextContent().replaceAll("\\.", "");
-                int levelOfQualification = -1;
+                String levelOfQualification = "-1";
                 if (!s1.isBlank()) {
-                    levelOfQualification = Integer.parseInt(s1);
+                    levelOfQualification = s1;
                 }
                 GeneralizedWorkFunction generalizedWorkFunction = new GeneralizedWorkFunction(generalizedWorkFunctionChildNodes.item(0).getTextContent(),
                         generalizedWorkFunctionChildNodes.item(1).getTextContent(), levelOfQualification, standard);

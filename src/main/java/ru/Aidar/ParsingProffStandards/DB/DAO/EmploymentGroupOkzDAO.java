@@ -25,6 +25,7 @@ public class EmploymentGroupOkzDAO {
         Transaction tx1 = session.beginTransaction();
         session.saveOrUpdate(employmentGroupOkz);
         tx1.commit();
+        session.clear();
         session.close();
     }
 
@@ -33,6 +34,7 @@ public class EmploymentGroupOkzDAO {
         Transaction tx1 = session.beginTransaction();
         session.delete(employmentGroupOkz);
         tx1.commit();
+        session.clear();
         session.close();
     }
 }

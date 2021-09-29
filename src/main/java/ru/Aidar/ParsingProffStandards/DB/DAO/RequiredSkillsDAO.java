@@ -15,6 +15,7 @@ public class RequiredSkillsDAO {
         Transaction tx1 = session.beginTransaction();
         session.saveOrUpdate(RequiredSkill);
         tx1.commit();
+        session.clear();
         session.close();
     }
 
@@ -23,6 +24,7 @@ public class RequiredSkillsDAO {
         Transaction tx1 = session.beginTransaction();
         session.delete(RequiredSkill);
         tx1.commit();
+        session.clear();
         session.close();
     }
 }

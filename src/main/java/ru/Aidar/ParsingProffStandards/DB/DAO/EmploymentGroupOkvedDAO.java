@@ -25,6 +25,7 @@ public class EmploymentGroupOkvedDAO {
         Transaction tx1 = session.beginTransaction();
         session.saveOrUpdate(employmentGroupOkved);
         tx1.commit();
+        session.clear();
         session.close();
     }
 
@@ -33,6 +34,7 @@ public class EmploymentGroupOkvedDAO {
         Transaction tx1 = session.beginTransaction();
         session.delete(employmentGroupOkved);
         tx1.commit();
+        session.clear();
         session.close();
     }
 }

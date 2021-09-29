@@ -26,6 +26,7 @@ public class GeneralizedWorkFunctionsDAO {
         Transaction tx1 = session.beginTransaction();
         session.saveOrUpdate(generalizedWorkFunction);
         tx1.commit();
+        session.clear();
         session.close();
     }
 
@@ -34,6 +35,7 @@ public class GeneralizedWorkFunctionsDAO {
         Transaction tx1 = session.beginTransaction();
         session.delete(generalizedWorkFunction);
         tx1.commit();
+        session.clear();
         session.close();
     }
 }

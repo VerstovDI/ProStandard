@@ -25,6 +25,7 @@ public class PossibleJobTitlesDAO {
         Transaction tx1 = session.beginTransaction();
         session.saveOrUpdate(PossibleJobTitle);
         tx1.commit();
+        session.clear();
         session.close();
     }
 
@@ -33,6 +34,7 @@ public class PossibleJobTitlesDAO {
         Transaction tx1 = session.beginTransaction();
         session.delete(PossibleJobTitle);
         tx1.commit();
+        session.clear();
         session.close();
     }
 }
