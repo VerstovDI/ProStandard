@@ -41,7 +41,5 @@ public class GetAndParseProffStandard {
         } else {
             log.error("не удалось");
         }
-
-
     }
 }
