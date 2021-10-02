@@ -20,7 +20,7 @@ public class GetAndParseProffStandard {
     private static final IParseUtils iParseUtils = new ParseUtilsSelenideRosmintrud();
 
     public static void getAndParseStandard(String number, String dirToSave) throws InterruptedException {
-        log.info("начало парсинга стандарта № "+number);
+        log.info("начало поиска стандарта № "+number);
         String pathToSave = dirToSave + File.separator + number;
         try {
             iParseUtils.setUp(pathToSave);

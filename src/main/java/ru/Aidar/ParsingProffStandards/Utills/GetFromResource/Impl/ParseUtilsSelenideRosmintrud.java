@@ -10,15 +10,19 @@ import org.openqa.selenium.chrome.ChromeOptions;
 import ru.Aidar.ParsingProffStandards.Utills.GetFromResource.IParseUtils;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.HashMap;
+import java.util.Properties;
 
 import static com.codeborne.selenide.Selenide.*;
 
 public class ParseUtilsSelenideRosmintrud implements IParseUtils {
     private static final Logger log = Logger.getLogger(ParseUtilsSelenideRosmintrud.class);
-
+    private static final String propFileName = "config.properties";
     /**
      * Показывает все стандарты в профф сйере. Можно написать, например 06
      *
@@ -42,7 +46,7 @@ public class ParseUtilsSelenideRosmintrud implements IParseUtils {
             Files.createDirectories(Paths.get(downloadDir));
         } catch (IOException e) {
             log.error(e);
-            log.error("Finish!!!");
+            log.error("Error Finish!!!");
             return;
         }
         chromePrefs.put("download.default_directory", downloadDir);
@@ -52,8 +56,17 @@ public class ParseUtilsSelenideRosmintrud implements IParseUtils {
         Configuration.browserCapabilities = options;
         Configuration.timeout = 120000;
         Configuration.pageLoadTimeout = 120000;
-        Configuration.holdBrowserOpen = false;
-        Configuration.headless = true;// не открывать браузер
+        try(InputStream inputStream = getClass().getClassLoader().getResourceAsStream(propFileName); ){
+            Properties properties = new Properties();
+            properties.load(inputStream);
+            Configuration.holdBrowserOpen = Boolean.parseBoolean(properties.getProperty("Configuration.holdBrowserOpen"));
+            Configuration.headless = Boolean.parseBoolean(properties.getProperty("Configuration.headless"));// не открывать браузер
+        }
+        catch (IOException io) {
+            log.error(io);
+            log.error("Error Finish!!!");
+            return;
+        }
         Configuration.fileDownload = FileDownloadMode.FOLDER;
     }
 
@@ -61,9 +74,21 @@ public class ParseUtilsSelenideRosmintrud implements IParseUtils {
      * На сайте мин труда открывает фильтр профф стандартов
      */
     public void openProfStandardsFilter() {
-        open("https://profstandart.rosmintrud.ru/obshchiy-informatsionnyy-blok" +
-                "/natsionalnyy-reestr-professionalnykh-standartov/reestr-professionalnykh-standartov");
-        $(new By.ByClassName("ps-hide-show")).pressEnter();
+        String relativeOrAbsoluteUrlOpenProfStandardsFilter;
+        String classNameOpenProfStandardsFilter;
+        try(InputStream inputStream = getClass().getClassLoader().getResourceAsStream(propFileName); ){
+            Properties properties = new Properties();
+            properties.load(inputStream);
+            relativeOrAbsoluteUrlOpenProfStandardsFilter = properties.getProperty("relativeOrAbsoluteUrlOpenProfStandardsFilter");
+            classNameOpenProfStandardsFilter = properties.getProperty("classNameOpenProfStandardsFilter");
+        }
+        catch (IOException io) {
+            log.error(io);
+            log.error("Error Finish!!!");
+            return;
+        }
+        open(relativeOrAbsoluteUrlOpenProfStandardsFilter);
+        $(new By.ByClassName(classNameOpenProfStandardsFilter)).pressEnter();
     }
 
     /**
@@ -72,9 +97,22 @@ public class ParseUtilsSelenideRosmintrud implements IParseUtils {
      * @param number номер профф стандарта
      */
     public void findProfStandardByNumber(String number) {
-        $("input[type='text'][name='KPF']").setValue(number).pressEnter();
+        String cssSelectorUrlFindProfStandardByNumber;
+        String findByCssSelectorUrlFindProfStandardByNumber;
+        try(InputStream inputStream = getClass().getClassLoader().getResourceAsStream(propFileName); ){
+            Properties properties = new Properties();
+            properties.load(inputStream);
+            cssSelectorUrlFindProfStandardByNumber = properties.getProperty("cssSelectorUrlFindProfStandardByNumber");
+            findByCssSelectorUrlFindProfStandardByNumber = properties.getProperty("findByCssSelectorUrlFindProfStandardByNumber");
+        }
+        catch (IOException io) {
+            log.error(io);
+            log.error("Error Finish!!!");
+            return;
+        }
+        $(cssSelectorUrlFindProfStandardByNumber).setValue(number).pressEnter();
         //Selenide.sleep(3000);
-        SelenideElement element = $$("a").findBy(Condition.text(number));
+        SelenideElement element = $$(findByCssSelectorUrlFindProfStandardByNumber).findBy(Condition.text(number));
         element.doubleClick();
 
     }
