@@ -19,27 +19,29 @@ public class GetAndParseProffStandard {
     private final static IParseXML iParseXML = new ParseXML();
     private static final IParseUtils iParseUtils = new ParseUtilsSelenideRosmintrud();
 
-    public static void getAndParseStandard(String number, String dirToSave)  {
+    public static void getAndParseStandard(String number, String dirToSave) {
         log.info("начало поиска стандарта № " + number);
         String pathToSave = dirToSave + File.separator + number;
         try {
             iParseUtils.setUp(pathToSave);
             iParseUtils.openProfStandardsFilter();
-            iParseUtils.findProfStandardByNumber(number);
-            iParseUtils.downloadOpenedProfStandard();
-            sleep(5000);
+            if (iParseUtils.findProfStandardByNumber(number)) {
+                iParseUtils.downloadOpenedProfStandard();
+                sleep(5000);
+                Optional<Path> lastFilePath = getLastFilePath(pathToSave);
+                if (lastFilePath.isPresent()) {
+                    Path savedPath = lastFilePath.get();
+                    iParseXML.parse(String.valueOf(savedPath));
+                } else {
+                    log.error("не удалось");
+                }
+            }
         } catch (Exception ex) {
             log.error(ex);
         } finally {
             WebDriverRunner.getWebDriver().close();
             WebDriverRunner.getWebDriver().quit();
         }
-        Optional<Path> lastFilePath = getLastFilePath(pathToSave);
-        if (lastFilePath.isPresent()) {
-            Path savedPath = lastFilePath.get();
-            iParseXML.parse(String.valueOf(savedPath));
-        } else {
-            log.error("не удалось");
-        }
+
     }
 }

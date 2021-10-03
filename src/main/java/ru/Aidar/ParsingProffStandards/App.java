@@ -10,7 +10,7 @@ public class App {
 
         String dirToSave = Paths.get("resources").toAbsolutePath().toString();
 
-        for (int i = 9; i <= 110; i++) { // парсим стандарты 24-й категории
+        for (int i = 33; i <= 34; i++) { // парсим стандарты 24-й категории
             String numberToParse = "24." + String.format("%03d", i);
             GetAndParseProffStandard.getAndParseStandard(numberToParse, dirToSave);
         }

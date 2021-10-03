@@ -5,7 +5,7 @@ public interface IParseUtils {
 
     void openProfStandardsFilter();
 
-    void findProfStandardByNumber(String number);
+    boolean findProfStandardByNumber(String number);
 
     void downloadOpenedProfStandard();
 

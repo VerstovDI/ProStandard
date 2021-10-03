@@ -4,6 +4,7 @@ import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.FileDownloadMode;
 import com.codeborne.selenide.SelenideElement;
+import com.codeborne.selenide.ex.ElementNotFound;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -11,8 +12,6 @@ import ru.Aidar.ParsingProffStandards.Utills.GetFromResource.IParseUtils;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.HashMap;
@@ -23,6 +22,7 @@ import static com.codeborne.selenide.Selenide.*;
 public class ParseUtilsSelenideRosmintrud implements IParseUtils {
     private static final Logger log = Logger.getLogger(ParseUtilsSelenideRosmintrud.class);
     private static final String propFileName = "config.properties";
+
     /**
      * Показывает все стандарты в профф сйере. Можно написать, например 06
      *
@@ -54,15 +54,15 @@ public class ParseUtilsSelenideRosmintrud implements IParseUtils {
         options.setExperimentalOption("prefs", chromePrefs);
 
         Configuration.browserCapabilities = options;
-        Configuration.timeout = 120000;
-        Configuration.pageLoadTimeout = 120000;
-        try(InputStream inputStream = getClass().getClassLoader().getResourceAsStream(propFileName); ){
+
+        try (InputStream inputStream = getClass().getClassLoader().getResourceAsStream(propFileName)) {
             Properties properties = new Properties();
             properties.load(inputStream);
+            Configuration.timeout = Integer.parseInt(properties.getProperty("Configuration.timeout"));
+            Configuration.pageLoadTimeout = Integer.parseInt(properties.getProperty("Configuration.pageLoadTimeout"));
             Configuration.holdBrowserOpen = Boolean.parseBoolean(properties.getProperty("Configuration.holdBrowserOpen"));
             Configuration.headless = Boolean.parseBoolean(properties.getProperty("Configuration.headless"));// не открывать браузер
-        }
-        catch (IOException io) {
+        } catch (IOException io) {
             log.error(io);
             log.error("Error Finish!!!");
             return;
@@ -76,13 +76,12 @@ public class ParseUtilsSelenideRosmintrud implements IParseUtils {
     public void openProfStandardsFilter() {
         String relativeOrAbsoluteUrlOpenProfStandardsFilter;
         String classNameOpenProfStandardsFilter;
-        try(InputStream inputStream = getClass().getClassLoader().getResourceAsStream(propFileName); ){
+        try (InputStream inputStream = getClass().getClassLoader().getResourceAsStream(propFileName)) {
             Properties properties = new Properties();
             properties.load(inputStream);
             relativeOrAbsoluteUrlOpenProfStandardsFilter = properties.getProperty("relativeOrAbsoluteUrlOpenProfStandardsFilter");
             classNameOpenProfStandardsFilter = properties.getProperty("classNameOpenProfStandardsFilter");
-        }
-        catch (IOException io) {
+        } catch (IOException io) {
             log.error(io);
             log.error("Error Finish!!!");
             return;
@@ -95,26 +94,31 @@ public class ParseUtilsSelenideRosmintrud implements IParseUtils {
      * Ищет профф стандарт по его номеру
      *
      * @param number номер профф стандарта
+     * @return
      */
-    public void findProfStandardByNumber(String number) {
+    public boolean findProfStandardByNumber(String number) {
         String cssSelectorUrlFindProfStandardByNumber;
         String findByCssSelectorUrlFindProfStandardByNumber;
-        try(InputStream inputStream = getClass().getClassLoader().getResourceAsStream(propFileName); ){
+        try (InputStream inputStream = getClass().getClassLoader().getResourceAsStream(propFileName)) {
             Properties properties = new Properties();
             properties.load(inputStream);
             cssSelectorUrlFindProfStandardByNumber = properties.getProperty("cssSelectorUrlFindProfStandardByNumber");
             findByCssSelectorUrlFindProfStandardByNumber = properties.getProperty("findByCssSelectorUrlFindProfStandardByNumber");
-        }
-        catch (IOException io) {
+        } catch (IOException io) {
             log.error(io);
             log.error("Error Finish!!!");
-            return;
+            return false;
         }
         $(cssSelectorUrlFindProfStandardByNumber).setValue(number).pressEnter();
         //Selenide.sleep(3000);
-        SelenideElement element = $$(findByCssSelectorUrlFindProfStandardByNumber).findBy(Condition.text(number));
-        element.doubleClick();
-
+        try {
+            SelenideElement element = $$(findByCssSelectorUrlFindProfStandardByNumber).findBy(Condition.text(number));
+            element.doubleClick();
+        } catch (ElementNotFound ex) {
+            log.error("Can't find standard " + number + " SKIP", ex);
+            return false;
+        }
+        return true;
     }
 
     /**
