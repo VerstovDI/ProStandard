@@ -5,8 +5,10 @@ import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.FileDownloadMode;
 import com.codeborne.selenide.SelenideElement;
 import com.codeborne.selenide.ex.ElementNotFound;
+import com.codeborne.selenide.ex.TimeoutException;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.chrome.ChromeOptions;
 import ru.Aidar.ParsingProffStandards.Utills.GetFromResource.IParseUtils;
 
@@ -109,7 +111,13 @@ public class ParseUtilsSelenideRosmintrud implements IParseUtils {
             log.error("Error Finish!!!");
             return false;
         }
-        $(cssSelectorUrlFindProfStandardByNumber).setValue(number).pressEnter();
+        try {
+            $(cssSelectorUrlFindProfStandardByNumber).setValue(number).pressEnter();
+        } catch (TimeoutException timeoutException) {
+            log.error(timeoutException);
+            log.error("Error Finish!!!");
+            return false;
+        }
         //Selenide.sleep(3000);
         try {
             SelenideElement element = $$(findByCssSelectorUrlFindProfStandardByNumber).findBy(Condition.text(number));
@@ -123,9 +131,17 @@ public class ParseUtilsSelenideRosmintrud implements IParseUtils {
 
     /**
      * Скачивает открытый профф стандарт
+     *
+     * @return
      */
-    public void downloadOpenedProfStandard() {
+    public boolean downloadOpenedProfStandard() {
         //  String path = $("input[type='submit'][class='button'][value='Скачать в XML']").download().getPath();
-        $("input[type='submit'][class='button'][value='Скачать в XML']").click();
+        try {
+            $("input[type='submit'][class='button'][value='Скачать в XML']").click();
+        } catch (NoSuchElementException noSuchElementException) {
+            log.error(noSuchElementException);
+            return false;
+        }
+        return true;
     }
 }

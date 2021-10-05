@@ -25,9 +25,8 @@ public class GetAndParseProffStandard {
         try {
             iParseUtils.setUp(pathToSave);
             iParseUtils.openProfStandardsFilter();
-            if (iParseUtils.findProfStandardByNumber(number)) {
-                iParseUtils.downloadOpenedProfStandard();
-                sleep(5000);
+            if (iParseUtils.findProfStandardByNumber(number) && iParseUtils.downloadOpenedProfStandard()) {
+                sleep(1000);
                 Optional<Path> lastFilePath = getLastFilePath(pathToSave);
                 if (lastFilePath.isPresent()) {
                     Path savedPath = lastFilePath.get();

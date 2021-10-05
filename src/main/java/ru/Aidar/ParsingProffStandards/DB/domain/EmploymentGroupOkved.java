@@ -8,6 +8,10 @@ import java.util.Objects;
 @Table(name = "employment_group_okved", schema = "proff")
 public class EmploymentGroupOkved {
     @Id
+    @Column(name = "id_okved", columnDefinition = "serial")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
     @Column(name = "сode_okved")
     private String codeOkved;
 
@@ -16,7 +20,7 @@ public class EmploymentGroupOkved {
 
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "code_kind_professional_activity", nullable = false)
+    @JoinColumn(name = "proff_standarts_id", nullable = false)
     private Standard standard;
 
 

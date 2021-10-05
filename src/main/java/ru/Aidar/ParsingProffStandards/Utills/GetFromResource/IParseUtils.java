@@ -7,6 +7,6 @@ public interface IParseUtils {
 
     boolean findProfStandardByNumber(String number);
 
-    void downloadOpenedProfStandard();
+    boolean downloadOpenedProfStandard();
 
 }
