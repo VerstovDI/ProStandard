@@ -146,12 +146,357 @@ CREATE TABLE IF NOT EXISTS proff.dict_pivot
 (
     record_id serial PRIMARY KEY,
     level_id serial,
-    spec_id serial,
-    major_id serial,
-    FOREIGN KEY (level_id) REFERENCES proff.dict_education_level(level_id)
-    ON DELETE CASCADE ON UPDATE CASCADE,
-    FOREIGN KEY (spec_id) REFERENCES proff.dict_specialization(spec_id)
-    ON DELETE CASCADE ON UPDATE CASCADE,
-    FOREIGN KEY (major_id) REFERENCES proff.dict_major(major_id)
-    ON DELETE CASCADE ON UPDATE CASCADE
+    spec_id
+    serial,
+    major_id
+    serial,
+    FOREIGN
+    KEY
+(
+    level_id
+) REFERENCES proff.dict_education_level
+(
+    level_id
+)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
+    FOREIGN KEY
+(
+    spec_id
+) REFERENCES proff.dict_specialization
+(
+    spec_id
+)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
+    FOREIGN KEY
+(
+    major_id
+) REFERENCES proff.dict_major
+(
+    major_id
+)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE
     );
+
+-- Таблицы для индексов
+CREATE TABLE proff.to_tsvector_educational_requirements AS
+SELECT id_educational_requirement, to_tsvector('russian', educational_requirement), id_gwf
+FROM proff.educational_requirements;
+
+
+CREATE TABLE proff.to_tsvector_proff_standarts AS
+SELECT proff_standarts_id
+     , to_tsvector('russian', "name_professional_standart")         as name_professional_standart
+     , to_tsvector('russian', "purpose_kind_professional_activity") as purpose_kind_professional_activity
+FROM proff.proff_standarts;
+
+
+CREATE TABLE proff.to_tsvector_generalized_work_functions AS
+SELECT id_gwf, to_tsvector('russian', "name_gwf") as name_gwf
+FROM proff.generalized_work_functions;
+
+CREATE TABLE proff.to_tsvector_possible_job_titles AS
+SELECT id_possible_job_title, to_tsvector('russian', "title") as title, id_gwf
+FROM proff.possible_job_titles;
+
+
+CREATE TABLE proff.to_tsvector_particular_work_functions AS
+SELECT id_particular_work_function, to_tsvector('russian', "name_wf") as name_wf, id_gwf
+FROM proff.particular_work_functions;
+
+
+CREATE TABLE proff.to_tsvector_labor_actions AS
+SELECT id_labor_action, to_tsvector('russian', "description") as description, id_particular_work_function
+FROM proff.labor_actions;
+
+CREATE TABLE proff.to_tsvector_required_skills AS
+SELECT id_required_skill, to_tsvector('russian', "description") as description, id_particular_work_function
+FROM proff.required_skills;
+
+CREATE TABLE proff.to_tsvector_necessary_knowledge AS
+SELECT id_necessary_knowledge, to_tsvector('russian', "description") as description, id_particular_work_function
+FROM proff.necessary_knowledge;
+
+---triggers
+CREATE
+OR REPLACE FUNCTION proff.update_to_tsvector_educational_requirements() RETURNS TRIGGER AS $update_to_tsvector_educational_requirements$
+BEGIN
+        IF
+(TG_OP = 'DELETE') THEN
+DELETE
+FROM proff.to_tsvector_educational_requirements
+WHERE id_educational_requirement = OLD.id_educational_requirement;
+RETURN OLD;
+ELSIF
+(TG_OP = 'UPDATE') THEN
+UPDATE proff.to_tsvector_educational_requirements
+SET to_tsvector = to_tsvector('russian', NEW.educational_requirement),
+    id_gwf=NEW.id_gwf
+WHERE id_educational_requirement = OLD.id_educational_requirement;
+RETURN NEW;
+ELSIF
+(TG_OP = 'INSERT') THEN
+            INSERT INTO proff.to_tsvector_educational_requirements
+select NEW.id_educational_requirement, to_tsvector('russian', NEW.educational_requirement), NEW.id_gwf;
+RETURN NEW;
+END IF;
+RETURN NULL; -- возвращаемое значение для триггера AFTER игнорируется
+END;
+$update_to_tsvector_educational_requirements$
+LANGUAGE plpgsql;
+
+CREATE TRIGGER update_to_tsvector_educational_requirements
+    AFTER INSERT OR
+UPDATE OR
+DELETE
+ON proff.educational_requirements
+    FOR EACH ROW EXECUTE PROCEDURE proff.update_to_tsvector_educational_requirements();
+--------------------------------------------------------------------
+CREATE
+OR REPLACE FUNCTION proff.update_to_tsvector_proff_standarts() RETURNS TRIGGER AS $update_to_tsvector_proff_standarts$
+BEGIN
+        IF
+(TG_OP = 'DELETE') THEN
+DELETE
+FROM proff.to_tsvector_proff_standarts
+WHERE proff_standarts_id = OLD.proff_standarts_id;
+RETURN OLD;
+ELSIF
+(TG_OP = 'UPDATE') THEN
+UPDATE proff.to_tsvector_proff_standarts
+SET name_professional_standart        = to_tsvector('russian', NEW.name_professional_standart),
+    purpose_kind_professional_activity=to_tsvector('russian', NEW.purpose_kind_professional_activity)
+WHERE proff_standarts_id = OLD.proff_standarts_id;
+RETURN NEW;
+ELSIF
+(TG_OP = 'INSERT') THEN
+            INSERT INTO proff.to_tsvector_proff_standarts
+select NEW.proff_standarts_id
+     , to_tsvector('russian', NEW.name_professional_standart)
+     , to_tsvector('russian', NEW.purpose_kind_professional_activity);
+RETURN NEW;
+END IF;
+RETURN NULL; -- возвращаемое значение для триггера AFTER игнорируется
+END;
+$update_to_tsvector_proff_standarts$
+LANGUAGE plpgsql;
+
+
+CREATE TRIGGER update_to_tsvector_proff_standarts
+    AFTER INSERT OR
+UPDATE OR
+DELETE
+ON proff.proff_standarts
+    FOR EACH ROW EXECUTE PROCEDURE proff.update_to_tsvector_proff_standarts();
+
+--------------------------------------------------------------------
+
+CREATE
+OR REPLACE FUNCTION proff.update_to_tsvector_generalized_work_functions() RETURNS TRIGGER AS $update_to_tsvector_generalized_work_functions$
+BEGIN
+        IF
+(TG_OP = 'DELETE') THEN
+DELETE
+FROM proff.to_tsvector_generalized_work_functions
+WHERE id_gwf = OLD.id_gwf;
+RETURN OLD;
+ELSIF
+(TG_OP = 'UPDATE') THEN
+UPDATE proff.to_tsvector_generalized_work_functions
+SET name_gwf = to_tsvector('russian', NEW.name_gwf)
+WHERE id_gwf = OLD.id_gwf;
+RETURN NEW;
+ELSIF
+(TG_OP = 'INSERT') THEN
+            INSERT INTO proff.to_tsvector_generalized_work_functions
+select NEW.id_gwf, to_tsvector('russian', NEW.name_gwf);
+RETURN NEW;
+END IF;
+RETURN NULL; -- возвращаемое значение для триггера AFTER игнорируется
+END;
+$update_to_tsvector_generalized_work_functions$
+LANGUAGE plpgsql;
+
+
+CREATE TRIGGER update_to_tsvector_generalized_work_functions
+    AFTER INSERT OR
+UPDATE OR
+DELETE
+ON proff.generalized_work_functions
+    FOR EACH ROW EXECUTE PROCEDURE proff.update_to_tsvector_generalized_work_functions();
+--------------------------------------------------------------------
+CREATE
+OR REPLACE FUNCTION proff.update_to_tsvector_possible_job_titles() RETURNS TRIGGER AS $update_to_tsvector_possible_job_titles$
+BEGIN
+        IF
+(TG_OP = 'DELETE') THEN
+DELETE
+FROM proff.to_tsvector_possible_job_titles
+WHERE id_possible_job_title = OLD.id_possible_job_title;
+RETURN OLD;
+ELSIF
+(TG_OP = 'UPDATE') THEN
+UPDATE proff.to_tsvector_possible_job_titles
+SET title = to_tsvector('russian', NEW.title),
+    id_gwf=NEW.id_gwf
+WHERE id_possible_job_title = OLD.id_possible_job_title;
+RETURN NEW;
+ELSIF
+(TG_OP = 'INSERT') THEN
+            INSERT INTO proff.to_tsvector_possible_job_titles
+select NEW.id_possible_job_title, to_tsvector('russian', NEW.title), NEW.id_gwf;
+RETURN NEW;
+END IF;
+RETURN NULL; -- возвращаемое значение для триггера AFTER игнорируется
+END;
+$update_to_tsvector_possible_job_titles$
+LANGUAGE plpgsql;
+
+--DROP TRIGGER if exists  update_to_tsvector_possible_job_titles ON proff.possible_job_titles ;
+CREATE TRIGGER update_to_tsvector_possible_job_titles
+    AFTER INSERT OR
+UPDATE OR
+DELETE
+ON proff.possible_job_titles
+    FOR EACH ROW EXECUTE PROCEDURE proff.update_to_tsvector_possible_job_titles();
+--------------------------------------------------------------------
+CREATE
+OR REPLACE FUNCTION proff.update_to_tsvector_particular_work_functions() RETURNS TRIGGER AS $update_to_tsvector_particular_work_functions$
+BEGIN
+        IF
+(TG_OP = 'DELETE') THEN
+DELETE
+FROM proff.to_tsvector_particular_work_functions
+WHERE id_particular_work_function = OLD.id_particular_work_function;
+RETURN OLD;
+ELSIF
+(TG_OP = 'UPDATE') THEN
+UPDATE proff.to_tsvector_particular_work_functions
+SET name_wf = to_tsvector('russian', NEW.name_wf)
+WHERE id_particular_work_function = OLD.id_particular_work_function;
+RETURN NEW;
+ELSIF
+(TG_OP = 'INSERT') THEN
+            INSERT INTO proff.to_tsvector_particular_work_functions
+select NEW.id_particular_work_function, to_tsvector('russian', NEW.name_wf), NEW.id_gwf;
+RETURN NEW;
+END IF;
+RETURN NULL;
+END;
+$update_to_tsvector_particular_work_functions$
+LANGUAGE plpgsql;
+
+
+CREATE TRIGGER update_to_tsvector_particular_work_functions
+    AFTER INSERT OR
+UPDATE OR
+DELETE
+ON proff.particular_work_functions
+    FOR EACH ROW EXECUTE PROCEDURE proff.update_to_tsvector_particular_work_functions();
+--------------------------------------------------------------------
+CREATE
+OR REPLACE FUNCTION proff.update_to_tsvector_labor_actions() RETURNS TRIGGER AS $update_to_tsvector_labor_actions$
+BEGIN
+        IF
+(TG_OP = 'DELETE') THEN
+DELETE
+FROM proff.to_tsvector_labor_actions
+WHERE id_labor_action = OLD.id_labor_action;
+RETURN OLD;
+ELSIF
+(TG_OP = 'UPDATE') THEN
+UPDATE proff.to_tsvector_labor_actions
+SET description                = to_tsvector('russian', NEW.description),
+    id_particular_work_function=NEW.id_particular_work_function
+WHERE id_labor_action = OLD.id_labor_action;
+RETURN NEW;
+ELSIF
+(TG_OP = 'INSERT') THEN
+            INSERT INTO proff.to_tsvector_labor_actions
+select NEW.id_labor_action, to_tsvector('russian', NEW.description), NEW.id_particular_work_function;
+RETURN NEW;
+END IF;
+RETURN NULL;
+END;
+$update_to_tsvector_labor_actions$
+LANGUAGE plpgsql;
+
+
+CREATE TRIGGER update_to_tsvector_labor_actions
+    AFTER INSERT OR
+UPDATE OR
+DELETE
+ON proff.labor_actions
+    FOR EACH ROW EXECUTE PROCEDURE proff.update_to_tsvector_labor_actions();
+--------------------------------------------------------------------
+CREATE
+OR REPLACE FUNCTION proff.update_to_tsvector_required_skills() RETURNS TRIGGER AS $update_to_tsvector_required_skills$
+BEGIN
+        IF
+(TG_OP = 'DELETE') THEN
+DELETE
+FROM proff.to_tsvector_required_skills
+WHERE id_required_skill = OLD.id_required_skill;
+RETURN OLD;
+ELSIF
+(TG_OP = 'UPDATE') THEN
+UPDATE proff.to_tsvector_required_skills
+SET description                = to_tsvector('russian', NEW.description),
+    id_particular_work_function=NEW.id_particular_work_function
+WHERE id_required_skill = OLD.id_required_skill;
+RETURN NEW;
+ELSIF
+(TG_OP = 'INSERT') THEN
+            INSERT INTO proff.to_tsvector_required_skills
+select NEW.id_required_skill, to_tsvector('russian', NEW.description), NEW.id_particular_work_function;
+RETURN NEW;
+END IF;
+RETURN NULL;
+END;
+$update_to_tsvector_required_skills$
+LANGUAGE plpgsql;
+
+
+CREATE TRIGGER update_to_tsvector_required_skills
+    AFTER INSERT OR
+UPDATE OR
+DELETE
+ON proff.required_skills
+    FOR EACH ROW EXECUTE PROCEDURE proff.update_to_tsvector_required_skills();
+--------------------------------------------------------------------
+CREATE
+OR REPLACE FUNCTION proff.update_to_tsvector_necessary_knowledge() RETURNS TRIGGER AS $update_to_tsvector_necessary_knowledge$
+BEGIN
+        IF
+(TG_OP = 'DELETE') THEN
+DELETE
+FROM proff.to_tsvector_necessary_knowledge
+WHERE id_necessary_knowledge = OLD.id_necessary_knowledge;
+RETURN OLD;
+ELSIF
+(TG_OP = 'UPDATE') THEN
+UPDATE proff.to_tsvector_necessary_knowledge
+SET description                = to_tsvector('russian', NEW.description),
+    id_particular_work_function=NEW.id_particular_work_function
+WHERE id_necessary_knowledge = OLD.id_necessary_knowledge;
+RETURN NEW;
+ELSIF
+(TG_OP = 'INSERT') THEN
+            INSERT INTO proff.to_tsvector_necessary_knowledge
+select NEW.id_necessary_knowledge, to_tsvector('russian', NEW.description), NEW.id_particular_work_function;
+RETURN NEW;
+END IF;
+RETURN NULL;
+END;
+$update_to_tsvector_necessary_knowledge$
+LANGUAGE plpgsql;
+
+
+CREATE TRIGGER update_to_tsvector_necessary_knowledge
+    AFTER INSERT OR
+UPDATE OR
+DELETE
+ON proff.necessary_knowledge
+    FOR EACH ROW EXECUTE PROCEDURE proff.update_to_tsvector_necessary_knowledge();
