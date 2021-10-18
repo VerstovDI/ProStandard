@@ -23,7 +23,6 @@ END;
 $BODY$
 language plpgsql;
 
-select proff.get_proff_standarts_id_by_ed_req_and_key_words('магистратура | специалитет', 'База & данных | аналитик')
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 create
@@ -48,9 +47,6 @@ where to_tsvector_educational_requirements.to_tsvector @@ to_tsquery(p_education
 END;
 $BODY$
 language plpgsql;
-
-select proff.get_generalized_work_functions_id_by_ed_req_and_key_words('магистратура | специалитет',
-                                                                       'База & данных | аналитик')
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -77,9 +73,6 @@ END;
 $BODY$
 language plpgsql;
 
-select proff.get_possible_job_titles_id_by_ed_req_and_key_words('магистратура | специалитет',
-                                                                'База & данных | аналитик')
-
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 create
@@ -105,8 +98,6 @@ END;
 $BODY$
 language plpgsql;
 
-select proff.get_particular_work_functions_id_by_ed_req_and_key_words('магистратура | специалитет',
-                                                                      'База & данных | аналитик')
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 create
@@ -134,7 +125,6 @@ END;
 $BODY$
 language plpgsql;
 
-select proff.get_labor_actions_id_by_ed_req_and_key_words('магистратура | специалитет', 'База & данных | аналитик')
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 create
@@ -162,7 +152,6 @@ END;
 $BODY$
 language plpgsql;
 
-select proff.get_required_skills_id_by_ed_req_and_key_words('магистратура | специалитет', 'База & данных | аналитик')
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 create
@@ -189,6 +178,3 @@ where to_tsvector_educational_requirements.to_tsvector @@ to_tsquery(p_education
 END;
 $BODY$
 language plpgsql;
-
-select proff.get_necessary_knowledge_id_by_ed_req_and_key_words('магистратура | специалитет',
-                                                                'База & данных | аналитик')
