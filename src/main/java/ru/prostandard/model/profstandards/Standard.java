@@ -10,6 +10,10 @@ import java.util.Objects;
 @Table(name = "proff_standarts", schema = "proff")
 public class Standard {
     @Id
+    @Column(name = "proff_standarts_id", columnDefinition = "serial")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
     @Column(name = "code_kind_professional_activity")
     private String codeKindProfessionalActivity;
 
@@ -165,5 +169,9 @@ public class Standard {
                 ", purposeKindProfessionalActivity='" + purposeKindProfessionalActivity + '\'' +
                 ", resource=" + resource +
                 '}';
+    }
+
+    public Long getId() {
+        return id;
     }
 }

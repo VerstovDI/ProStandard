@@ -21,7 +21,7 @@ public class GeneralizedWorkFunction {
     private Integer levelOfQualification;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "code_kind_professional_activity", nullable = false)
+    @JoinColumn(name = "proff_standarts_id", nullable = false)
     private Standard standard;
 
     public GeneralizedWorkFunction() {
