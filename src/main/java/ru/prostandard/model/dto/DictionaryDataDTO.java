@@ -1,6 +1,7 @@
 package ru.prostandard.model.dto;
 
 import lombok.*;
+import ru.prostandard.model.search.SearchFilter;
 
 import java.io.Serializable;
 
@@ -9,9 +10,14 @@ import java.io.Serializable;
  * Класс для передачи данных запроса с клиента на сервер о требуемой конфигурации
  * для подбора профстандартов
  */
+@EqualsAndHashCode(callSuper = true)
 @Data
 @AllArgsConstructor
-public class DictionaryDataDTO implements Serializable {
+@NoArgsConstructor
+@RequiredArgsConstructor
+public class DictionaryDataDTO extends SearchFilter implements Serializable {
+
+    private static final long serialVersionUID = -1329588300102932213L;
 
     /** Уровень образования */
     private String educationLevel;
@@ -22,6 +28,6 @@ public class DictionaryDataDTO implements Serializable {
     /** Направление обучения */
     private String subjMajor;
 
-    /** URL ресурса для загрузки и парсинга проф. стандартов */
+    /** URL ресурса для загрузки и парсинга профессиональных стандартов */
     private String resourceToDownload;
 }

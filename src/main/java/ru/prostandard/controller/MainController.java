@@ -9,10 +9,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.prostandard.model.dto.DictionaryDataDTO;
 import ru.prostandard.model.dto.HelpInfoDTO;
+import ru.prostandard.model.dto.StandardDTO;
 import ru.prostandard.repository.EducationLevelRepository;
 import ru.prostandard.service.DictionaryService;
 import ru.prostandard.service.HelpService;
 import ru.prostandard.service.ParsingService;
+import ru.prostandard.service.intellisearch.IntelliSelectionService;
 
 /**
  * Контроллер, обрабатывающий запросы главной страницы приложения.
@@ -36,6 +38,9 @@ public class MainController {
     @Autowired
     private ParsingService parsingService;
 
+    @Autowired
+    IntelliSelectionService intelliSelectionService;
+
     /**
      * Получение списка всех подобранных стандартов
      * @return
@@ -43,10 +48,10 @@ public class MainController {
     @CrossOrigin
     @PostMapping(value = "/standards")
     @ResponseBody
-    public ResponseEntity<Object> getStandards(@RequestBody DictionaryDataDTO dictionaryDataDTO) {
+    public ResponseEntity<Object> getStandards(@RequestBody StandardDTO standardDTO) {
         try {
             logger.info("Начало выдачи профессиональных стандартов");
-            dictionaryService.createRequest(dictionaryDataDTO);
+            intelliSelectionService.getProfstandards(standardDTO);
 
             // TODO: Что вызываем? Что возвращает?
 
