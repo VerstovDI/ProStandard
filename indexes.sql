@@ -11,8 +11,12 @@ INDEX id_particular_work_function_idx
 ON proff.particular_work_functions (id_particular_work_function);
 
 CREATE
-INDEX id_educational_requirements_idx
+INDEX id_gwf_in_educational_requirements_idx
 ON proff.educational_requirements(id_gwf);
+
+CREATE
+INDEX id_educational_requirements_idx
+ON proff.educational_requirements(id_educational_requirement);
 
 CREATE
 INDEX id_possible_job_titles_idx
