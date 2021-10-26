@@ -15,19 +15,19 @@ INDEX id_gwf_in_educational_requirements_idx
 ON proff.educational_requirements(id_gwf);
 
 CREATE
-INDEX id_educational_requirements_idx
+INDEX id_educational_requirement_idx
 ON proff.educational_requirements(id_educational_requirement);
 
 CREATE
-INDEX id_possible_job_titles_idx
+INDEX id_possible_job_title_idx
 ON proff.possible_job_titles(id_possible_job_title);
 
 CREATE
-INDEX id_labor_actions_idx
+INDEX id_labor_action_idx
 ON proff.labor_actions(id_labor_action);
 
 CREATE
-INDEX id_required_skills_idx
+INDEX id_required_skill_idx
 ON proff.required_skills(id_required_skill);
 
 CREATE
@@ -39,11 +39,11 @@ INDEX to_tsvector_id_gwf_idx
 ON proff.to_tsvector_generalized_work_functions(id_gwf);
 
 CREATE
-INDEX to_tsvector_id_particular_work_functions_idx
+INDEX to_tsvector_id_particular_work_function_idx
 ON proff.to_tsvector_particular_work_functions(id_particular_work_function);
 
 CREATE
-INDEX to_tsvector_educational_requirements_idx
+INDEX to_tsvector_educational_requirement_idx
 ON proff.to_tsvector_educational_requirements
 USING gin ("to_tsvector");
 
@@ -63,7 +63,7 @@ ON proff.to_tsvector_generalized_work_functions
 USING gin (name_gwf);
 
 CREATE
-INDEX to_tsvector_possible_job_titles_titles
+INDEX to_tsvector_possible_job_titles_title
 ON proff.to_tsvector_possible_job_titles
 USING gin (title);
 
