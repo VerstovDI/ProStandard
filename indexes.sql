@@ -11,23 +11,23 @@ INDEX id_particular_work_function_idx
 ON proff.particular_work_functions (id_particular_work_function);
 
 CREATE
-INDEX id_gwf_idx_educational_requirements
+INDEX id_educational_requirements_idx
 ON proff.educational_requirements(id_gwf);
 
 CREATE
-INDEX id_gwf_idx_possible_job_titles
+INDEX id_possible_job_titles_idx
 ON proff.possible_job_titles(id_possible_job_title);
 
 CREATE
-INDEX id_gwf_idx_labor_actions
+INDEX id_labor_actions_idx
 ON proff.labor_actions(id_labor_action);
 
 CREATE
-INDEX id_gwf_idx_required_skills
+INDEX id_required_skills_idx
 ON proff.required_skills(id_required_skill);
 
 CREATE
-INDEX id_gwf_idx_necessary_knowledge
+INDEX id_necessary_knowledge_idx
 ON proff.necessary_knowledge(id_necessary_knowledge);
 
 CREATE
@@ -36,10 +36,10 @@ ON proff.to_tsvector_generalized_work_functions(id_gwf);
 
 CREATE
 INDEX to_tsvector_id_particular_work_functions_idx
-ON proff.particular_work_functions(id_particular_work_function);
+ON proff.to_tsvector_particular_work_functions(id_particular_work_function);
 
 CREATE
-INDEX to_tsvecto_educational_requirementsr_idx
+INDEX to_tsvector_educational_requirements_idx
 ON proff.to_tsvector_educational_requirements
 USING gin ("to_tsvector");
 
@@ -55,25 +55,31 @@ USING gin ("purpose_kind_professional_activity");
 
 CREATE
 INDEX to_tsvector_generalized_work_functions_name_gwf
-ON proff.to_tsvector_generalized_work_functions USING gin (name_gwf);
+ON proff.to_tsvector_generalized_work_functions
+USING gin (name_gwf);
 
 CREATE
 INDEX to_tsvector_possible_job_titles_titles
-ON proff.to_tsvector_possible_job_titles USING gin (title);
+ON proff.to_tsvector_possible_job_titles
+USING gin (title);
 
 CREATE
 INDEX to_tsvector_particular_work_functions_name_wf
-ON proff.to_tsvector_particular_work_functions USING gin (name_wf);
+ON proff.to_tsvector_particular_work_functions
+USING gin (name_wf);
 
 CREATE
 INDEX to_tsvector_labor_actions_description
-ON proff.to_tsvector_labor_actions USING gin (description);
+ON proff.to_tsvector_labor_actions
+USING gin (description);
 
 CREATE
 INDEX to_tsvector_required_skills_description
-ON proff.to_tsvector_required_skills USING gin (description);
+ON proff.to_tsvector_required_skills
+USING gin (description);
 
 
 CREATE
 INDEX to_tsvector_necessary_knowledge_description
-ON proff.to_tsvector_necessary_knowledge USING gin (description);
+ON proff.to_tsvector_necessary_knowledge
+USING gin (description);
