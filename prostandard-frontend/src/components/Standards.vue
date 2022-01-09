@@ -52,10 +52,10 @@
                     <th data-field="actions" data-formatter="operateFormatter" data-events="operateEvents">Действия</th>
                     </thead>
                     <tbody>
-                    <tr>
-                      <td>1</td>
-                      <td>1460</td>
-                      <td>10.015</td>
+                    <tr v-for="standard in standards" v-bind:key="standard.regNumber">
+                      <td> {{ standard.regNumber }}</td>
+                      <td> {{ standard.profstandardCode }}</td>
+                      <td> {{ standard.profstandardName }}</td>
                       <td>Специалист по организации архитектурно-строительного проектирования</td>
                       <td></td>
                     </tr>
@@ -75,8 +75,46 @@
 </template>
 
 <script>
+import MainDataService from "@/services/MainDataService";
+
 export default {
-  name: "Standards"
+  name: "Standards",
+  props: {
+    // Проброшенные фильтры поиска с родительского компонента Main.vue на текущий (дочерний) компонент с Standards.vue
+    educationLevel: String,
+    specializationCode: String,
+    subjMajor: String,
+    resourceToDownload: String,
+    keywords: Array
+  },
+
+  data() {
+    return {
+      // Накопленные ошибки работы приложения
+      errors: [],
+
+      standards: []
+    }
+  },
+
+  getStandards() {
+    let searchData = {
+      educationLevel: this.props.educationLevel,
+      specializationCode: this.props.specializationCode,
+      subjMajor: this.props.subjMajor,
+      resourceToDownload: this.props.resourceToDownload,
+      keywords: this.props.getTags
+    };
+    MainDataService.getStandards(searchData).then(response => {
+      this.standards = response.data;
+    });
+    console.log(this.standards);
+  },
+
+  // TODO: добавить что-то в стиле RefreshList
+  mounted: function () {
+    //this.getStandards();
+  }
 }
 </script>
 

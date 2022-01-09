@@ -11,27 +11,18 @@ import java.io.Serializable;
  * Класс (DTO) для передачи профстандарта клиенту.
  */
 @AllArgsConstructor
-@RequiredArgsConstructor
 @NoArgsConstructor
 public class StandardDTO extends SearchFilter implements Serializable {
 
     private static final long serialVersionUID = 1020345830010232213L;
 
-    /**
-     * Регистрационный номер профессионального стандарта
-     */
+    /** Регистрационный номер профессионального стандарта */
     private Long regNumber;
 
-    /**
-     * Код профессионального стандарта
-     */
+    /** Код профессионального стандарта */
     private String profstandardCode;
 
-    /**
-     * Наименование профессионального стандарта
-     */
+    /** Наименование профессионального стандарта */
     private String profstandardName;
-
-    private String kindOfProfessionalActivity;
 
 }

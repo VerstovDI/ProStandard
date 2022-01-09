@@ -4,6 +4,7 @@ import lombok.*;
 import ru.prostandard.model.search.SearchFilter;
 
 import java.io.Serializable;
+import java.util.List;
 
 
 /**
@@ -14,8 +15,7 @@ import java.io.Serializable;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@RequiredArgsConstructor
-public class DictionaryDataDTO extends SearchFilter implements Serializable {
+public class SearchDTO extends SearchFilter implements Serializable {
 
     private static final long serialVersionUID = -1329588300102932213L;
 
@@ -30,4 +30,7 @@ public class DictionaryDataDTO extends SearchFilter implements Serializable {
 
     /** URL ресурса для загрузки и парсинга профессиональных стандартов */
     private String resourceToDownload;
+
+    /** Список ключевых слов для фильтрации выборки */
+    private List<String> keywords;
 }

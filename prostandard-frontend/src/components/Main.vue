@@ -1,5 +1,10 @@
 <template>
   <!-- root страницы !-->
+
+  <!-- Пробрасываем данные формы на компонент вывода стандартов !-->
+<!--  <Standards v-on: :education-level="this.educationLevel" :specialization-code="this.specializationCode"
+              :subj-major="this.subjMajor" :resource-to-download="this.resourceToDownload" :keywords="this.tags"/>-->
+
   <div class="root-main">
     <div class="row pt-5 pb-5">
       <div class="container">
@@ -44,7 +49,7 @@
                 </span>
                 <input type="text" v-model="specializationCode"
                        name="specializationCode" class="form-control" id="specializationCode"
-                       placeholder="Введите наименование специальности">
+                       placeholder="Введите наименование специальности...">
               </div>
 
               <!-- Форма "Направление обучения" !-->
@@ -52,8 +57,9 @@
                 <label for="subjMajor">
                   <b>Направление обучения</b>
                 </label>
-                <input type="text" v-model="subjMajor"  name="subjMajor" class="form-control" id="subjMajor"
-                       placeholder="Введите направление обучения">
+                <input type="text" v-model="subjMajor"
+                       name="subjMajor" class="form-control" id="subjMajor"
+                       placeholder="Введите направление обучения...">
               </div>
 
               <!-- Форма "Источник данных" !-->
@@ -75,6 +81,20 @@
                   <i>([https://profstandart.rosmintrud.ru/])</i>
                 </p>
               </div>
+
+              <!-- Форма "Ключевые слова" !-->
+              <label for="subjMajor">
+                <b>Ключевые слова</b>
+              </label>
+              <div>
+                <vue-tags-input
+                    v-model="tag"
+                    :tags="tags"
+                    :autocomplete-items="filteredItems"
+                    placeholder="Введите ключевое слово..."
+                    @tags-changed="newTags => tags = newTags"
+                />
+              </div>
             </div>
           </form>
         </div>
@@ -93,7 +113,7 @@
 <!--              data-bs-toggle="modal" data-bs-target="#helpModal"-->
               Справка
             </button>
-            <ModalInfo :infoData="infoData" v-if="showModal" @close="showModal = false">
+            <ModalInfo :helpData="helpData" v-if="showModal" @close="showModal = false">
 <!--              <template v-slot:body>
                 Hello, modal!
               </template>-->
@@ -103,9 +123,10 @@
           <!-- Кнопка "Подобрать" !-->
           <div class="row p-3 m-2">
 <!--            <router-link to="/standards" tag="button">-->
-              <button type="button" class="btn btn-success" @click="$router.push('/standards'); getStandards()" id="getStandards">
+              <button type="button" class="btn btn-success"
+                      @click="$router.push('/standards'); sendSearchFilters()" id="searchStandards">
                 Подобрать
-                <!-- TODO: вынести getStandards() на mount() страницы с профстандартами, а не на вызов по клику !-->
+                <!-- TODO: вынести sendSearchFilters() на mount() страницы с профстандартами, а не на вызов по клику !-->
               </button>
 <!--            </router-link>-->
           </div>
@@ -125,31 +146,44 @@
 <script>
 import MainDataService from "@/services/MainDataService";
 import ModalInfo from "@/components/ModalInfo";
+import VueTagsInput from '@sipec/vue3-tags-input';
 
 export default {
   name: "Main",
-  components: { ModalInfo },
+  components: { ModalInfo, VueTagsInput },
   data() {
     return {
+
       // Накопленные ошибки работы приложения
       errors: [],
+
       // Переменные форм
       resourceOptions: [ {id: 0, name: 'Росминтруд'} ],
       educationLevels: [ {id: 0, name: 'Бакалавриат'},
-                         {id: 1, name: 'Специалитет'},
-                         {id: 2, name: 'Магистратура'}
-                       ],
+                          {id: 1, name: 'Специалитет'},
+                          {id: 2, name: 'Магистратура'}
+                        ],
       educationLevel: '',
       specializationCode: '',
       subjMajor: '',
       resourceToDownload: '',
+      tags: [],
+      tag: '',
+      autocompleteItems: [ { text: 'Базы данных'},
+                           { text: 'Программист' },
+                           { text: 'Аналитик' },
+                           { text: 'Системный администратор' },
+                           { text: 'Автоматизированные системы' }
+                          ],
+
       // Переменные блока "Справка"
-      infoData: {
+      helpData: {
         aboutApp: '',
         appVersion: '',
         developerInfo: '',
         lastUpdateInfo: ''
       },
+
       // Переменная открытия модального окна
       showModal: false
     }
@@ -161,37 +195,64 @@ export default {
       this.specializationCode = '';
       this.subjMajor = '';
       this.resourceToDownload = '';
+      this.tag = '';
+      this.tags = [];
     },
+
     // Метод получения подобранных профстандартов
-    getStandards() {
+    sendSearchFilters() {
       let requestData = {
         educationLevel: this.educationLevel,
         specializationCode: this.specializationCode,
         subjMajor: this.subjMajor,
-        resourceToDownload: this.resourceToDownload
+        resourceToDownload: this.resourceToDownload,
+        keywords: this.getTags
       };
       console.log(requestData);
-      MainDataService.getStandards(requestData).catch(e => {
-        if(e.request) {console.log(e.request)} if (e.response) {console.log(e.response)}
+      MainDataService.searchStandards(requestData).catch(e => {
+        if (e.request) {
+          console.log(e.request)
+        }
+        if (e.response) {
+          console.log(e.response)
+        }
       });
     },
+
     // Метод получения справки о приложении
     getInfo() {
       return MainDataService.getInfo();
-    },
+    }
   },
+
   // Справочная информация прогружается единожды при старте приложения
   mounted: function () {
     this.getInfo().then((response) => {
-      this.infoData = response.data;
+      this.helpData = response.data;
     });
+  },
+
+  computed: {
+    filteredItems() {
+      return this.autocompleteItems.filter(i => {
+        return i.text.toLowerCase().indexOf(this.tag.toLowerCase()) !== -1;
+      });
+    },
+
+    getTags() {
+      return this.tags.map(obj => obj.text);
+    }
   },
 
 }
 </script>
 
 <style>
-.btn {
-  border-color: white;
-}
+  .btn {
+    border-color: white;
+  }
+  /*.root-main {
+    background-size: contain;
+    background: url("~@/assets/MephiBlur.jpg") center center;
+  }*/
 </style>

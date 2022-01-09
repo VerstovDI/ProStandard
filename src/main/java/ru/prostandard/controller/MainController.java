@@ -4,59 +4,69 @@ import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ru.prostandard.model.dto.DictionaryDataDTO;
 import ru.prostandard.model.dto.HelpInfoDTO;
+import ru.prostandard.model.dto.SearchDTO;
 import ru.prostandard.model.dto.StandardDTO;
-import ru.prostandard.repository.EducationLevelRepository;
 import ru.prostandard.service.DictionaryService;
 import ru.prostandard.service.HelpService;
-import ru.prostandard.service.ParsingService;
 import ru.prostandard.service.intellisearch.IntelliSelectionService;
+
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * Контроллер, обрабатывающий запросы главной страницы приложения.
  * Отвечает за отправку и приём JSON с главного окна составления профстандарта.
  */
-@RestController
+@RestController(value = "localhost:8081/")
 @RequiredArgsConstructor
 public class MainController {
+
     private final Logger logger = LoggerFactory.getLogger(MainController.class);
 
-    /**
-     * Сервис для ведения справочной информации приложения
-     */
+    /** Сервис для ведения справочной информации приложения */
     private final DictionaryService dictionaryService;
 
+    @Autowired
     private final HelpService helpService;
 
     @Autowired
-    private EducationLevelRepository educationLevelRepository;
-
-    @Autowired
-    private ParsingService parsingService;
-
-    @Autowired
-    IntelliSelectionService intelliSelectionService;
+    private final IntelliSelectionService intelliSelectionService;
 
     /**
-     * Получение списка всех подобранных стандартов
-     * @return
+     * GET-запрос с отправкой данных на получения списка всех подобранных стандартов
+     * @return Список подобранных стандартов
      */
-    @CrossOrigin
-    @PostMapping(value = "/standards")
+    @GetMapping(value = "/standards")
     @ResponseBody
-    public ResponseEntity<Object> getStandards(@RequestBody StandardDTO standardDTO) {
+    public ResponseEntity<List<StandardDTO>> getStandards(@RequestParam String educationLevel,
+                                                          @RequestParam String specializationCode,
+                                                          @RequestParam String subjMajor,
+                                                          @RequestParam String resourceToDownload,
+                                                          @RequestParam String keywords) {
         try {
-            logger.info("Начало выдачи профессиональных стандартов");
-            intelliSelectionService.getProfstandards(standardDTO);
-
-            // TODO: Что вызываем? Что возвращает?
-
-            logger.info("Выдача профессиональных стандартов прошла успешно");
-            return new ResponseEntity<>(HttpStatus.OK);
+            logger.info("Отправка данных с формы выдачи стандартов начата...");
+            //TODO: String -> List<String>
+            List<String> keywordsList = Stream.of(keywords.split(",")).collect(Collectors.toList());
+            SearchDTO searchDTO =
+                    new SearchDTO(educationLevel, specializationCode, subjMajor, resourceToDownload, keywordsList);
+            List<StandardDTO> foundStandards = intelliSelectionService.getProfstandards(searchDTO);
+            foundStandards.add(new StandardDTO(1L,
+                                        "09.05.01",
+                                        "Применения и эксплуатация автоматизированных систем специального назначения"));
+            foundStandards.add(new StandardDTO(2L,
+                                                "09.04.03",
+                                                "Программная инженерия"));
+            // TODO: доделать
+            logger.info("Подбор профессиональных стандартов прошёл успешно");
+            HttpHeaders httpHeaders = new HttpHeaders();
+            httpHeaders.set("Access-Control-Allow-Origin", "http://localhost:8080");
+            return ResponseEntity.ok().headers(httpHeaders).body(foundStandards);
         } catch (Exception ex) {
             logger.error(ex.getMessage(), ex);
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -67,7 +77,6 @@ public class MainController {
      * Получение справки о приложении.
      * @return Статус запроса.
      */
-    @CrossOrigin()
     @GetMapping("/info")
     @ResponseBody
     public ResponseEntity<HelpInfoDTO> getInfo() {

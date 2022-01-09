@@ -2,12 +2,12 @@ package ru.prostandard.service.intellisearch;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import ru.prostandard.model.dto.SearchDTO;
 import ru.prostandard.model.dto.StandardDTO;
 import ru.prostandard.model.search.SearchFilter;
-import ru.prostandard.repository.standard.StandardRepository;
+import ru.prostandard.repository.standard.MatchedStandardRepository;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -24,17 +24,16 @@ public class IntelliSelectionService {
     private List<StandardDTO> profstandards;
 
     @Autowired
-    private StandardRepository standardRepository;
+    private MatchedStandardRepository matchedStandardRepository;
 
-    public List<StandardDTO> getProfstandards(StandardDTO standardDTO) {
+    public List<StandardDTO> getProfstandards(SearchDTO searchDTO) {
 
         List<SearchFilter> searchFilters = new ArrayList<>();
 
-        searchFilters.add(standardDTO);
-
-        profstandards = standardRepository.getStandards(searchFilters);
-
-        return profstandards;
+        searchFilters.add(searchDTO);
+        return new ArrayList<>(); // временная заглушка
+        //profstandards = matchedStandardRepository.sendSearchFilters(searchFilters);
+        //return profstandards;
     }
 
     /* public List<StandardDTO> getProfstandardsWithPostProcessing(...) {

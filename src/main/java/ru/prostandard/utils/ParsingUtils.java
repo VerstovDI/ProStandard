@@ -3,7 +3,7 @@ package ru.prostandard.utils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import ru.prostandard.model.dto.DictionaryDataDTO;
+import ru.prostandard.model.dto.SearchDTO;
 import ru.prostandard.service.ParsingService;
 
 import java.io.IOException;
@@ -16,12 +16,12 @@ public class ParsingUtils {
     @Autowired
     private ParsingService parsingService;
 
-    public static Path createTemporaryDir(DictionaryDataDTO dictionaryDataDTO) throws IOException {
+    public static Path createTemporaryDir(SearchDTO searchDTO) throws IOException {
         Path tempDirPath = Files.createTempDirectory("dictionaryDataDTO.");
         return tempDirPath;
     }
 
-    public static String getTargetParsingString(DictionaryDataDTO parsingDataDTO) {
+    public static String getTargetParsingString(SearchDTO parsingDataDTO) {
         //createTemporaryDir();
         return "";
     }
@@ -30,20 +30,20 @@ public class ParsingUtils {
 
     /**
      * Функция парсинга профессиональных стандартов
-     * @param dictionaryDataDTO
+     * @param searchDTO
      * @return
      */
-    public ParseInfo parseStandards(DictionaryDataDTO dictionaryDataDTO) {
+    public ParseInfo parseStandards(SearchDTO searchDTO) {
         try {
             logger.info("Начало парсинга профстандарта в базу данных...");
-            if (dictionaryDataDTO == null) {
+            if (searchDTO == null) {
                 logger.error("Данные для парсинга пусты");
                 throw new RuntimeException("Данные для парсинга пусты");
             }
             ParseInfo parseInfo = new ParseInfo();
             // TODO: возвращаем не просто ответ, а ещё и что-то от парсинга
             //  (краткая свода того, что было спарсено)
-            parsingService.parseResource(dictionaryDataDTO);
+            parsingService.parseResource(searchDTO);
             logger.info("Данные о профстандарте были успешно добавлены на сервер");
             return parseInfo;
         } catch (Exception ex) {

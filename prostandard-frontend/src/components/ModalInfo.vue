@@ -9,10 +9,10 @@
 <!--            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>-->
           </div>
           <div class="modal-body">
-            <p><b>О приложении:</b> {{infoData.aboutApp}}</p>
-            <p><b>Версия приложения:</b> {{infoData.appVersion}}</p>
-            <p><b>О разработчике:</b> {{infoData.developerInfo}}</p>
-            <p><b>Дата последнего обновления:</b> {{infoData.lastUpdateInfo}}</p>
+            <p><b>О приложении:</b> {{helpData.aboutApp}}</p>
+            <p><b>Версия приложения:</b> {{helpData.appVersion}}</p>
+            <p><b>О разработчике:</b> {{helpData.developerInfo}}</p>
+            <p><b>Дата последнего обновления:</b> {{helpData.lastUpdateInfo}}</p>
           </div>
           <!-- Кнопка "Ок" модального окна справки !-->
           <div class="modal-footer">
@@ -30,8 +30,8 @@
 export default {
   name: "ModalInfo",
   props: {
-    // Свойство infoData, хранящее
-    infoData: {
+    // Свойство helpData, хранящее справочную информацию
+    helpData: {
           type: String,
           required: true
     }

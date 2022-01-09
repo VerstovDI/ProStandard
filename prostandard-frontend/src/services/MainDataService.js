@@ -2,8 +2,17 @@ import http from "../http-common";
 
 class MainDataService {
 
-    getStandards(data) {
-        return http.post("/standards", data);
+    searchStandards(data) {
+        console.log(JSON.stringify(data.tags));
+        return http.get("/standards", {
+            params: {
+                educationLevel: data.educationLevel,
+                specializationCode: data.specializationCode,
+                subjMajor: data.subjMajor,
+                resourceToDownload: data.resourceToDownload,
+                keywords: data.keywords
+            }
+        });
     }
 
     getInfo() {
