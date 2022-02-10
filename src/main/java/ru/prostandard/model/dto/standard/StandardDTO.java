@@ -1,8 +1,6 @@
-package ru.prostandard.model.dto;
+package ru.prostandard.model.dto.standard;
 
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
 import ru.prostandard.model.search.SearchFilter;
 
 import java.io.Serializable;
@@ -12,12 +10,15 @@ import java.io.Serializable;
  */
 @AllArgsConstructor
 @NoArgsConstructor
+@Getter
+@Setter
+@Builder
 public class StandardDTO extends SearchFilter implements Serializable {
 
     private static final long serialVersionUID = 1020345830010232213L;
 
     /** Регистрационный номер профессионального стандарта */
-    private Long regNumber;
+    private Integer regNumber;
 
     /** Код профессионального стандарта */
     private String profstandardCode;

@@ -10,11 +10,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.prostandard.model.dto.HelpInfoDTO;
 import ru.prostandard.model.dto.SearchDTO;
-import ru.prostandard.model.dto.StandardDTO;
+import ru.prostandard.model.dto.standard.StandardDTO;
+import ru.prostandard.model.profstandards.Standard;
 import ru.prostandard.service.DictionaryService;
 import ru.prostandard.service.HelpService;
 import ru.prostandard.service.intellisearch.IntelliSelectionService;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -51,22 +53,30 @@ public class MainController {
                                                           @RequestParam String keywords) {
         try {
             logger.info("Отправка данных с формы выдачи стандартов начата...");
-            //TODO: String -> List<String>
+
             List<String> keywordsList = Stream.of(keywords.split(",")).collect(Collectors.toList());
             SearchDTO searchDTO =
                     new SearchDTO(educationLevel, specializationCode, subjMajor, resourceToDownload, keywordsList);
-            List<StandardDTO> foundStandards = intelliSelectionService.getProfstandards(searchDTO);
-            foundStandards.add(new StandardDTO(1L,
+
+            List<Standard> foundStandards = intelliSelectionService.getProfstandards(searchDTO);
+            List<StandardDTO> standardDTOList = new ArrayList<>();
+            for (Standard standard : foundStandards) {
+                standardDTOList.add(new StandardDTO(
+                       standard.getRegistrationNumber(),
+                       standard.getCodeKindProfessionalActivity(),
+                       standard.getNameProfessionalStandart()));
+            }
+           /* foundStandards.add(new StandardDTO(1L,
                                         "09.05.01",
                                         "Применения и эксплуатация автоматизированных систем специального назначения"));
             foundStandards.add(new StandardDTO(2L,
                                                 "09.04.03",
-                                                "Программная инженерия"));
+                                                "Программная инженерия"));*/
             // TODO: доделать
             logger.info("Подбор профессиональных стандартов прошёл успешно");
             HttpHeaders httpHeaders = new HttpHeaders();
             httpHeaders.set("Access-Control-Allow-Origin", "http://localhost:8080");
-            return ResponseEntity.ok().headers(httpHeaders).body(foundStandards);
+            return ResponseEntity.ok().headers(httpHeaders).body(standardDTOList);
         } catch (Exception ex) {
             logger.error(ex.getMessage(), ex);
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);

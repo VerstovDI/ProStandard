@@ -6,7 +6,8 @@
               :subj-major="this.subjMajor" :resource-to-download="this.resourceToDownload" :keywords="this.tags"/>-->
 
   <div class="root-main">
-    <div class="row pt-5 pb-5">
+    <div class="wrapper container">
+    <div class="row mt-5">
       <div class="container">
         <div class="row">
           <div class="col text-center">
@@ -137,8 +138,9 @@
     </div>
 
     <!-- Footer страницы !-->
-    <div class="fixed-bottom">
-      <div class="row justify-content-center">ProStandard application, 2021, ver. 0.1</div>
+    <div class="d-flex flex-column min-vh-50">
+      <footer class="mt-auto">ProStandard application, 2021, ver. 0.1</footer>
+    </div>
     </div>
   </div>
 </template>

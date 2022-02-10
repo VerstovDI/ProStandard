@@ -1,19 +1,19 @@
 package ru.prostandard.repository.standard;
 
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
-import ru.prostandard.model.dto.StandardDTO;
-import ru.prostandard.model.profstandards.Standard;
 
-import java.util.Collection;
 import java.util.List;
-import java.util.Optional;
 
 /**
  * Главный интерфейс получения информации о профессиональных стандартах
  */
 @Repository
-public interface MatchedStandardRepository
-        extends JpaRepository<Standard, Long>, StandardFilterRepository {
+public interface MatchedStandardRepository extends StandardFilterRepository {
 
+    @Query(value = "proff.get_proff_standarts_id_by_ed_req_and_key_words(:edLvl, :keywords)",
+            nativeQuery = true)
+    List<Integer> getProfstandardIdsByEducationalLevelAndKeywords(@Param("p_educational_requirements") Integer educationLevel,
+                                                                  @Param("p_key_words") String keyWords);
 }

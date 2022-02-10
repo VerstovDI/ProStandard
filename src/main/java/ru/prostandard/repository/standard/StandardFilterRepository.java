@@ -1,12 +1,5 @@
 package ru.prostandard.repository.standard;
 
-import ru.prostandard.model.dto.StandardDTO;
-import ru.prostandard.model.search.SearchFilter;
-
-import java.util.Collection;
-import java.util.List;
-import java.util.Optional;
-
 /**
  * Интерфейс работы со стандартами в соответствие с заданными фильтрами.
  * Служит дополнительным звеном при получении стандартов из репозитория для
