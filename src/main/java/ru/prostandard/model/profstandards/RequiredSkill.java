@@ -21,7 +21,7 @@ public class RequiredSkill {
     public RequiredSkill() {
     }
 
-    public RequiredSkill( String description, ParticularWorkFunction particularWorkFunction) {
+    public RequiredSkill(String description, ParticularWorkFunction particularWorkFunction) {
         this.description = description;
         this.particularWorkFunction = particularWorkFunction;
     }

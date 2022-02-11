@@ -1,33 +1,43 @@
-package ru.prostandard.model.competence_model;
+package ru.prostandard.model.competence_model.tcl;
 
 import javax.persistence.*;
 import java.util.Objects;
 
+/**
+ * Сущность таблицы-классификатора типа профессиональной деятельности
+ */
 @Entity
 @Table(name = "tcl_proffessional_task_type", schema = "proff")
 public class ProfessionalTaskType {
 
+    /**
+     * Уникальный идентификатор типа профессиональной деятельности
+     */
     @Id
     @Column(name = "type_id", columnDefinition = "serial")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long taskTypeId;
+    private Integer taskTypeId;
 
+    /**
+     * Описание типа профессиональной деятельности.<br/>
+     * Например, "научно-исследовательский", "педагогический" и т.д.)
+     */
     @Column(name = "type_description")
     private String typeDescription;
 
     public ProfessionalTaskType() {
     }
 
-    public ProfessionalTaskType(Long taskTypeId, String typeDescription) {
+    public ProfessionalTaskType(Integer taskTypeId, String typeDescription) {
         this.taskTypeId = taskTypeId;
         this.typeDescription = typeDescription;
     }
 
-    public Long getTaskTypeId() {
+    public Integer getTaskTypeId() {
         return taskTypeId;
     }
 
-    public void setTaskTypeId(Long taskTypeId) {
+    public void setTaskTypeId(Integer taskTypeId) {
         this.taskTypeId = taskTypeId;
     }
 

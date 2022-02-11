@@ -7,6 +7,10 @@ import java.util.Objects;
 @Table(name = "employment_group_okved", schema = "proff")
 public class EmploymentGroupOkved {
     @Id
+    @Column(name = "id_okved", columnDefinition = "serial")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
     @Column(name = "сode_okved")
     private String codeOkved;
 

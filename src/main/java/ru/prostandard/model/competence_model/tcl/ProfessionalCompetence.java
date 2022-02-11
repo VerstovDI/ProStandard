@@ -1,33 +1,44 @@
-package ru.prostandard.model.competence_model;
+package ru.prostandard.model.competence_model.tcl;
 
 import javax.persistence.*;
 import java.util.Objects;
 
+/**
+ * Сущность таблицы-классификатора проф. компетенций, вводимых методистом
+ */
 @Entity
 @Table(name = "tcl_proffessional_competence", schema = "proff")
 public class ProfessionalCompetence {
 
+    /**
+     * Уникальный идентификатор профессиональной компетенции
+     */
     @Id
     @Column(name = "prof_competence_id", columnDefinition = "serial")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long competenceId;
+    private Integer competenceId;
 
+    /**
+     * Описание профессиональной компетенции.<br/>
+     * Например,
+     * "(ПК-4) Способен разрабатывать, согласовывать и выпускать все виды проектной документации".
+     */
     @Column(name = "competence_name")
     private String competenceName;
 
     public ProfessionalCompetence() {
     }
 
-    public ProfessionalCompetence(Long competenceId, String competenceName) {
+    public ProfessionalCompetence(Integer competenceId, String competenceName) {
         this.competenceId = competenceId;
         this.competenceName = competenceName;
     }
 
-    public Long getCompetenceId() {
+    public Integer getCompetenceId() {
         return competenceId;
     }
 
-    public void setCompetenceId(Long competenceId) {
+    public void setCompetenceId(Integer competenceId) {
         this.competenceId = competenceId;
     }
 

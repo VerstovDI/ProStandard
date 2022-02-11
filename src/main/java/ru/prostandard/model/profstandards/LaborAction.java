@@ -21,7 +21,7 @@ public class LaborAction {
     public LaborAction() {
     }
 
-    public LaborAction( String description, ParticularWorkFunction particularWorkFunction) {
+    public LaborAction(String description, ParticularWorkFunction particularWorkFunction) {
         this.description = description;
         this.particularWorkFunction = particularWorkFunction;
     }

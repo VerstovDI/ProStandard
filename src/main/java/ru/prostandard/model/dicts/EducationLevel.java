@@ -10,10 +10,10 @@ public class EducationLevel implements Serializable {
     @Id
     @Column(name = "level_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
 
     @Column(name = "level_value")
-    private Long levelValue;
+    private Integer levelValue;
 
     @Column(name = "description")
     private String levelDescription;
@@ -22,25 +22,25 @@ public class EducationLevel implements Serializable {
 
     }
 
-    public EducationLevel(Long id, Long levelValue, String levelDescription) {
+    public EducationLevel(Integer id, Integer levelValue, String levelDescription) {
         this.id = id;
         this.levelValue = levelValue;
         this.levelDescription = levelDescription;
     }
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
-    public Long getLevelValue() {
+    public Integer getLevelValue() {
         return levelValue;
     }
 
-    public void setLevelValue(Long levelValue) {
+    public void setLevelValue(Integer levelValue) {
         this.levelValue = levelValue;
     }
 

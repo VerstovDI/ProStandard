@@ -27,9 +27,9 @@ CREATE TABLE IF NOT EXISTS proff.prof_competence(  -- профессиональ
                                                     model_id integer,  -- ссылка на компетентностную модель
                                                     competence_id integer,  -- ссылка на профессиональную компетенцию
                                                     prof_task_type_id integer, -- ссылка на тип задачи профессиональной деятельности
-                                                    knowledge_id integer, -- ссылка на знание
-                                                    skill_id integer, -- ссылка на умение
-                                                    labor_action_id integer, -- ссылка на навык
+                                                    knowledge_id bigint, -- ссылка на знание
+                                                    skill_id bigint, -- ссылка на умение
+                                                    labor_action_id bigint, -- ссылка на навык
                                                     PRIMARY KEY(model_id, competence_id, prof_task_type_id, knowledge_id, skill_id, labor_action_id),
                                                     FOREIGN KEY (model_id) REFERENCES proff.competence_model (model_id)
                                                         ON DELETE RESTRICT ON UPDATE CASCADE,

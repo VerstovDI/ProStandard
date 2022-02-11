@@ -21,7 +21,7 @@ public class NecessaryKnowledge {
     public NecessaryKnowledge() {
     }
 
-    public NecessaryKnowledge( String description, ParticularWorkFunction particularWorkFunction) {
+    public NecessaryKnowledge(String description, ParticularWorkFunction particularWorkFunction) {
         this.description = description;
         this.particularWorkFunction = particularWorkFunction;
     }

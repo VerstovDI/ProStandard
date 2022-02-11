@@ -22,7 +22,8 @@ public class EducationalRequirement {
     public EducationalRequirement() {
     }
 
-    public EducationalRequirement( String educationalRequirement, GeneralizedWorkFunction generalizedWorkFunction) {
+    public EducationalRequirement(String educationalRequirement,
+                                  GeneralizedWorkFunction generalizedWorkFunction) {
         this.educationalRequirement = educationalRequirement;
         this.generalizedWorkFunction = generalizedWorkFunction;
     }
@@ -56,7 +57,9 @@ public class EducationalRequirement {
         if (this == o) return true;
         if (!(o instanceof EducationalRequirement)) return false;
         EducationalRequirement that = (EducationalRequirement) o;
-        return Objects.equals(id, that.id) && Objects.equals(educationalRequirement, that.educationalRequirement) && Objects.equals(generalizedWorkFunction, that.generalizedWorkFunction);
+        return Objects.equals(id, that.id)
+                && Objects.equals(educationalRequirement, that.educationalRequirement)
+                && Objects.equals(generalizedWorkFunction, that.generalizedWorkFunction);
     }
 
     @Override

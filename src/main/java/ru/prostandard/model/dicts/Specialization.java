@@ -1,5 +1,7 @@
 package ru.prostandard.model.dicts;
 
+import ru.prostandard.model.competence_model.CompetenceModel;
+
 import javax.persistence.*;
 import java.io.Serializable;
 
@@ -10,7 +12,7 @@ public class Specialization implements Serializable {
     @Id
     @Column(name = "spec_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
 
     @Column(name = "spec_code")
     private String specializationCode;
@@ -18,20 +20,23 @@ public class Specialization implements Serializable {
     @Column(name = "spec_description")
     private String specializationDescription;
 
+    @OneToOne(mappedBy = "specialization")
+    private CompetenceModel competenceModel;
+
     public Specialization() {
     }
 
-    public Specialization(Long id, String specializationCode, String specializationDescription) {
+    public Specialization(Integer id, String specializationCode, String specializationDescription) {
         this.id = id;
         this.specializationCode = specializationCode;
         this.specializationDescription = specializationDescription;
     }
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -49,6 +54,14 @@ public class Specialization implements Serializable {
 
     public void setSpecializationDescription(String specializationDescription) {
         this.specializationDescription = specializationDescription;
+    }
+
+    public CompetenceModel getCompetenceModel() {
+        return competenceModel;
+    }
+
+    public void setCompetenceModel(CompetenceModel competenceModel) {
+        this.competenceModel = competenceModel;
     }
 
     @Override

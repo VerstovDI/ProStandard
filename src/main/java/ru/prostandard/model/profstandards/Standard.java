@@ -152,8 +152,8 @@ public class Standard {
     @Override
     public int hashCode() {
         return Objects.hash(codeKindProfessionalActivity, dateOfApproval, dateOfDownloading,
-                nameProfessionalStandart, registrationNumber, orderNumber, kindProfessionalActivity,
-                purposeKindProfessionalActivity, resource);
+                nameProfessionalStandart, registrationNumber, orderNumber,
+                kindProfessionalActivity, purposeKindProfessionalActivity, resource);
     }
 
     @Override
@@ -169,9 +169,5 @@ public class Standard {
                 ", purposeKindProfessionalActivity='" + purposeKindProfessionalActivity + '\'' +
                 ", resource=" + resource +
                 '}';
-    }
-
-    public Long getId() {
-        return id;
     }
 }

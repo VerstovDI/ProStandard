@@ -27,7 +27,8 @@ public class ParticularWorkFunction {
     public ParticularWorkFunction() {
     }
 
-    public ParticularWorkFunction( String сodeWf, String nameWf, Integer subQualification, GeneralizedWorkFunction generalizedWorkFunction) {
+    public ParticularWorkFunction(String сodeWf, String nameWf, Integer subQualification,
+                                  GeneralizedWorkFunction generalizedWorkFunction) {
         this.сodeWf = сodeWf;
         this.nameWf = nameWf;
         this.subQualification = subQualification;
@@ -79,12 +80,17 @@ public class ParticularWorkFunction {
         if (this == o) return true;
         if (!(o instanceof ParticularWorkFunction)) return false;
         ParticularWorkFunction that = (ParticularWorkFunction) o;
-        return Objects.equals(id, that.id) && Objects.equals(сodeWf, that.сodeWf) && Objects.equals(nameWf, that.nameWf) && Objects.equals(subQualification, that.subQualification) && Objects.equals(generalizedWorkFunction, that.generalizedWorkFunction);
+        return Objects.equals(id, that.id)
+                && Objects.equals(сodeWf, that.сodeWf)
+                && Objects.equals(nameWf, that.nameWf)
+                && Objects.equals(subQualification, that.subQualification)
+                && Objects.equals(generalizedWorkFunction, that.generalizedWorkFunction);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, сodeWf, nameWf, subQualification, generalizedWorkFunction);
+        return Objects.hash(id, сodeWf, nameWf,
+                subQualification, generalizedWorkFunction);
     }
 
     @Override
