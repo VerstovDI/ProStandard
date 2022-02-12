@@ -26,6 +26,7 @@ VALUES ('Способен разрабатывать образовательн�
 INSERT INTO proff.tcl_proffessional_task_type (type_description) VALUES ('научно-исследовательский');
 INSERT INTO proff.tcl_proffessional_task_type (type_description) VALUES ('технологический');
 INSERT INTO proff.tcl_proffessional_task_type (type_description) VALUES ('организационно-управленческий');
+INSERT INTO proff.tcl_proffessional_task_type (type_description) VALUES ('проектный');
 
 -- Наполняем proff.dict_specialization-- Специализации
 INSERT INTO proff.dict_specialization (spec_code,spec_description) VALUES ('09.05.01','Применение и эксплутация автоматизированных систем специального назначения');
@@ -35,3 +36,6 @@ INSERT INTO proff.competence_model (spec_code_id,status_id) VALUES (1,1);
 
 -- Наполняем proff.prof_competence_linked  -- Компетентностная модель со связями
 INSERT INTO proff.prof_competence_linked  VALUES (1,1,1,1,1,1);
+INSERT INTO proff.prof_competence_linked  VALUES (1,2,1,2,2,2);
+INSERT INTO proff.prof_competence_linked  VALUES (1,3,2,3,3,3);
+INSERT INTO proff.prof_competence_linked  VALUES (1,4,3,1,4,4);
