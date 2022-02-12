@@ -21,3 +21,17 @@ INSERT INTO proff.tcl_educational_competence (competence_name)
 VALUES ('Способен разрабатывать, согласовывать и выпускать все виды проектной документации');
 INSERT INTO proff.tcl_educational_competence (competence_name)
 VALUES ('Способен разрабатывать образовательные программы и учебно-методические материалы, а также проводить лекционные и практические занятия по дисциплинам в области информатики и вычислительной техники');
+
+-- Наполняем proff.tcl_proffessional_task_type  -- тип задач профессиональной деятельности
+INSERT INTO proff.tcl_proffessional_task_type (type_description) VALUES ('научно-исследовательский');
+INSERT INTO proff.tcl_proffessional_task_type (type_description) VALUES ('технологический');
+INSERT INTO proff.tcl_proffessional_task_type (type_description) VALUES ('организационно-управленческий');
+
+-- Наполняем proff.dict_specialization-- Специализации
+INSERT INTO proff.dict_specialization (spec_code,spec_description) VALUES ('09.05.01','Применение и эксплутация автоматизированных систем специального назначения');
+
+-- Наполняем proff.competence_model  -- Компетентностная модель
+INSERT INTO proff.competence_model (spec_code_id,status_id) VALUES (1,1);
+
+-- Наполняем proff.prof_competence_linked  -- Компетентностная модель со связями
+INSERT INTO proff.prof_competence_linked  VALUES (1,1,1,1,1,1);
