@@ -7,14 +7,14 @@ import java.util.Objects;
  * Сущность таблицы-классификатора проф. компетенций, вводимых методистом
  */
 @Entity
-@Table(name = "tcl_proffessional_competence", schema = "proff")
-public class ProfessionalCompetence {
+@Table(name = "tcl_educational_competence", schema = "proff")
+public class EducationalCompetence {
 
     /**
      * Уникальный идентификатор профессиональной компетенции
      */
     @Id
-    @Column(name = "prof_competence_id", columnDefinition = "serial")
+    @Column(name = "educational_competence_id", columnDefinition = "serial")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer competenceId;
 
@@ -26,10 +26,10 @@ public class ProfessionalCompetence {
     @Column(name = "competence_name")
     private String competenceName;
 
-    public ProfessionalCompetence() {
+    public EducationalCompetence() {
     }
 
-    public ProfessionalCompetence(Integer competenceId, String competenceName) {
+    public EducationalCompetence(Integer competenceId, String competenceName) {
         this.competenceId = competenceId;
         this.competenceName = competenceName;
     }
@@ -53,8 +53,8 @@ public class ProfessionalCompetence {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof ProfessionalCompetence)) return false;
-        ProfessionalCompetence that = (ProfessionalCompetence) o;
+        if (!(o instanceof EducationalCompetence)) return false;
+        EducationalCompetence that = (EducationalCompetence) o;
         return Objects.equals(getCompetenceId(), that.getCompetenceId()) && Objects.equals(getCompetenceName(), that.getCompetenceName());
     }
 

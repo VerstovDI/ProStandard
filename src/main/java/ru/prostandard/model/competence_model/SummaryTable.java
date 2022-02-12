@@ -1,6 +1,6 @@
 package ru.prostandard.model.competence_model;
 
-import ru.prostandard.model.competence_model.tcl.ProfessionalCompetence;
+import ru.prostandard.model.competence_model.tcl.EducationalCompetence;
 import ru.prostandard.model.competence_model.tcl.ProfessionalTaskType;
 import ru.prostandard.model.profstandards.LaborAction;
 import ru.prostandard.model.profstandards.NecessaryKnowledge;
@@ -14,7 +14,7 @@ import javax.persistence.*;
  * Соответствует таблице proff.prof_competence в базе данных приложения.
  */
 @Entity
-@Table(name = "prof_competence", schema = "proff")
+@Table(name = "prof_competence_linked", schema = "proff")
 public class SummaryTable {
 
     /**
@@ -37,7 +37,7 @@ public class SummaryTable {
     @ManyToOne
     @MapsId("competenceId")
     @JoinColumn(name = "competence_id")
-    private ProfessionalCompetence professionalCompetence;
+    private EducationalCompetence educationalCompetence;
 
     /**
      * Ссылка на тип задачи профессиональной деятельности
@@ -76,20 +76,20 @@ public class SummaryTable {
 
     public SummaryTable(SummaryTableId summaryTableId,
                         CompetenceModel competenceModel,
-                        ProfessionalCompetence professionalCompetence,
+                        EducationalCompetence educationalCompetence,
                         ProfessionalTaskType professionalTaskType,
                         NecessaryKnowledge necessaryKnowledge,
                         RequiredSkill requiredSkill,
                         LaborAction laborActionId) {
         this.summaryTableId = new SummaryTableId(
                 competenceModel.getModelId(),
-                professionalCompetence.getCompetenceId(),
+                educationalCompetence.getCompetenceId(),
                 professionalTaskType.getTaskTypeId(),
                 necessaryKnowledge.getId(),
                 requiredSkill.getId(),
                 laborActionId.getId());
         this.competenceModel = competenceModel;
-        this.professionalCompetence = professionalCompetence;
+        this.educationalCompetence = educationalCompetence;
         this.professionalTaskType = professionalTaskType;
         this.necessaryKnowledge = necessaryKnowledge;
         this.requiredSkill = requiredSkill;

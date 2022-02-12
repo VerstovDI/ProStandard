@@ -3,12 +3,12 @@ CREATE TABLE IF NOT EXISTS proff.tcl_model_status(  -- таблица-класс
                                                      status_description varchar(15) UNIQUE -- описание статуса (например, PROJECT, ARCHIVE, ACTIVE)
 );
 
-CREATE TABLE IF NOT EXISTS proff.tcl_proffessional_competence( -- таблица-классификатор проф. компетенций, вводимых методистом
-                                                                 prof_competence_id serial PRIMARY KEY,  -- уникальный идентификатор профессиональной компетенции
+CREATE TABLE IF NOT EXISTS proff.tcl_educational_competence( -- таблица-классификатор образ. компетенций, вводимых методистом
+                                                                 educational_competence_id serial PRIMARY KEY,  -- уникальный идентификатор образовательной компетенции
                                                                  competence_name varchar(500) UNIQUE  -- описание компетенции (например, "(ПК-4) Способен разрабатывать, согласовывать и выпускать все виды проектной документации")
 );
 
-CREATE TABLE IF NOT EXISTS proff.tcl_proffessional_task_type(  -- таблица-классификатор типа профессиональной деятельности
+CREATE TABLE IF NOT EXISTS proff.tcl_proffessional_task_type(  -- таблица-классификатор типа задач профессиональной деятельности
                                                                 type_id serial PRIMARY KEY, -- уникальный идентификатор типа профессиональной деятельности
                                                                 type_description varchar(50) UNIQUE -- описание типа профессиональной деятельности (например, "научно-исследовательский", "педагогический". Возможно, пустой вариант - тогда ПК стоит отдельно и не имеет типа задачи)
 );
@@ -23,9 +23,9 @@ CREATE TABLE IF NOT EXISTS proff.competence_model(  -- Компетентнос�
                                                          ON DELETE RESTRICT ON UPDATE CASCADE
 );
 
-CREATE TABLE IF NOT EXISTS proff.prof_competence(  -- профессиональные компетенции
+CREATE TABLE IF NOT EXISTS proff.prof_competence_linked(  -- профессиональные компетенции
                                                     model_id integer,  -- ссылка на компетентностную модель
-                                                    competence_id integer,  -- ссылка на профессиональную компетенцию
+                                                    competence_id integer,  -- ссылка на оброзовательную компетенцию
                                                     prof_task_type_id integer, -- ссылка на тип задачи профессиональной деятельности
                                                     knowledge_id bigint, -- ссылка на знание
                                                     skill_id bigint, -- ссылка на умение
@@ -33,7 +33,7 @@ CREATE TABLE IF NOT EXISTS proff.prof_competence(  -- профессиональ
                                                     PRIMARY KEY(model_id, competence_id, prof_task_type_id, knowledge_id, skill_id, labor_action_id),
                                                     FOREIGN KEY (model_id) REFERENCES proff.competence_model (model_id)
                                                         ON DELETE RESTRICT ON UPDATE CASCADE,
-                                                    FOREIGN KEY (competence_id) REFERENCES proff.tcl_proffessional_competence(prof_competence_id)
+                                                    FOREIGN KEY (competence_id) REFERENCES proff.tcl_educational_competence(educational_competence_id)
                                                         ON DELETE RESTRICT ON UPDATE CASCADE,
                                                     FOREIGN KEY (prof_task_type_id) REFERENCES proff.tcl_proffessional_task_type(type_id)
                                                         ON DELETE RESTRICT ON UPDATE CASCADE,
