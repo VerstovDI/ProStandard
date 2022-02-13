@@ -1,9 +1,13 @@
 package ru.prostandard.model.competence_model;
 
+import lombok.Getter;
+import lombok.Setter;
 import ru.prostandard.model.competence_model.tcl.CompetenceModelStatus;
 import ru.prostandard.model.dicts.Specialization;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -12,6 +16,8 @@ import java.util.Objects;
  */
 @Entity
 @Table(name = "competence_model", schema = "proff")
+@Getter
+@Setter
 public class CompetenceModel {
 
     /**
@@ -30,6 +36,10 @@ public class CompetenceModel {
     @JoinColumn(name = "status_id", referencedColumnName = "status_id")
     private CompetenceModelStatus modelStatus;
 
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "model_id")
+    private List<SummaryTable> summaryTables=new ArrayList<>();
+
     public CompetenceModel() {
     }
 
@@ -40,29 +50,6 @@ public class CompetenceModel {
         this.modelStatus = modelStatus;
     }
 
-    public Integer getModelId() {
-        return modelId;
-    }
-
-    public void setModelId(Integer modelId) {
-        this.modelId = modelId;
-    }
-
-    public Specialization getSpecialization() {
-        return specialization;
-    }
-
-    public void setSpecialization(Specialization specialization) {
-        this.specialization = specialization;
-    }
-
-    public CompetenceModelStatus getModelStatus() {
-        return modelStatus;
-    }
-
-    public void setModelStatus(CompetenceModelStatus modelStatus) {
-        this.modelStatus = modelStatus;
-    }
 
     @Override
     public boolean equals(Object o) {

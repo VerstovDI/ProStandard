@@ -1,5 +1,7 @@
 package ru.prostandard.model.competence_model;
 
+import lombok.Getter;
+import lombok.Setter;
 import ru.prostandard.model.competence_model.tcl.EducationalCompetence;
 import ru.prostandard.model.competence_model.tcl.ProfessionalTaskType;
 import ru.prostandard.model.profstandards.LaborAction;
@@ -15,6 +17,8 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "prof_competence_linked", schema = "proff")
+@Getter
+@Setter
 public class SummaryTable {
 
     /**
@@ -67,9 +71,9 @@ public class SummaryTable {
      * Ссылка на навык
      */
     @ManyToOne
-    @MapsId("skillId")
+    @MapsId("laborActionId")
     @JoinColumn(name = "labor_action_id")
-    private LaborAction laborActionId;
+    private LaborAction laborAction;
 
     public SummaryTable() {
     }
@@ -93,6 +97,6 @@ public class SummaryTable {
         this.professionalTaskType = professionalTaskType;
         this.necessaryKnowledge = necessaryKnowledge;
         this.requiredSkill = requiredSkill;
-        this.laborActionId = laborActionId;
+        this.laborAction = laborActionId;
     }
 }
