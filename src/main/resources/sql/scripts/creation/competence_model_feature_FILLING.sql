@@ -28,9 +28,6 @@ INSERT INTO proff.tcl_proffessional_task_type (type_description) VALUES ('тех
 INSERT INTO proff.tcl_proffessional_task_type (type_description) VALUES ('организационно-управленческий');
 INSERT INTO proff.tcl_proffessional_task_type (type_description) VALUES ('проектный');
 
--- Наполняем proff.dict_specialization-- Специализации
-INSERT INTO proff.dict_specialization (spec_code,spec_description) VALUES ('09.05.01','Применение и эксплутация автоматизированных систем специального назначения');
-
 -- Наполняем proff.competence_model  -- Компетентностная модель
 INSERT INTO proff.competence_model (spec_code_id,status_id) VALUES (1,1);
 
