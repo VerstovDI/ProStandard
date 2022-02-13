@@ -71,7 +71,7 @@ public class SummaryTable {
      * Ссылка на навык
      */
     @ManyToOne
-    @MapsId("skillId")
+    @MapsId("laborActionId")
     @JoinColumn(name = "labor_action_id")
     private LaborAction laborAction;
 
