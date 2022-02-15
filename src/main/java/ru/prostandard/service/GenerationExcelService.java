@@ -1,22 +1,21 @@
 package ru.prostandard.service;
 
 import lombok.RequiredArgsConstructor;
-import lombok.extern.log4j.Log4j2;
-import org.apache.poi.hssf.util.HSSFColor;
+import lombok.extern.log4j.Log4j;
 import org.apache.poi.ss.usermodel.*;
-import org.apache.poi.ss.usermodel.Color;
 import org.apache.poi.ss.util.CellRangeAddress;
-import org.apache.poi.xssf.usermodel.XSSFColor;
 import org.apache.poi.xssf.usermodel.XSSFFont;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ru.prostandard.controller.MainController;
 import ru.prostandard.model.competence_model.CompetenceModel;
 import ru.prostandard.model.competence_model.SummaryTable;
 import ru.prostandard.model.competence_model.tcl.ProfessionalTaskType;
 import ru.prostandard.repository.ProfessionalTaskTypeRepository;
 
-import java.awt.*;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -28,10 +27,9 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-@Log4j2
 public class GenerationExcelService {
     private final ProfessionalTaskTypeRepository professionalTaskTypeRepository;
-
+    private final Logger logger = LoggerFactory.getLogger(GenerationExcelService.class);
     @Transactional
     public void generate(CompetenceModel competenceModel, String dirToSave) {
         XSSFWorkbook workbook = new XSSFWorkbook();
@@ -56,16 +54,16 @@ public class GenerationExcelService {
         List<ProfessionalTaskType> professionalTaskTypes = professionalTaskTypeRepository.findAll();
         List<SummaryTable> summaryTables = competenceModel.getSummaryTables();
         int currentRow = 3;
-        int countNumber=1;
+        int countNumber = 1;
         for (ProfessionalTaskType professionalTaskType : professionalTaskTypes) {
             Collection<SummaryTable> summaryTablesFiltered = summaryTables.stream()
                     .filter(t -> t.getProfessionalTaskType().getTaskTypeId().equals(professionalTaskType.getTaskTypeId())).collect(Collectors.toSet());
 
-            currentRow = writeData(sheet, arial11, arial11Bold, summaryTablesFiltered, currentRow, professionalTaskType,countNumber);
-            countNumber+=summaryTablesFiltered.size();
+            currentRow = writeData(sheet, arial11, arial11Bold, summaryTablesFiltered, currentRow, professionalTaskType, countNumber);
+            countNumber += summaryTablesFiltered.size();
         }
 
-        String pathToSave = dirToSave + File.separator + "км " + competenceModel.getSpecialization().getSpecializationCode() + ".xlsx";
+        String pathToSave = dirToSave + File.separator + "cm " + competenceModel.getSpecialization().getSpecializationCode() + ".xlsx";
         if (!Files.exists(Path.of(dirToSave))) {
             new File(dirToSave).mkdirs();
         }
@@ -74,7 +72,7 @@ public class GenerationExcelService {
             workbook.write(outputStream);
             workbook.close();
         } catch (IOException e) {
-            log.error(e.getMessage());
+            logger.error(e.getMessage());
         }
     }
 
