@@ -1,7 +1,6 @@
 package ru.prostandard.service;
 
 import lombok.RequiredArgsConstructor;
-import lombok.extern.log4j.Log4j;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.xssf.usermodel.XSSFFont;
@@ -10,7 +9,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.prostandard.controller.MainController;
 import ru.prostandard.model.competence_model.CompetenceModel;
 import ru.prostandard.model.competence_model.SummaryTable;
 import ru.prostandard.model.competence_model.tcl.ProfessionalTaskType;
@@ -30,6 +28,7 @@ import java.util.stream.Collectors;
 public class GenerationExcelService {
     private final ProfessionalTaskTypeRepository professionalTaskTypeRepository;
     private final Logger logger = LoggerFactory.getLogger(GenerationExcelService.class);
+
     @Transactional
     public void generate(CompetenceModel competenceModel, String dirToSave) {
         XSSFWorkbook workbook = new XSSFWorkbook();

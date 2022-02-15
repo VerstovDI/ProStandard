@@ -134,8 +134,8 @@ public class MainController {
     /**
      * Возвращает сгенерированную эксель
      *
-     * @return excel с КМ
      * @param filePath - путь к файлу
+     * @return excel с КМ
      * @apiNote example http://localhost:8081/excel/download?filePath=src/main/resources/excels/cm 09.05.01.xlsx
      */
     @RequestMapping(path = "/excel/download", method = RequestMethod.GET)
