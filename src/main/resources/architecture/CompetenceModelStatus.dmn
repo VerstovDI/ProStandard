@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/" xmlns:dmndi="https://www.omg.org/spec/DMN/20191111/DMNDI/" xmlns:dc="http://www.omg.org/spec/DMN/20180521/DC/" xmlns:biodi="http://bpmn.io/schema/dmn/biodi/2.0" id="ModelStatusDecisionId1" name="Competence model status" namespace="http://camunda.org/schema/1.0/dmn" exporter="Camunda Modeler" exporterVersion="4.12.0">
+  <decision id="Decision_1knep2j" name="Статус компетентностной модели">
+    <decisionTable id="DecisionTable_03tlifh">
+      <input id="Input_1" label="Наличие моделей для заданных параметров" biodi:width="392">
+        <inputExpression id="InputExpression_1" typeRef="string">
+          <text></text>
+        </inputExpression>
+      </input>
+      <output id="Output_1" label="Решение по текущей модели" typeRef="string" biodi:width="287" />
+      <rule id="DecisionRule_1i0tcg7">
+        <description>"Заменить" = перевести предудыдущую модель в статус "ARCHIVE", текущую перевести в статус "ACTIVE";</description>
+        <inputEntry id="UnaryTests_0i6uw6r">
+          <text>Существует в статусе "ACTIVE"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0h9flli">
+          <text>Заменить или отмена</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0yavnm2">
+        <description>"Восстановить" = перевести какую-либо предыдущую версию модели из статуса "ARCHIVE" в статус ACTIVE и продолжить работу с ней;
+"Продолжить создание" = не предпринимать действий и перейти к подбору проф. компетенций.</description>
+        <inputEntry id="UnaryTests_0mmt5mq">
+          <text>Существует(-ют) в статусе "ARCHIVE"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_08tbnk1">
+          <text>Восстановить какую-либо прошлую версию, отмена или продолжить создание</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_15gdrx6">
+        <description>"Продолжить создание существующей модели" - вернуться к прошлому проекту модели и продолжить его формирование.</description>
+        <inputEntry id="UnaryTests_0kbd35n">
+          <text>Существует в статусе "PROJECT"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0r32qdj">
+          <text>Продолжить создание существующей модели или продолжить создание текущей модели</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_043voqp">
+        <description>-</description>
+        <inputEntry id="UnaryTests_1xvaqs0">
+          <text>Не существует</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0kkvgnb">
+          <text>Продолжить создание текущей модели</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <dmndi:DMNDI>
+    <dmndi:DMNDiagram>
+      <dmndi:DMNShape dmnElementRef="Decision_1knep2j">
+        <dc:Bounds height="80" width="180" x="160" y="80" />
+      </dmndi:DMNShape>
+    </dmndi:DMNDiagram>
+  </dmndi:DMNDI>
+</definitions>

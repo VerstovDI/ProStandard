@@ -9,7 +9,7 @@ INSERT INTO proff.tcl_model_status (status_description) VALUES ('ARCHIVE');
 -- ACTIVE = компетент. модель считается активной, т.е. доступна для использования в любой момент
 INSERT INTO proff.tcl_model_status (status_description) VALUES ('ACTIVE');
 
--- Наполняем proff.tcl_proffessional_competence
+-- Наполняем proff.tcl_educational_competence
 -- Несколько тестовых заполнений из тестового документа для 09.05.01
 INSERT INTO proff.tcl_educational_competence (competence_name)
 VALUES ('Способен применять научно обоснованные перспективные методы исследования и решать задачи на основе знания мировых тенденций развития вычислительной техники и информационных технологий с внедрением результатов исследований в реальный сектор экономики');
