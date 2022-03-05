@@ -6,11 +6,16 @@ import org.hibernate.query.Query;
 import ru.Aidar.ParsingProffStandards.DB.HibernateSessionFactoryUtil;
 import ru.Aidar.ParsingProffStandards.DB.domain.Standard;
 
+import java.util.List;
+
 public class StandardsDAO {
 
 
-    public Standard findByCodeKindProfessionalActivity(String code) {
-        return HibernateSessionFactoryUtil.getSessionFactory().openSession().get(Standard.class, code);
+    public List<Standard> findByCodeKindProfessionalActivity(String code) {
+        Query<Standard> query = HibernateSessionFactoryUtil.getSessionFactory()
+                .openSession().createQuery("from Standard s where s.codeKindProfessionalActivity=:code", Standard.class);
+        query.setParameter("code",code);
+        return query.getResultList();
     }
 
     public Standard findByNameProfessionalStandart(String name) {

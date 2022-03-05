@@ -26,7 +26,7 @@ public class ParseUtilsSelenideRosmintrud implements IParseUtils {
     private static final String propFileName = "config.properties";
 
     /**
-     * Показывает все стандарты в профф сйере. Можно написать, например 06
+     * Показывает все стандарты в проф сфере. Можно написать, например 06
      *
      * @param profArea проффессиональная сфера
      */

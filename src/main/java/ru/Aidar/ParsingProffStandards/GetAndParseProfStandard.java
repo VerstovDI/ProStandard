@@ -14,11 +14,19 @@ import java.util.Optional;
 import static java.lang.Thread.sleep;
 import static ru.Aidar.ParsingProffStandards.Utills.FileUtils.getLastFilePath;
 
-public class GetAndParseProffStandard {
-    private static final Logger log = Logger.getLogger(GetAndParseProffStandard.class);
+/**
+ * Главный класс. Его метод отвечает за все.
+ */
+public class GetAndParseProfStandard {
+    private static final Logger log = Logger.getLogger(GetAndParseProfStandard.class);
     private final static IParseXML iParseXML = new ParseXML();
     private static final IParseUtils iParseUtils = new ParseUtilsSelenideRosmintrud();
 
+    /**
+     * Поиск. Скачивание. Разбор стандарта
+     * Если стандарт не существует в базе, или если в базе представлена старая версия стандарта, то сохраняется
+     * Иначе отбой
+     */
     public static void getAndParseStandard(String number, String dirToSave) {
         log.info("начало поиска стандарта № " + number);
         String pathToSave = dirToSave + File.separator + number;
@@ -41,6 +49,5 @@ public class GetAndParseProffStandard {
             WebDriverRunner.getWebDriver().close();
             WebDriverRunner.getWebDriver().quit();
         }
-
     }
 }

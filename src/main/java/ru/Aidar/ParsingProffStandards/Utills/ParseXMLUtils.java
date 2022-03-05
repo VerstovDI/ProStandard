@@ -162,8 +162,13 @@ public class ParseXMLUtils {
         }
     }
 
+    public static Date getStandardDateOfApproval(Document document){
+        return Date.valueOf(LocalDate.parse(document.getDocumentElement().getElementsByTagName("DateOfApproval")
+                .item(0).getTextContent(), DateTimeFormatter.ofPattern("dd.MM.yyyy", Locale.ENGLISH)));
+    }
+
     public static Standard getStandard(Document document, Resource resource) {
-        String nameProfessionalStandart = document.getDocumentElement().getElementsByTagName("NameProfessionalStandart")
+        String nameProfessionalStandard = document.getDocumentElement().getElementsByTagName("NameProfessionalStandart")
                 .item(0).getTextContent();
         String registrationNumberString = document.getDocumentElement().getElementsByTagName("RegistrationNumber")
                 .item(0).getTextContent().replaceAll("\\.", "");
@@ -174,8 +179,7 @@ public class ParseXMLUtils {
 
         String orderNumber = document.getDocumentElement().getElementsByTagName("OrderNumber")
                 .item(0).getTextContent();
-        Date dateOfApproval = Date.valueOf(LocalDate.parse(document.getDocumentElement().getElementsByTagName("DateOfApproval")
-                .item(0).getTextContent(), DateTimeFormatter.ofPattern("dd.MM.yyyy", Locale.ENGLISH)));
+        Date dateOfApproval = getStandardDateOfApproval(document);
         String kindProfessionalActivity = document.getDocumentElement().getElementsByTagName("KindProfessionalActivity")
                 .item(0).getTextContent();
         String codeKindProfessionalActivity = document.getDocumentElement().getElementsByTagName("CodeKindProfessionalActivity")
@@ -183,7 +187,7 @@ public class ParseXMLUtils {
         String purposeKindProfessionalActivity = document.getDocumentElement().getElementsByTagName("PurposeKindProfessionalActivity")
                 .item(0).getTextContent().replaceAll("<br />", "");
         Date dateOfDownloading = Date.valueOf(new SimpleDateFormat("yyyy-MM-dd").format(new java.util.Date()));
-        Standard standard = new Standard(codeKindProfessionalActivity, dateOfApproval, dateOfDownloading, nameProfessionalStandart
+        Standard standard = new Standard(codeKindProfessionalActivity, dateOfApproval, dateOfDownloading, nameProfessionalStandard
                 , registrationNumber, orderNumber, kindProfessionalActivity, purposeKindProfessionalActivity, resource);
         return standard;
     }

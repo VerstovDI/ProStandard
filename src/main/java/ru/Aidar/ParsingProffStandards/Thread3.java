@@ -26,7 +26,7 @@ public class Thread3 extends Thread {
     public static void parse(String standardCategory, int endNumber, String dirToSave) {
         for (int i = 1; i <= endNumber; i++) { //
             String numberToParse = standardCategory + String.format("%03d", i);
-            GetAndParseProffStandard.getAndParseStandard(numberToParse, dirToSave);
+            GetAndParseProfStandard.getAndParseStandard(numberToParse, dirToSave);
         }
     }
 }
