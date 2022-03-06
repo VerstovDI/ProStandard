@@ -10,8 +10,8 @@
     <div class="row mt-5">
       <div class="container">
         <div class="row">
-          <div class="col text-center">
-            <h4>Выберите необходимые параметры для формирования компетенций</h4>
+          <div class="col text-center" style="color: lavender">
+            <h4><b>Выберите необходимые параметры для формирования компетенций<br><br></b></h4>
           </div>
         </div>
       </div>
@@ -27,7 +27,7 @@
 
               <!-- Форма "Уровень образования" !-->
               <div class="form-group">
-                <label for="educationLevel">
+                <label for="educationLevel" style="color: lavender">
                   <b>Уровень образования</b>
                 </label>
                 <select v-model="educationLevel"
@@ -44,7 +44,7 @@
               <!-- Форма "Специальность" !-->
               <div class="form-group">
                 <span class="has-float-label">
-                <label for="specializationCode">
+                <label for="specializationCode" style="color: lavender">
                   <b>Специальность</b>
                 </label>
                 </span>
@@ -55,7 +55,7 @@
 
               <!-- Форма "Направление обучения" !-->
               <div class="form-group">
-                <label for="subjMajor">
+                <label for="subjMajor" style="color: lavender">
                   <b>Направление обучения</b>
                 </label>
                 <input type="text" v-model="subjMajor"
@@ -65,7 +65,7 @@
 
               <!-- Форма "Источник данных" !-->
               <div class="form-group">
-                <label for="resourceToDownload">
+                <label for="resourceToDownload" style="color: lavender">
                   <b>Источник данных</b>
                 </label>
                 <select v-model="resourceToDownload"
@@ -79,15 +79,15 @@
                 </select>
                 <!-- Подсказки для выпадающих источников ресурсов !-->
                 <p class="help-block" v-if="resourceToDownload === 'Росминтруд'">
-                  <i>([https://profstandart.rosmintrud.ru/])</i>
+                  <i style="color: lightgray"><b>([https://profstandart.rosmintrud.ru/])</b></i>
                 </p>
               </div>
 
               <!-- Форма "Ключевые слова" !-->
-              <label for="subjMajor">
+              <label for="subjMajor" style="color: lavender">
                 <b>Ключевые слова</b>
               </label>
-              <div>
+              <div class="tagsInputClass">
                 <vue-tags-input
                     v-model="tag"
                     :tags="tags"
@@ -110,7 +110,7 @@
 
           <!-- Кнопка "Справка" !-->
           <div class="row p-3 m-2">
-            <button type="button" class="btn btn-info" @click="showModal = true;">
+            <button type="button" class="btn btn-info" @click="showModal = true;" id="info">
 <!--              data-bs-toggle="modal" data-bs-target="#helpModal"-->
               Справка
             </button>
@@ -135,11 +135,6 @@
         </div>
 
       </div>
-    </div>
-
-    <!-- Footer страницы !-->
-    <div class="d-flex flex-column min-vh-50">
-      <footer class="mt-auto">ProStandard application, 2021, ver. 0.1</footer>
     </div>
     </div>
   </div>
@@ -228,7 +223,7 @@ export default {
   },
 
   // Справочная информация прогружается единожды при старте приложения
-  mounted: function () {
+  created: function () {
     this.getInfo().then((response) => {
       this.helpData = response.data;
     });
@@ -249,12 +244,55 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
+
   .btn {
     border-color: white;
   }
-  /*.root-main {
-    background-size: contain;
-    background: url("~@/assets/MephiBlur.jpg") center center;
-  }*/
+
+  .tagsInputClass {
+    margin-top: 1px;
+    flex-shrink: 0;
+    width: 100%;
+  }
+
+  .vue-tags-input {
+    max-width: 100%;
+  }
+
+  .help-block {
+    margin-bottom: -5px;
+  }
+
+  #reset {
+    background-image: url("../../src/assets/ResetClipArt.png");
+    background-repeat: no-repeat;
+    background-position: 5px 5px;
+    border: none;
+    cursor: pointer;
+    padding-left: 20px;
+    vertical-align: middle;
+  }
+
+  #info {
+    background-image: url("../../src/assets/InfoClipArt.png");
+    background-repeat: no-repeat;  /* make the background image appear only once */
+    background-position: 5px 5px;  /* equivalent to 'top left' */
+    border: none;           /* assuming we don't want any borders */
+    cursor: pointer;        /* make the cursor like hovering over an <a> element */
+    padding-left: 20px;     /* make text start to the right of the image */
+    vertical-align: middle; /* align the text vertically centered */
+  }
+
+  #searchStandards {
+    background-image: url("../../src/assets/OkClipArt.png");
+    backface-visibility: hidden;
+    background-repeat: no-repeat;  /* make the background image appear only once */
+    background-position: 5px 5px;  /* equivalent to 'top left' */
+    border: none;           /* assuming we don't want any borders */
+    cursor: pointer;        /* make the cursor like hovering over an <a> element */
+    padding-left: 20px;     /* make text start to the right of the image */
+    vertical-align: middle; /* align the text vertically centered */
+  }
+
 </style>

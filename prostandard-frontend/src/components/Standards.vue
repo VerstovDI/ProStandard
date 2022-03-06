@@ -33,11 +33,40 @@
             <div class="row">
               <div class="col-md-8 col-md-offset-2">
 
-                <div class="fresh-table toolbar-color-blue">
+                <table class="table">
+                  <thead>
+                  <tr>
+                    <th scope="col">Рег. номер</th>
+                    <th scope="col">Код профстандарта</th>
+                    <th scope="col">Наименование профстандарта</th>
+                    <th scope="col">Обращение</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <tr>
+                    <th scope="row">1</th>
+                    <td>Mark</td>
+                    <td>Otto</td>
+                    <td>@mdo</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">2</th>
+                    <td>Jacob</td>
+                    <td>Thornton</td>
+                    <td>@fat</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">3</th>
+                    <td colspan="2">Larry the Bird</td>
+                    <td>@twitter</td>
+                  </tr>
+                  </tbody>
+                </table>
+<!--                <div class="fresh-table toolbar-color-blue">
 
-                  <!-- Изменение фона таблицы: full-color-blue, full-color-azure, full-color-green, full-color-red, full-color-orange
+                  &lt;!&ndash; Изменение фона таблицы: full-color-blue, full-color-azure, full-color-green, full-color-red, full-color-orange
                   Изменение фона тулбара страницы: toolbar-color-blue, toolbar-color-azure, toolbar-color-green, toolbar-color-red, toolbar-color-orange
-                  -->
+                  &ndash;&gt;
 
                   <div class="toolbar">
                     <button id="alertBtn" class="btn btn-default">Alert</button>
@@ -61,7 +90,7 @@
                     </tr>
                     </tbody>
                   </table>
-                </div>
+                </div>-->
 
 
               </div>
@@ -105,15 +134,15 @@ export default {
       resourceToDownload: this.props.resourceToDownload,
       keywords: this.props.getTags
     };
-    MainDataService.getStandards(searchData).then(response => {
+    MainDataService.searchStandards(searchData).then(response => {
       this.standards = response.data;
     });
     console.log(this.standards);
   },
 
   // TODO: добавить что-то в стиле RefreshList
-  mounted: function () {
-    //this.getStandards();
+  created: function () {
+    this.getStandards();
   }
 }
 </script>
