@@ -3,16 +3,16 @@ begin;
 drop schema if exists proff cascade;
 create schema proff;
 
-CREATE TABLE proff.tcl_resource (  --откуда загружено
+CREATE TABLE proff.tcl_resource (  -- Источник загрузки
                                     id_resource serial PRIMARY KEY,
                                     url varchar(500)  NOT NULL
 );
 
-CREATE TABLE proff.proff_standards(                                                             -- профф стандарт
+CREATE TABLE proff.proff_standards(                                                             -- Профф стандарт
                                       proff_standards_id                 serial PRIMARY KEY,
                                       code_kind_professional_activity    varchar(10),
                                       date_of_approval                   date         NOT NULL,
-                                      date_of_downloading                date         NOT NULL, --дата загрузки
+                                      date_of_downloading                date         NOT NULL, -- Дата загрузки
                                       name_professional_standard         varchar(500) NOT NULL,
                                       registration_number                integer      NOT NULL,
                                       order_number                       varchar(20)  NOT NULL,
@@ -24,7 +24,7 @@ CREATE TABLE proff.proff_standards(                                             
 
 
 
-CREATE TABLE proff.employment_group_okz  --код ОКЗ
+CREATE TABLE proff.employment_group_okz  -- Код ОКЗ
 (
     сode_okz           integer PRIMARY KEY,
     name_okz           varchar(1000),
@@ -32,7 +32,7 @@ CREATE TABLE proff.employment_group_okz  --код ОКЗ
     FOREIGN KEY (proff_standards_id) REFERENCES proff.proff_standards (proff_standards_id) ON DELETE RESTRICT ON UPDATE CASCADE
 );
 
-CREATE TABLE proff.employment_group_okved  ---КОД ОКВЕД
+CREATE TABLE proff.employment_group_okved  -- КОД ОКВЕД
 (
     id_okved           serial PRIMARY KEY,
     сode_okved         varchar,
@@ -42,7 +42,7 @@ CREATE TABLE proff.employment_group_okved  ---КОД ОКВЕД
 );
 
 
-CREATE TABLE proff.generalized_work_functions ---- обобщ трудовые функции
+CREATE TABLE proff.generalized_work_functions -- Обобщ трудовые функции
 (
     id_gwf                 serial PRIMARY KEY,
     сode_gwf               varchar(50)   NOT NULL,
@@ -52,7 +52,7 @@ CREATE TABLE proff.generalized_work_functions ---- обобщ трудовые �
     FOREIGN KEY (proff_standards_id) REFERENCES proff.proff_standards (proff_standards_id) ON DELETE RESTRICT ON UPDATE CASCADE
 );
 
-CREATE TABLE proff.possible_job_titles  -- возможные профессии
+CREATE TABLE proff.possible_job_titles  -- Возможные профессии
 (
     id_possible_job_title serial  PRIMARY KEY,
     title varchar(1000) NOT NULL,
@@ -60,7 +60,7 @@ CREATE TABLE proff.possible_job_titles  -- возможные профессии
     FOREIGN KEY(id_gwf)  REFERENCES proff.generalized_work_functions (id_gwf)  ON DELETE RESTRICT ON UPDATE CASCADE
 );
 
-CREATE TABLE proff.educational_requirements --требования к уровню образования
+CREATE TABLE proff.educational_requirements -- Требования к уровню образования
 (
     id_educational_requirement serial  PRIMARY KEY,
     educational_requirement varchar(1000)  NOT NULL,
@@ -70,9 +70,9 @@ CREATE TABLE proff.educational_requirements --требования к уровн
 
 
 
----- на этом обобщ трудовые функции все
+---- конец обобщ трудовые функции
 
-CREATE TABLE proff.particular_work_functions  --трудовые функции
+CREATE TABLE proff.particular_work_functions  -- Трудовые функции
 (
     id_particular_work_function serial  PRIMARY KEY,
     сode_wf varchar(100) NOT NULL,
@@ -82,7 +82,7 @@ CREATE TABLE proff.particular_work_functions  --трудовые функции
     FOREIGN KEY(id_gwf)  REFERENCES proff.generalized_work_functions (id_gwf)  ON DELETE RESTRICT ON UPDATE CASCADE
 );
 
-CREATE TABLE proff.labor_actions  --трудовые действия(навыки)
+CREATE TABLE proff.labor_actions  -- Трудовые действия(навыки)
 (
     id_labor_action serial  PRIMARY KEY,
     description varchar(10000) NOT NULL,
@@ -91,7 +91,7 @@ CREATE TABLE proff.labor_actions  --трудовые действия(навык
     FOREIGN KEY(id_particular_work_function)  REFERENCES proff.particular_work_functions (id_particular_work_function)  ON DELETE RESTRICT ON UPDATE CASCADE
 );
 
-CREATE TABLE proff.required_skills  --Необходимые умения
+CREATE TABLE proff.required_skills  -- Необходимые умения
 (
     id_required_skill serial  PRIMARY KEY,
     description varchar(10000) NOT NULL,
@@ -100,7 +100,7 @@ CREATE TABLE proff.required_skills  --Необходимые умения
     FOREIGN KEY(id_particular_work_function)  REFERENCES proff.particular_work_functions (id_particular_work_function)  ON DELETE RESTRICT ON UPDATE CASCADE
 );
 
-CREATE TABLE proff.necessary_knowledge  --Необходимые знания
+CREATE TABLE proff.necessary_knowledge  -- Необходимые знания
 (
     id_necessary_knowledge serial  PRIMARY KEY,
     description varchar(10000) NOT NULL,
