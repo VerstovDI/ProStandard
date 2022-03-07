@@ -2,22 +2,22 @@ set
 default_text_search_config = russian;
 
 create
-or replace function proff.get_proff_standarts_id_by_ed_req_and_key_words(in p_educational_requirements text,
+or replace function proff.get_proff_standards_id_by_ed_req_and_key_words(in p_educational_requirements text,
 																		  in p_key_words text,
-																		  out p_proff_standarts_id integer)
+																		  out p_proff_standards_id integer)
 returns setof integer as
 $BODY$
 BEGIN
 return query
-select       -- proff_standarts
-    distinct (to_tsvector_proff_standarts.proff_standarts_id)
+select       -- proff_standards
+    distinct (to_tsvector_proff_standards.proff_standards_id)
 from proff.to_tsvector_educational_requirements
          left join proff.generalized_work_functions
                    on (generalized_work_functions.id_gwf = to_tsvector_educational_requirements.id_gwf)
-         inner join proff.to_tsvector_proff_standarts
-                    on (generalized_work_functions.proff_standarts_id = to_tsvector_proff_standarts.proff_standarts_id
-                        and (to_tsvector_proff_standarts.purpose_kind_professional_activity @@ to_tsquery(p_key_words)
-                            or to_tsvector_proff_standarts.name_professional_standart @@ to_tsquery(p_key_words)))
+         inner join proff.to_tsvector_proff_standards
+                    on (generalized_work_functions.proff_standards_id = to_tsvector_proff_standards.proff_standards_id
+                        and (to_tsvector_proff_standards.purpose_kind_professional_activity @@ to_tsquery(p_key_words)
+                            or to_tsvector_proff_standards.name_professional_standard @@ to_tsquery(p_key_words)))
 where to_tsvector_educational_requirements.to_tsvector @@ to_tsquery(p_educational_requirements);
 END;
 $BODY$

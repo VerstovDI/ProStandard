@@ -18,7 +18,7 @@ public class AppDB {
                 "orderNumb", "kind", "purpose", resource);
         StandardsDAO standardsDAO = new StandardsDAO();
         standardsDAO.save(standard);
-        System.out.println(standardsDAO.findByNameProfessionalStandart("name"));
+        System.out.println(standardsDAO.findByNameProfessionalStandard("name"));
         System.out.println(standardsDAO.findByCodeKindProfessionalActivity("111"));
     }
 }

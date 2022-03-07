@@ -8,12 +8,12 @@ CREATE TABLE proff.tcl_resource (  --откуда загружено
                                     url varchar(500)  NOT NULL
 );
 
-CREATE TABLE proff.proff_standarts(                                                             -- профф стандарт
-                                      proff_standarts_id                 serial PRIMARY KEY,
+CREATE TABLE proff.proff_standards(                                                             -- профф стандарт
+                                      proff_standards_id                 serial PRIMARY KEY,
                                       code_kind_professional_activity    varchar(10),
                                       date_of_approval                   date         NOT NULL,
                                       date_of_downloading                date         NOT NULL, --дата загрузки
-                                      name_professional_standart         varchar(500) NOT NULL,
+                                      name_professional_standard         varchar(500) NOT NULL,
                                       registration_number                integer      NOT NULL,
                                       order_number                       varchar(20)  NOT NULL,
                                       kind_professional_activity         varchar      NOT NULL,
@@ -28,8 +28,8 @@ CREATE TABLE proff.employment_group_okz  --код ОКЗ
 (
     сode_okz           integer PRIMARY KEY,
     name_okz           varchar(1000),
-    proff_standarts_id BIGINT,
-    FOREIGN KEY (proff_standarts_id) REFERENCES proff.proff_standarts (proff_standarts_id) ON DELETE RESTRICT ON UPDATE CASCADE
+    proff_standards_id BIGINT,
+    FOREIGN KEY (proff_standards_id) REFERENCES proff.proff_standards (proff_standards_id) ON DELETE RESTRICT ON UPDATE CASCADE
 );
 
 CREATE TABLE proff.employment_group_okved  ---КОД ОКВЕД
@@ -37,8 +37,8 @@ CREATE TABLE proff.employment_group_okved  ---КОД ОКВЕД
     id_okved           serial PRIMARY KEY,
     сode_okved         varchar,
     name_okved         varchar(1000),
-    proff_standarts_id BIGINT,
-    FOREIGN KEY (proff_standarts_id) REFERENCES proff.proff_standarts (proff_standarts_id) ON DELETE RESTRICT ON UPDATE CASCADE
+    proff_standards_id BIGINT,
+    FOREIGN KEY (proff_standards_id) REFERENCES proff.proff_standards (proff_standards_id) ON DELETE RESTRICT ON UPDATE CASCADE
 );
 
 
@@ -48,8 +48,8 @@ CREATE TABLE proff.generalized_work_functions ---- обобщ трудовые �
     сode_gwf               varchar(50)   NOT NULL,
     name_gwf               varchar(1000) NOT NULL,
     level_of_qualification varchar(10)   NOT NULL,
-    proff_standarts_id     BIGINT,
-    FOREIGN KEY (proff_standarts_id) REFERENCES proff.proff_standarts (proff_standarts_id) ON DELETE RESTRICT ON UPDATE CASCADE
+    proff_standards_id     BIGINT,
+    FOREIGN KEY (proff_standards_id) REFERENCES proff.proff_standards (proff_standards_id) ON DELETE RESTRICT ON UPDATE CASCADE
 );
 
 CREATE TABLE proff.possible_job_titles  -- возможные профессии
@@ -109,7 +109,7 @@ CREATE TABLE proff.necessary_knowledge  --Необходимые знания
 );
 
 insert into proff.tcl_resource (id_resource,url)
-values (default,'https://profstandart.rosmintrud.ru/obshchiy-informatsionnyy-blok/natsionalnyy-reestr-professionalnykh-standartov/reestr-professionalnykh-standartov');
+values (default,'https://profstandard.rosmintrud.ru/obshchiy-informatsionnyy-blok/natsionalnyy-reestr-professionalnykh-standardov/reestr-professionalnykh-standardov');
 
 end;
 
@@ -186,11 +186,11 @@ SELECT id_educational_requirement, to_tsvector('russian', educational_requiremen
 FROM proff.educational_requirements;
 
 
-CREATE TABLE proff.to_tsvector_proff_standarts AS
-SELECT proff_standarts_id
-     , to_tsvector('russian', "name_professional_standart")         as name_professional_standart
+CREATE TABLE proff.to_tsvector_proff_standards AS
+SELECT proff_standards_id
+     , to_tsvector('russian', "name_professional_standard")         as name_professional_standard
      , to_tsvector('russian', "purpose_kind_professional_activity") as purpose_kind_professional_activity
-FROM proff.proff_standarts;
+FROM proff.proff_standards;
 
 
 CREATE TABLE proff.to_tsvector_generalized_work_functions AS
@@ -255,41 +255,41 @@ ON proff.educational_requirements
     FOR EACH ROW EXECUTE PROCEDURE proff.update_to_tsvector_educational_requirements();
 --------------------------------------------------------------------
 CREATE
-OR REPLACE FUNCTION proff.update_to_tsvector_proff_standarts() RETURNS TRIGGER AS $update_to_tsvector_proff_standarts$
+OR REPLACE FUNCTION proff.update_to_tsvector_proff_standards() RETURNS TRIGGER AS $update_to_tsvector_proff_standards$
 BEGIN
         IF
 (TG_OP = 'DELETE') THEN
 DELETE
-FROM proff.to_tsvector_proff_standarts
-WHERE proff_standarts_id = OLD.proff_standarts_id;
+FROM proff.to_tsvector_proff_standards
+WHERE proff_standards_id = OLD.proff_standards_id;
 RETURN OLD;
 ELSIF
 (TG_OP = 'UPDATE') THEN
-UPDATE proff.to_tsvector_proff_standarts
-SET name_professional_standart        = to_tsvector('russian', NEW.name_professional_standart),
+UPDATE proff.to_tsvector_proff_standards
+SET name_professional_standard        = to_tsvector('russian', NEW.name_professional_standard),
     purpose_kind_professional_activity=to_tsvector('russian', NEW.purpose_kind_professional_activity)
-WHERE proff_standarts_id = OLD.proff_standarts_id;
+WHERE proff_standards_id = OLD.proff_standards_id;
 RETURN NEW;
 ELSIF
 (TG_OP = 'INSERT') THEN
-            INSERT INTO proff.to_tsvector_proff_standarts
-select NEW.proff_standarts_id
-     , to_tsvector('russian', NEW.name_professional_standart)
+            INSERT INTO proff.to_tsvector_proff_standards
+select NEW.proff_standards_id
+     , to_tsvector('russian', NEW.name_professional_standard)
      , to_tsvector('russian', NEW.purpose_kind_professional_activity);
 RETURN NEW;
 END IF;
 RETURN NULL; -- возвращаемое значение для триггера AFTER игнорируется
 END;
-$update_to_tsvector_proff_standarts$
+$update_to_tsvector_proff_standards$
 LANGUAGE plpgsql;
 
 
-CREATE TRIGGER update_to_tsvector_proff_standarts
+CREATE TRIGGER update_to_tsvector_proff_standards
     AFTER INSERT OR
 UPDATE OR
 DELETE
-ON proff.proff_standarts
-    FOR EACH ROW EXECUTE PROCEDURE proff.update_to_tsvector_proff_standarts();
+ON proff.proff_standards
+    FOR EACH ROW EXECUTE PROCEDURE proff.update_to_tsvector_proff_standards();
 
 --------------------------------------------------------------------
 

@@ -3,8 +3,8 @@ INDEX id_gwf_idx
 ON proff.generalized_work_functions(id_gwf);
 
 CREATE
-INDEX id_professional_standart_idx
-ON proff.proff_standarts( proff_standarts_id);
+INDEX id_professional_standard_idx
+ON proff.proff_standards( proff_standards_id);
 
 CREATE
 INDEX id_particular_work_function_idx
@@ -48,13 +48,13 @@ ON proff.to_tsvector_educational_requirements
 USING gin ("to_tsvector");
 
 CREATE
-INDEX to_tsvector_proff_standarts_name_professional_standart_idx
-ON proff.to_tsvector_proff_standarts
-USING gin ("name_professional_standart");
+INDEX to_tsvector_proff_standards_name_professional_standard_idx
+ON proff.to_tsvector_proff_standards
+USING gin ("name_professional_standard");
 
 CREATE
-INDEX to_tsvector_proff_standarts_purpose_kind_professional_activity_idx
-ON proff.to_tsvector_proff_standarts
+INDEX to_tsvector_proff_standards_purpose_kind_professional_activity_idx
+ON proff.to_tsvector_proff_standards
 USING gin ("purpose_kind_professional_activity");
 
 CREATE

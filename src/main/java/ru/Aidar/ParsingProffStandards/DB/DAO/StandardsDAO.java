@@ -18,10 +18,10 @@ public class StandardsDAO {
         return query.getResultList();
     }
 
-    public Standard findByNameProfessionalStandart(String name) {
+    public Standard findByNameProfessionalStandard(String name) {
 
         Query<Standard> query = HibernateSessionFactoryUtil.getSessionFactory().openSession()
-                .createQuery("from Standard s where s.nameProfessionalStandart=:name", Standard.class);
+                .createQuery("from Standard s where s.nameProfessionalStandard=:name", Standard.class);
         query.setParameter("name", name);
         return query.uniqueResult();
     }
