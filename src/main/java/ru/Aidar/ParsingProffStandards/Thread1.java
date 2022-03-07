@@ -4,6 +4,13 @@ import java.nio.file.Paths;
 
 
 public class Thread1 extends Thread {
+    public static void parse(String standardCategory, int endNumber, String dirToSave) {
+        for (int i = 1; i <= endNumber; i++) { //
+            String numberToParse = standardCategory + String.format("%03d", i);
+            GetAndParseProfStandard.getAndParseStandard(numberToParse, dirToSave);
+        }
+    }
+
     @Override
     public void run() {
         String dirToSave = Paths.get("resources").toAbsolutePath().toString();
@@ -20,13 +27,6 @@ public class Thread1 extends Thread {
         parse("10.", 15, dirToSave);
 
         parse("11.", 17, dirToSave);
-    }
-
-    public static void parse(String standardCategory, int endNumber, String dirToSave) {
-        for (int i = 1; i <= endNumber; i++) { //
-            String numberToParse = standardCategory + String.format("%03d", i);
-            GetAndParseProfStandard.getAndParseStandard(numberToParse, dirToSave);
-        }
     }
 
 }

@@ -1,7 +1,5 @@
 package ru.Aidar.ParsingProffStandards;
 
-import java.nio.file.Paths;
-
 public class App {
 
     public static void main(String[] args) throws InterruptedException {
