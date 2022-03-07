@@ -1,7 +1,8 @@
 package ru.Aidar.ParsingProffStandards;
 
 import com.codeborne.selenide.WebDriverRunner;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import ru.Aidar.ParsingProffStandards.Parsing.IParseXML;
 import ru.Aidar.ParsingProffStandards.Parsing.Impl.ParseXML;
 import ru.Aidar.ParsingProffStandards.Utills.GetFromResource.IParseUtils;
@@ -18,7 +19,7 @@ import static ru.Aidar.ParsingProffStandards.Utills.FileUtils.getLastFilePath;
  * Главный класс. Его метод отвечает за все.
  */
 public class GetAndParseProfStandard {
-    private static final Logger log = Logger.getLogger(GetAndParseProfStandard.class);
+    private static final Logger log = LogManager.getLogger(GetAndParseProfStandard.class);
     private final static IParseXML iParseXML = new ParseXML();
     private static final IParseUtils iParseUtils = new ParseUtilsSelenideRosmintrud();
 

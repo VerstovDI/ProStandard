@@ -1,6 +1,7 @@
 package ru.Aidar.ParsingProffStandards.Utills;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -14,7 +15,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 
 public class ParseXMLUtils {
-    private static final Logger log = Logger.getLogger(ParseXMLUtils.class);
+    private static final Logger log = LogManager.getLogger(ParseXMLUtils.class);
 
     public static void getAndSaveGeneralizedWorkFunctions(Document document, Standard standard
             , GeneralizedWorkFunctionsDAO generalizedWorkFunctionsDAO, PossibleJobTitlesDAO possibleJobTitlesDAO
@@ -162,7 +163,7 @@ public class ParseXMLUtils {
         }
     }
 
-    public static Date getStandardDateOfApproval(Document document){
+    public static Date getStandardDateOfApproval(Document document) {
         return Date.valueOf(LocalDate.parse(document.getDocumentElement().getElementsByTagName("DateOfApproval")
                 .item(0).getTextContent(), DateTimeFormatter.ofPattern("dd.MM.yyyy", Locale.ENGLISH)));
     }

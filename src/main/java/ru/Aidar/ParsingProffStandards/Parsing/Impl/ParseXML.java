@@ -1,6 +1,7 @@
 package ru.Aidar.ParsingProffStandards.Parsing.Impl;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 import ru.Aidar.ParsingProffStandards.DB.DAO.*;
@@ -22,7 +23,7 @@ import static ru.Aidar.ParsingProffStandards.Utills.ParseXMLUtils.*;
 
 
 public class ParseXML implements IParseXML {
-    private static final Logger log = Logger.getLogger(ParseXML.class);
+    private static final Logger log = LogManager.getLogger(ParseXML.class);
     private static final String propFileName = "config.properties";
 
     @Override
@@ -59,7 +60,7 @@ public class ParseXML implements IParseXML {
 
             if (newestOptionalStandardFromDB.isPresent()
                     && !newestOptionalStandardFromDB.get().getDateOfApproval().before(getStandardDateOfApproval(document))) {
-                log.info("стандарт " +codeKindProfessionalActivity+ " не является новым, уже существует в базе");
+                log.info("стандарт " + codeKindProfessionalActivity + " не является новым, уже существует в базе");
                 return;
             }
 

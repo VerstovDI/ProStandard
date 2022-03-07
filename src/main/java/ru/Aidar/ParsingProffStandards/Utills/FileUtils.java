@@ -1,6 +1,7 @@
 package ru.Aidar.ParsingProffStandards.Utills;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -9,7 +10,7 @@ import java.util.Comparator;
 import java.util.Optional;
 
 public class FileUtils {
-    private static final Logger log = Logger.getLogger(FileUtils.class);
+    private static final Logger log = LogManager.getLogger(FileUtils.class);
 
     public static Optional<Path> getLastFilePath(String dir) {
         try {

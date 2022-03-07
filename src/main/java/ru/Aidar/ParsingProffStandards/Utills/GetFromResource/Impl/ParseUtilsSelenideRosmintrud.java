@@ -6,7 +6,8 @@ import com.codeborne.selenide.FileDownloadMode;
 import com.codeborne.selenide.SelenideElement;
 import com.codeborne.selenide.ex.ElementNotFound;
 import com.codeborne.selenide.ex.TimeoutException;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -22,7 +23,7 @@ import java.util.Properties;
 import static com.codeborne.selenide.Selenide.*;
 
 public class ParseUtilsSelenideRosmintrud implements IParseUtils {
-    private static final Logger log = Logger.getLogger(ParseUtilsSelenideRosmintrud.class);
+    private static final Logger log = LogManager.getLogger(ParseUtilsSelenideRosmintrud.class);
     private static final String propFileName = "config.properties";
 
     /**
