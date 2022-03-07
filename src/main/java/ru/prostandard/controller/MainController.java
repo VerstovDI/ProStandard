@@ -4,9 +4,9 @@ import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.InputStreamResource;
-import org.springframework.core.io.Resource;
-import org.springframework.http.*;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.prostandard.model.dto.HelpInfoDTO;
 import ru.prostandard.model.dto.SearchDTO;
@@ -16,10 +16,6 @@ import ru.prostandard.service.DictionaryService;
 import ru.prostandard.service.HelpService;
 import ru.prostandard.service.intellisearch.IntelliSelectionService;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -35,9 +31,7 @@ public class MainController {
 
     private final Logger logger = LoggerFactory.getLogger(MainController.class);
 
-    /**
-     * Сервис для ведения справочной информации приложения
-     */
+    /** Сервис для ведения справочной информации приложения */
     private final DictionaryService dictionaryService;
 
     @Autowired
@@ -48,7 +42,6 @@ public class MainController {
 
     /**
      * GET-запрос с отправкой данных на получения списка всех подобранных стандартов
-     *
      * @return Список подобранных стандартов
      */
     @GetMapping(value = "/standards")
@@ -69,9 +62,9 @@ public class MainController {
             List<StandardDTO> standardDTOList = new ArrayList<>();
             for (Standard standard : foundStandards) {
                 standardDTOList.add(new StandardDTO(
-                        standard.getRegistrationNumber(),
-                        standard.getCodeKindProfessionalActivity(),
-                        standard.getNameProfessionalStandart()));
+                       standard.getRegistrationNumber(),
+                       standard.getCodeKindProfessionalActivity(),
+                       standard.getNameProfessionalStandard()));
             }
            /* foundStandards.add(new StandardDTO(1L,
                                         "09.05.01",
@@ -92,7 +85,6 @@ public class MainController {
 
     /**
      * Получение справки о приложении.
-     *
      * @return Статус запроса.
      */
     @GetMapping("/info")
@@ -110,7 +102,6 @@ public class MainController {
 
     /**
      * Ручное обновление пользователем состояния профстандартов, хранящихся в БД
-     *
      * @return ...
      */
     @PutMapping("/manual-update")
@@ -130,31 +121,4 @@ public class MainController {
 
     // TODO: Впоследствии добавить @PutMapping для обновления (корректировки) введенных
     //  пользователем данных для будущего парсинга
-
-    /**
-     * Возвращает сгенерированную эксель
-     *
-     * @param filePath - путь к файлу
-     * @return excel с КМ
-     * @apiNote example http://localhost:8081/excel/download?filePath=src/main/resources/excels/cm 09.05.01.xlsx
-     */
-    @RequestMapping(path = "/excel/download", method = RequestMethod.GET)
-    public ResponseEntity<Resource> download(String filePath) throws IOException {
-        File file = new File(filePath);
-        InputStreamResource resource = new InputStreamResource(new FileInputStream(file));
-        int indexOf = filePath.indexOf("cm");
-        ContentDisposition contentDisposition = ContentDisposition.builder("inline")
-                //.filename( filePath.substring(indexOf), StandardCharsets.UTF_8)
-                .filename(filePath.substring(indexOf), StandardCharsets.US_ASCII)
-                .name("attachment")
-                .build();
-        HttpHeaders httpHeaders = new HttpHeaders();
-        httpHeaders.setContentDisposition(contentDisposition);
-        httpHeaders.setContentType(MediaType.parseMediaType("application/vnd.ms-excel"));
-        httpHeaders.setContentLength(file.length());
-
-        return ResponseEntity.ok()
-                .headers(httpHeaders)
-                .body(resource);
-    }
 }

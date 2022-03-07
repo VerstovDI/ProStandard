@@ -7,10 +7,10 @@ import java.sql.Date;
 import java.util.Objects;
 
 @Entity
-@Table(name = "proff_standarts", schema = "proff")
+@Table(name = "proff_standards", schema = "proff")
 public class Standard {
     @Id
-    @Column(name = "proff_standarts_id", columnDefinition = "serial")
+    @Column(name = "proff_standards_id", columnDefinition = "serial")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
@@ -23,8 +23,8 @@ public class Standard {
     @Column(name = "date_of_downloading", nullable = false)
     private Date dateOfDownloading;
 
-    @Column(name = "name_professional_standart", nullable = false)
-    private String nameProfessionalStandart;
+    @Column(name = "name_professional_standard", nullable = false)
+    private String nameProfessionalStandard;
 
     @Column(name = "registration_number", nullable = false)
     private Integer registrationNumber;
@@ -47,13 +47,13 @@ public class Standard {
     }
 
     public Standard(String codeKindProfessionalActivity, Date dateOfApproval,
-                    Date dateOfDownloading, String nameProfessionalStandart,
+                    Date dateOfDownloading, String nameProfessionalStandard,
                     Integer registrationNumber, String orderNumber, String kindProfessionalActivity,
                     String purposeKindProfessionalActivity, Resource resource) {
         this.codeKindProfessionalActivity = codeKindProfessionalActivity;
         this.dateOfApproval = dateOfApproval;
         this.dateOfDownloading = dateOfDownloading;
-        this.nameProfessionalStandart = nameProfessionalStandart;
+        this.nameProfessionalStandard = nameProfessionalStandard;
         this.registrationNumber = registrationNumber;
         this.orderNumber = orderNumber;
         this.kindProfessionalActivity = kindProfessionalActivity;
@@ -85,12 +85,12 @@ public class Standard {
         this.dateOfDownloading = dateOfDownloading;
     }
 
-    public String getNameProfessionalStandart() {
-        return nameProfessionalStandart;
+    public String getNameProfessionalStandard() {
+        return nameProfessionalStandard;
     }
 
-    public void setNameProfessionalStandart(String nameProfessionalStandart) {
-        this.nameProfessionalStandart = nameProfessionalStandart;
+    public void setNameProfessionalStandard(String nameProfessionalStandard) {
+        this.nameProfessionalStandard = nameProfessionalStandard;
     }
 
     public Integer getRegistrationNumber() {
@@ -141,7 +141,7 @@ public class Standard {
         return Objects.equals(codeKindProfessionalActivity, standard.codeKindProfessionalActivity)
                 && Objects.equals(dateOfApproval, standard.dateOfApproval)
                 && Objects.equals(dateOfDownloading, standard.dateOfDownloading)
-                && Objects.equals(nameProfessionalStandart, standard.nameProfessionalStandart)
+                && Objects.equals(nameProfessionalStandard, standard.nameProfessionalStandard)
                 && Objects.equals(registrationNumber, standard.registrationNumber)
                 && Objects.equals(orderNumber, standard.orderNumber)
                 && Objects.equals(kindProfessionalActivity, standard.kindProfessionalActivity)
@@ -152,7 +152,7 @@ public class Standard {
     @Override
     public int hashCode() {
         return Objects.hash(codeKindProfessionalActivity, dateOfApproval, dateOfDownloading,
-                nameProfessionalStandart, registrationNumber, orderNumber,
+                nameProfessionalStandard, registrationNumber, orderNumber,
                 kindProfessionalActivity, purposeKindProfessionalActivity, resource);
     }
 
@@ -162,7 +162,7 @@ public class Standard {
                 "codeKindProfessionalActivity='" + codeKindProfessionalActivity + '\'' +
                 ", dateOfApproval=" + dateOfApproval +
                 ", dateOfDownloading=" + dateOfDownloading +
-                ", nameProfessionalStandart='" + nameProfessionalStandart + '\'' +
+                ", nameProfessionalStandard='" + nameProfessionalStandard + '\'' +
                 ", registrationNumber=" + registrationNumber +
                 ", orderNumber='" + orderNumber + '\'' +
                 ", kindProfessionalActivity='" + kindProfessionalActivity + '\'' +

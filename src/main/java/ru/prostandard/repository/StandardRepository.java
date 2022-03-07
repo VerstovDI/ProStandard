@@ -21,7 +21,7 @@ public interface StandardRepository extends JpaRepository<Standard, Long> {
      * @param keyWords строка ключевых слов
      * @return список ID подорбанных проф. стандартов
      */
-    @Query(value = "SELECT proff.get_proff_standarts_id_by_ed_req_and_key_words(" +
+    @Query(value = "SELECT proff.get_proff_standards_id_by_ed_req_and_key_words(" +
             ":p_educational_requirements," +
             ":p_key_words)", nativeQuery = true)
     List<Long> findStandardsByEducationalLevelAndByKeyWords(
