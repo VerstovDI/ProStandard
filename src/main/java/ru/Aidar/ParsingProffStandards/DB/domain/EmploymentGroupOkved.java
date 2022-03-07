@@ -20,7 +20,7 @@ public class EmploymentGroupOkved {
 
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "proff_tandards_id", nullable = false)
+    @JoinColumn(name = "proff_standards_id", nullable = false)
     private Standard standard;
 
 
