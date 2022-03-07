@@ -30,16 +30,16 @@ public class ParseXML implements IParseXML {
     public void parse(String path) {
         log.info("Запуск разбора XML");
 
-        log.info("Создание DAO");
+        log.debug("Создание DAO");
         ResourceDAO resourceDAO = new ResourceDAO();
         StandardsDAO standardsDAO = new StandardsDAO();
         try {
-            log.info("Запуск загрузки XML в ОП");
+            log.debug("Запуск загрузки XML в ОП");
             DocumentBuilder documentBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
             Document document = documentBuilder.parse(path);
             log.debug("Поиск и установка ресурса в БД");
             int idOfResource1;
-            try (InputStream inputStream = getClass().getClassLoader().getResourceAsStream(propFileName);) {
+            try (InputStream inputStream = getClass().getClassLoader().getResourceAsStream(propFileName)) {
                 Properties properties = new Properties();
                 properties.load(inputStream);
                 idOfResource1 = Integer.parseInt(properties.getProperty("idOfResource1"));
@@ -52,7 +52,7 @@ public class ParseXML implements IParseXML {
             String codeKindProfessionalActivity = document.getDocumentElement()
                     .getElementsByTagName("CodeKindProfessionalActivity")
                     .item(0).getTextContent();
-
+            log.info("Код стандарта " + codeKindProfessionalActivity);
             List<Standard> standardsByKindProfessionalActivity = standardsDAO.findByCodeKindProfessionalActivity(codeKindProfessionalActivity);
 
             Optional<Standard> newestOptionalStandardFromDB = standardsByKindProfessionalActivity.stream()
@@ -87,7 +87,7 @@ public class ParseXML implements IParseXML {
             log.debug("getAndSaveGeneralizedWorkFunctions");
             getAndSaveGeneralizedWorkFunctions(document, standard, generalizedWorkFunctionsDAO, possibleJobTitlesDAO, educationalRequirementsDAO, particularWorkFunctionsDAO, laborActionsDAO, requiredSkillsDAO, necessaryKnowledgeDAO);
 
-            log.info("done");
+            log.info("Окончание провесса для № " + codeKindProfessionalActivity);
         } catch (ParserConfigurationException | SAXException | IOException e) {
             log.error(e);
         }

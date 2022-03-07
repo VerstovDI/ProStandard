@@ -8,13 +8,13 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-public class AppParse {
+public class TestAppParse {
     public static void main(String[] args) throws IOException {
         String number1 = "06.003";
         String number2 = "06.040";
-        String pathToSave1 = Paths.get("resources").toAbsolutePath().toString()
+        String pathToSave1 = Paths.get("resources").toAbsolutePath()
                 + File.separator + number1;
-        String pathToSave2 = Paths.get("resources").toAbsolutePath().toString()
+        String pathToSave2 = Paths.get("resources").toAbsolutePath()
                 + File.separator + number2;
         Path path1 = FileUtils.getLastFilePath(pathToSave1).get();
         IParseXML iParseXML = new ParseXML();

@@ -14,7 +14,7 @@ public class StandardsDAO {
     public List<Standard> findByCodeKindProfessionalActivity(String code) {
         Query<Standard> query = HibernateSessionFactoryUtil.getSessionFactory()
                 .openSession().createQuery("from Standard s where s.codeKindProfessionalActivity=:code", Standard.class);
-        query.setParameter("code",code);
+        query.setParameter("code", code);
         return query.getResultList();
     }
 

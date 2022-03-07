@@ -12,15 +12,19 @@ import java.util.Optional;
 public class FileUtils {
     private static final Logger log = LogManager.getLogger(FileUtils.class);
 
+    /**
+     *
+     * @param dir
+     * @return последний файл в директории
+     */
     public static Optional<Path> getLastFilePath(String dir) {
         try {
-            return Files.list(Path.of(dir))    // here we get the stream with full directory listing
-                    .filter(f -> !Files.isDirectory(f))  // exclude subdirectories from listing
+            return Files.list(Path.of(dir))
+                    .filter(f -> !Files.isDirectory(f))
                     .max(Comparator.comparingLong(f -> f.toFile().lastModified()));
         } catch (IOException e) {
             log.error(e);
         }
         return Optional.empty();
     }
-
 }

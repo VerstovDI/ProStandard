@@ -8,7 +8,7 @@ import ru.Aidar.ParsingProffStandards.DB.domain.Standard;
 import java.sql.Date;
 
 
-public class AppDB {
+public class TestAppDB {
     public static void main(String[] args) {
         ResourceDAO resourceDAO = new ResourceDAO();
         Resource resource = resourceDAO.findById(1);

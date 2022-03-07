@@ -23,7 +23,7 @@ public class ParseXMLUtils {
             , LaborActionsDAO laborActionsDAO, RequiredSkillsDAO requiredSkillsDAO, NecessaryKnowledgeDAO necessaryKnowledgeDAO) {
 
         NodeList generalizedWorkFunctions = document.getDocumentElement().getElementsByTagName("GeneralizedWorkFunction");
-        log.info("перебор обобщенных трудовых функций");
+        log.debug("перебор обобщенных трудовых функций");
         for (int i = 0; i < generalizedWorkFunctions.getLength(); i++) {
             NodeList generalizedWorkFunctionChildNodes = generalizedWorkFunctions.item(i).getChildNodes();
             if (generalizedWorkFunctionChildNodes != null) {
@@ -34,13 +34,13 @@ public class ParseXMLUtils {
                 }
                 GeneralizedWorkFunction generalizedWorkFunction = new GeneralizedWorkFunction(generalizedWorkFunctionChildNodes.item(0).getTextContent(),
                         generalizedWorkFunctionChildNodes.item(1).getTextContent(), levelOfQualification, standard);
-                log.info("generalizedWorkFunctionsDAO");
+                log.debug("generalizedWorkFunctionsDAO");
                 generalizedWorkFunctionsDAO.save(generalizedWorkFunction);
-                log.info("getAndSavePossibleJobTitles");
+                log.debug("getAndSavePossibleJobTitles");
                 getAndSavePossibleJobTitles(possibleJobTitlesDAO, generalizedWorkFunctionChildNodes, generalizedWorkFunction);
-                log.info("etAndSaveEducationalRequirements");
+                log.debug("etAndSaveEducationalRequirements");
                 getAndSaveEducationalRequirements(educationalRequirementsDAO, generalizedWorkFunctionChildNodes, generalizedWorkFunction);
-                log.info("getAndSaveParticularWorkFunctions");
+                log.debug("getAndSaveParticularWorkFunctions");
                 getAndSaveParticularWorkFunctions(particularWorkFunctionsDAO, laborActionsDAO, requiredSkillsDAO
                         , necessaryKnowledgeDAO, generalizedWorkFunctionChildNodes, generalizedWorkFunction);
             }
