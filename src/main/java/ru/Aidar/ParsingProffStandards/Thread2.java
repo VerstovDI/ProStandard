@@ -6,7 +6,7 @@ public class Thread2 extends Thread {
     public static void parse(String standardCategory, int endNumber, String dirToSave) {
         for (int i = 1; i <= endNumber; i++) { //
             String numberToParse = standardCategory + String.format("%03d", i);
-            GetAndParseProfStandard.getAndParseStandard(numberToParse, dirToSave);
+            Main.getAndParseStandard(numberToParse, dirToSave);
         }
     }
 

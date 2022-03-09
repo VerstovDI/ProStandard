@@ -13,13 +13,14 @@ import java.nio.file.Path;
 import java.util.Optional;
 
 import static java.lang.Thread.sleep;
+import static ru.Aidar.ParsingProffStandards.Utills.FileUtils.clearOldDirectories;
 import static ru.Aidar.ParsingProffStandards.Utills.FileUtils.getLastFilePath;
 
 /**
- * Главный класс. Его метод отвечает за все.
+ * Главный класс. Его методы отвечают за все.
  */
-public class GetAndParseProfStandard {
-    private static final Logger log = LogManager.getLogger(GetAndParseProfStandard.class);
+public class Main {
+    private static final Logger log = LogManager.getLogger(Main.class);
     private final static IParseXML iParseXML = new ParseXML();
     private static final IParseUtils iParseUtils = new ParseUtilsSelenideRosmintrud();
 
@@ -50,5 +51,13 @@ public class GetAndParseProfStandard {
             WebDriverRunner.getWebDriver().close();
             WebDriverRunner.getWebDriver().quit();
         }
+    }
+
+    /**
+     * Удаляет старые папки с файлами. Необходим для очистки XML файлов, которые уже сохранены в базу
+     * @param savedDir = dirToSave in getAndParseStandard
+     */
+    public static void clearOldData( String savedDir){
+        clearOldDirectories(new File(savedDir));
     }
 }
