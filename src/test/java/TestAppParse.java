@@ -1,5 +1,4 @@
-package ru.Aidar.ParsingProffStandards.Parsing;
-
+import ru.Aidar.ParsingProffStandards.Parsing.IParseXML;
 import ru.Aidar.ParsingProffStandards.Parsing.Impl.ParseXML;
 import ru.Aidar.ParsingProffStandards.Utills.FileUtils;
 

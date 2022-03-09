@@ -55,4 +55,48 @@
 
     </dependencies>
 
+    <build>
+        <plugins>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                        <configuration>
+                            <archive>
+                                <manifest>
+                                    <mainClass>
+                                        ru.Aidar.ParsingProffStandards.Main
+                                    </mainClass>
+                                </manifest>
+                            </archive>
+                            <descriptorRefs>
+                                <descriptorRef>jar-with-dependencies</descriptorRef>
+                            </descriptorRefs>
+                            <dependencySets>
+                                <dependencySet>
+                                    <outputDirectory>/</outputDirectory>
+                                    <useProjectArtifact>true</useProjectArtifact>
+                                    <unpack>true</unpack>
+                                    <scope>runtime</scope>
+                                    <unpackOptions>
+                                        <excludes>
+                                            <exclude>**/resources/**</exclude>
+                                        </excludes>
+                                    </unpackOptions>
+                                </dependencySet>
+                            </dependencySets>
+                        </configuration>
+                    </execution>
+                </executions>
+
+            </plugin>
+
+        </plugins>
+    </build>
 </project>

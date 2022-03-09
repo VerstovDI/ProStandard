@@ -1,5 +1,3 @@
-package ru.Aidar.ParsingProffStandards.DB;
-
 import ru.Aidar.ParsingProffStandards.DB.DAO.ResourceDAO;
 import ru.Aidar.ParsingProffStandards.DB.DAO.StandardsDAO;
 import ru.Aidar.ParsingProffStandards.DB.domain.Resource;

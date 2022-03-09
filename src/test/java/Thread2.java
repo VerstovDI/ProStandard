@@ -1,4 +1,4 @@
-package ru.Aidar.ParsingProffStandards;
+import ru.Aidar.ParsingProffStandards.Main;
 
 import java.nio.file.Paths;
 

@@ -1,5 +1,3 @@
-package ru.Aidar.ParsingProffStandards;
-
 class Test {
     public void calculate(int[][] arr) {
         int summ = 0;

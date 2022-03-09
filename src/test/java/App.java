@@ -1,5 +1,3 @@
-package ru.Aidar.ParsingProffStandards;
-
 import java.nio.file.Paths;
 
 import static ru.Aidar.ParsingProffStandards.Main.clearOldData;
