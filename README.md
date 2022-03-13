@@ -1,4 +1,5 @@
 # ProStandard
 Application for matching educational and professional standards
 
-use mvn validate for installing libraries
+1.Compile JAR from the DB branch
+2.Use mvn validate for installing libraries
