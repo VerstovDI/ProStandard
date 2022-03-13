@@ -15,7 +15,7 @@ ParsingService parsingService;
     void parse() {
         String dirToSave = Paths.get("resources").toAbsolutePath().toString();
         for (int i = 1; i <= 11; i++) { //
-            String numberToParse = "01" + String.format("%03d", i);
+            String numberToParse = "01." + String.format("%03d", i);
             parsingService.parse(numberToParse, dirToSave);
         }
     }
