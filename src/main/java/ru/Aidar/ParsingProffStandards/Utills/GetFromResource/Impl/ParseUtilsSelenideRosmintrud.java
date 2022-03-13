@@ -61,6 +61,7 @@ public class ParseUtilsSelenideRosmintrud implements IParseUtils {
         Configuration.browserCapabilities = options;
 
         try (InputStream inputStream = new FileInputStream(propFileName)) {
+            System.out.println("new FileInputStrea");
             Properties properties = new Properties();
             properties.load(inputStream);
             Configuration.timeout = Integer.parseInt(properties.getProperty("Configuration.timeout"));
