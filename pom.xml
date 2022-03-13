@@ -72,6 +72,18 @@
             <groupId>ru.MEPHI.Aidar</groupId>
             <artifactId>selenide-parser</artifactId>
             <version>1.0.0</version>
+            <exclusions>
+                <exclusion>  <!-- declare the exclusion here -->
+                    <groupId>com.codeborne</groupId>
+                    <artifactId>selenide</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <dependency>
+            <groupId>com.codeborne</groupId>
+            <artifactId>selenide</artifactId>
+            <version>6.3.3</version>
         </dependency>
 
     </dependencies>
