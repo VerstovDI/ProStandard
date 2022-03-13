@@ -13,6 +13,8 @@ import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.chrome.ChromeOptions;
 import ru.Aidar.ParsingProffStandards.Utills.GetFromResource.IParseUtils;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
@@ -24,7 +26,7 @@ import static com.codeborne.selenide.Selenide.*;
 
 public class ParseUtilsSelenideRosmintrud implements IParseUtils {
     private static final Logger log = LogManager.getLogger(ParseUtilsSelenideRosmintrud.class);
-    private static final String propFileName = "config.properties";
+    private static final String propFileName = Paths.get("resources").toAbsolutePath() + File.separator + "config.properties";
 
     /**
      * Показывает все стандарты в проф сфере. Можно написать, например 06
@@ -58,7 +60,7 @@ public class ParseUtilsSelenideRosmintrud implements IParseUtils {
 
         Configuration.browserCapabilities = options;
 
-        try (InputStream inputStream = getClass().getClassLoader().getResourceAsStream(propFileName)) {
+        try (InputStream inputStream = new FileInputStream(propFileName)) {
             Properties properties = new Properties();
             properties.load(inputStream);
             Configuration.timeout = Integer.parseInt(properties.getProperty("Configuration.timeout"));
@@ -79,7 +81,7 @@ public class ParseUtilsSelenideRosmintrud implements IParseUtils {
     public void openProfStandardsFilter() {
         String relativeOrAbsoluteUrlOpenProfStandardsFilter;
         String classNameOpenProfStandardsFilter;
-        try (InputStream inputStream = getClass().getClassLoader().getResourceAsStream(propFileName)) {
+        try (InputStream inputStream = new FileInputStream(propFileName)) {
             Properties properties = new Properties();
             properties.load(inputStream);
             relativeOrAbsoluteUrlOpenProfStandardsFilter = properties.getProperty("relativeOrAbsoluteUrlOpenProfStandardsFilter");
@@ -102,7 +104,7 @@ public class ParseUtilsSelenideRosmintrud implements IParseUtils {
     public boolean findProfStandardByNumber(String number) {
         String cssSelectorUrlFindProfStandardByNumber;
         String findByCssSelectorUrlFindProfStandardByNumber;
-        try (InputStream inputStream = getClass().getClassLoader().getResourceAsStream(propFileName)) {
+        try (InputStream inputStream = new FileInputStream(propFileName)) {
             Properties properties = new Properties();
             properties.load(inputStream);
             cssSelectorUrlFindProfStandardByNumber = properties.getProperty("cssSelectorUrlFindProfStandardByNumber");
