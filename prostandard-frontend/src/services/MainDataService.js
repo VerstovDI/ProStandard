@@ -9,7 +9,7 @@ class MainDataService {
                 specializationCode: data.specializationCode,
                 subjMajor: data.subjMajor,
                 resourceToDownload: data.resourceToDownload,
-                keywords: data.keywords.join(',')
+                keywords: data.keywords
             }
         });
     }

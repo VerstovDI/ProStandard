@@ -7,15 +7,16 @@ const routes = [
         path: "",
         name: "Main",
         //component: Main
-        component: () => import("@/components/Main")
+        component: () => import("@/components/Main/Main")
     },
 
     // На компонент с выдачей подобранных профстандартов
     {
         path: '/standards',
         name: 'Standards',
+        props: true,
         //component: Standards
-        component: () => import("@/components/Standards")
+        component: () => import("@/components/Standard/Standards")
     }
 ];
 

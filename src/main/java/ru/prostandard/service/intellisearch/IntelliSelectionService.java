@@ -39,11 +39,15 @@ public class IntelliSelectionService {
         // TODO: хардкод-заглушка, ур. образования не привязан к SearchDTO
         List<EducationLevel> educationLevels = new ArrayList<>();
         educationLevels.add(EducationLevel.SPECIALIST);
-        List<Long> prostandardsIds =
+        /*List<Long> prostandardsIds =
                 getProfstandardIdsByEducationLevelAndKeywordString(educationLevels,
-                        searchDTO.getKeywords());
+                        searchDTO.getKeywords());*/
 
-        List<Standard> matchedProfstandards = getProfstandardsByIds(prostandardsIds);
+        List<Standard> matchedProfstandards = new ArrayList<>();//getProfstandardsByIds(prostandardsIds);
+        // TODO: заглушка
+        matchedProfstandards.add(standardRepository.getOne(2L));
+        matchedProfstandards.add(standardRepository.getOne(4L));
+        matchedProfstandards.add(standardRepository.getOne(3L));
         return matchedProfstandards;
     }
 

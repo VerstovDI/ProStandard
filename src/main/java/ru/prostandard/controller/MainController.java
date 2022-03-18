@@ -1,6 +1,5 @@
 package ru.prostandard.controller;
 
-import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,29 +7,26 @@ import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
+import ru.prostandard.converter.StandardsConverter;
 import ru.prostandard.model.dto.HelpInfoDTO;
 import ru.prostandard.model.dto.SearchDTO;
 import ru.prostandard.model.dto.standard.StandardDTO;
-import ru.prostandard.model.profstandards.Standard;
 import ru.prostandard.service.DictionaryService;
 import ru.prostandard.service.HelpService;
 import ru.prostandard.service.intellisearch.IntelliSelectionService;
+import ru.prostandard.utils.RequestUtils;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  * Контроллер, обрабатывающий запросы главной страницы приложения.
  * Отвечает за отправку и приём JSON с главного окна составления профстандарта.
  */
 @RestController(value = "localhost:8081/")
-@RequiredArgsConstructor
 public class MainController {
 
     private final Logger logger = LoggerFactory.getLogger(MainController.class);
@@ -40,11 +36,29 @@ public class MainController {
      */
     private final DictionaryService dictionaryService;
 
-    @Autowired
+    /**
+     * Сервис для показа всей справочной информации приложения
+     */
     private final HelpService helpService;
 
-    @Autowired
+    /**
+     * Сервис для взаимодействия с функционалом подбора профстандартов
+     */
     private final IntelliSelectionService intelliSelectionService;
+
+    /**
+     * Конвертер модели стандарта в DTO стандарта
+     */
+    private final StandardsConverter standardsConverter;
+
+    @Autowired
+    public MainController(DictionaryService dictionaryService, HelpService helpService,
+                          IntelliSelectionService intelliSelectionService, StandardsConverter standardsConverter) {
+        this.dictionaryService = dictionaryService;
+        this.helpService = helpService;
+        this.intelliSelectionService = intelliSelectionService;
+        this.standardsConverter = standardsConverter;
+    }
 
     /**
      * GET-запрос с отправкой данных на получения списка всех подобранных стандартов
@@ -60,19 +74,9 @@ public class MainController {
                                                           @RequestParam String keywords) {
         try {
             logger.info("Отправка данных с формы выдачи стандартов начата...");
-
-            List<String> keywordsList = Stream.of(keywords.split(",")).collect(Collectors.toList());
-            SearchDTO searchDTO =
-                    new SearchDTO(educationLevel, specializationCode, subjMajor, resourceToDownload, keywordsList);
-
-            List<Standard> foundStandards = intelliSelectionService.getProfstandards(searchDTO);
-            List<StandardDTO> standardDTOList = new ArrayList<>();
-            for (Standard standard : foundStandards) {
-                standardDTOList.add(new StandardDTO(
-                        standard.getRegistrationNumber(),
-                        standard.getCodeKindProfessionalActivity(),
-                        standard.getNameProfessionalStandart()));
-            }
+            List<String> keywordsList = RequestUtils.prepareKeywordsStringToList(keywords);
+            SearchDTO searchDTO = new SearchDTO(educationLevel, specializationCode, subjMajor, resourceToDownload, keywordsList);
+            List<StandardDTO> standardDTOList = standardsConverter.convertToDTO(intelliSelectionService.getProfstandards(searchDTO));
            /* foundStandards.add(new StandardDTO(1L,
                                         "09.05.01",
                                         "Применения и эксплуатация автоматизированных систем специального назначения"));
@@ -81,9 +85,11 @@ public class MainController {
                                                 "Программная инженерия"));*/
             // TODO: доделать
             logger.info("Подбор профессиональных стандартов прошёл успешно");
+            /*
             HttpHeaders httpHeaders = new HttpHeaders();
             httpHeaders.set("Access-Control-Allow-Origin", "http://localhost:8080");
-            return ResponseEntity.ok().headers(httpHeaders).body(standardDTOList);
+            */
+            return ResponseEntity.ok(standardDTOList);
         } catch (Exception ex) {
             logger.error(ex.getMessage(), ex);
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
