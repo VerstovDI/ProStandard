@@ -4,6 +4,8 @@ import org.springframework.stereotype.Service;
 import ru.prostandard.model.dto.SearchDTO;
 import ru.prostandard.utils.ParsingUtils;
 
+import static ru.Aidar.ParsingProffStandards.Main.getAndParseStandard;
+
 @Service
 public class ParsingService {
 
@@ -12,5 +14,9 @@ public class ParsingService {
         String typicalString = "06.*";
 
         return targetParsingString;
+    }
+
+    public void parse(String number, String dirToSave){
+        getAndParseStandard(number,dirToSave);
     }
 }
