@@ -15,7 +15,7 @@ export default {
 
 <style>
 
-html, body {
+/*html, body {
   height: 100%;
 }
 
@@ -31,6 +31,6 @@ body {
 
 #content {
   flex: 1 0 auto;
-}
+}*/
 
 </style>

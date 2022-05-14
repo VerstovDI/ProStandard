@@ -11,7 +11,7 @@
 
         <div class="row">
           <div class="col-md-6">
-            <form role="form">
+            <form role="form" > <!-- @submit="checkForm" !-->
               <div class="row gy-3">
 
                 <!-- Форма "Уровень образования" !-->
@@ -199,15 +199,32 @@ export default {
     // Метод получения справки о приложении
     getInfo() {
       return MainDataService.getInfo();
+    },
+
+    // Метод проверки формы ввода: обязателен уровень образования и ресурса стандартов
+    checkForm() {
+      if (this.educationLevel && this.resourceToDownload) {
+        return true;
+      }
+
+      this.errors = [];
+
+      if (!this.educationLevel) {
+        this.errors.push('Требуется указать уровень образования');
+      }
+
+      if (!this.resourceToDownload) {
+        this.errors.push('Требуется указать ресурс поиска');
+      }
     }
   },
 
   // Справочная информация прогружается единожды при старте приложения
-  created: function () {
+  /*created: function () {
     this.getInfo().then((response) => {
       this.helpData = response.data;
     });
-  },
+  },*/
 
   computed: {
     filteredItems() {
@@ -222,7 +239,7 @@ export default {
 
 <style scoped>
 
-.btn {
+/*.btn {
   border-color: white;
 }
 
@@ -252,34 +269,34 @@ export default {
 
 #info {
   background-image: url("../../../src/assets/InfoClipArt.png");
-  background-repeat: no-repeat; /* make the background image appear only once */
-  background-position: 5px 5px; /* equivalent to 'top left' */
-  border: none; /* assuming we don't want any borders */
-  cursor: pointer; /* make the cursor like hovering over an <a> element */
-  padding-left: 20px; /* make text start to the right of the image */
-  vertical-align: middle; /* align the text vertically centered */
+  background-repeat: no-repeat; !* make the background image appear only once *!
+  background-position: 5px 5px; !* equivalent to 'top left' *!
+  border: none; !* assuming we don't want any borders *!
+  cursor: pointer; !* make the cursor like hovering over an <a> element *!
+  padding-left: 20px; !* make text start to the right of the image *!
+  vertical-align: middle; !* align the text vertically centered *!
 }
 
 #searchStandards {
   background-image: url("../../../src/assets/OkClipArt.png");
   backface-visibility: hidden;
-  background-repeat: no-repeat; /* make the background image appear only once */
-  background-position: 5px 5px; /* equivalent to 'top left' */
-  border: none; /* assuming we don't want any borders */
-  cursor: pointer; /* make the cursor like hovering over an <a> element */
-  padding-left: 20px; /* make text start to the right of the image */
-  vertical-align: middle; /* align the text vertically centered */
+  background-repeat: no-repeat; !* make the background image appear only once *!
+  background-position: 5px 5px; !* equivalent to 'top left' *!
+  border: none; !* assuming we don't want any borders *!
+  cursor: pointer; !* make the cursor like hovering over an <a> element *!
+  padding-left: 20px; !* make text start to the right of the image *!
+  vertical-align: middle; !* align the text vertically centered *!
 }
 
 #enterInfo {
   background-image: url("../../../src/assets/IconAddInfo.png");
   backface-visibility: hidden;
-  background-repeat: no-repeat; /* make the background image appear only once */
-  background-position: 5px 5px; /* equivalent to 'top left' */
-  border: none; /* assuming we don't want any borders */
-  cursor: pointer; /* make the cursor like hovering over an <a> element */
-  padding-left: 20px; /* make text start to the right of the image */
-  vertical-align: middle; /* align the text vertically centered */
-}
+  background-repeat: no-repeat; !* make the background image appear only once *!
+  background-position: 5px 5px; !* equivalent to 'top left' *!
+  border: none; !* assuming we don't want any borders *!
+  cursor: pointer; !* make the cursor like hovering over an <a> element *!
+  padding-left: 20px; !* make text start to the right of the image *!
+  vertical-align: middle; !* align the text vertically centered *!
+}*/
 
 </style>

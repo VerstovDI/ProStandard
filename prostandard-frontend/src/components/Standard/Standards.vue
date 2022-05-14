@@ -24,7 +24,7 @@
             <div class="row">
               <div class="col-md-8 col-md-offset-2">
                 <!-- Таблица с профстандартами !-->
-                <StandardsTable></StandardsTable>
+<!--                <StandardsTable :standardList="standards"></StandardsTable>-->
               </div>
             </div>
           </div>
@@ -33,24 +33,25 @@
     </div>
 
   </div>
+  <StandardsTable></StandardsTable>
 </template>
 
 <script>
-import MainDataService from "@/services/MainDataService";
+//import MainDataService from "@/services/MainDataService";
 import StandardsHeader from "@/components/Standard/StandardsHeader";
 import StandardsTable from "@/components/Standard/StandardsTable";
 
 export default {
   name: "Standards",
   components: { StandardsTable, StandardsHeader },
-  props: {
+  /*props: {
     // Проброшенные фильтры поиска с родительского компонента Main.vue на текущий (дочерний) компонент с Standards.vue
     educationLevel: String,
     specializationCode: String,
     subjMajor: String,
     resourceToDownload: String,
     tags: Array
-  },
+  },*/
 
   data() {
     return {
@@ -60,7 +61,7 @@ export default {
       standards: []
     }
   },
-  methods: {
+  /*methods: {
     getStandards() {
       let searchData = {
         educationLevel: this.educationLevel,
@@ -71,6 +72,14 @@ export default {
       };
       console.log(searchData);
 
+      /!*const searchStandardsRequest = async () => {
+        try {
+          const resp = await MainDataService.searchStandards(searchData);
+          this.standards = resp.data;
+        } catch (err) {
+          console.error(err);
+        }
+      }*!/
       MainDataService.searchStandards(searchData).then(response => {
         this.standards = response.data;
       }).catch(e => {
@@ -87,7 +96,7 @@ export default {
   },
   mounted: function () {
     this.getStandards();
-  }
+  }*/
 }
 </script>
 
